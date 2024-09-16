@@ -1,5 +1,13 @@
 {
-  "cSpell.words": ["biomejs", "clsx", "rsbuild", "tailwindcss", "Topbar"],
+  "cSpell.words": [
+    "biomejs",
+    "clsx",
+    "Mechatronics",
+    "rsbuild",
+    "RUET",
+    "tailwindcss",
+    "Topbar"
+  ],
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
