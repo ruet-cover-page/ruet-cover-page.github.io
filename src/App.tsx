@@ -1,5 +1,8 @@
 import { useAtomValue } from 'jotai';
 import './App.css';
+import { PDFViewer } from '@react-pdf/renderer';
+import { CoverTemplate } from './components/cover-template';
+import { Editor } from './components/editor/editor';
 import { TopbarLeft, TopbarRight } from './components/topbar';
 import { cn } from './lib/utils';
 import { previewModeAtom } from './store/preview-mode';
@@ -16,14 +19,19 @@ const App = () => {
         )}
       >
         <TopbarLeft />
+        <Editor />
       </div>
       <div
         className={cn(
           'min-w-0 flex-1 origin-right transition-all',
           previewMode || 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
+          'flex flex-col',
         )}
       >
         <TopbarRight />
+        <PDFViewer className="flex-1">
+          <CoverTemplate />
+        </PDFViewer>
       </div>
     </main>
   );
