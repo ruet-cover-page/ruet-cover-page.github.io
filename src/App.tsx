@@ -14,7 +14,7 @@ const App = () => {
     <main className="fixed inset-0 flex divide-x">
       <div
         className={cn(
-          'min-w-0 flex-1 origin-left transition-all',
+          'flex min-w-0 flex-1 origin-left flex-col transition-all',
           previewMode && 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
         )}
       >
@@ -23,13 +23,13 @@ const App = () => {
       </div>
       <div
         className={cn(
-          'min-w-0 flex-1 origin-right transition-all',
+          'flex min-w-0 flex-1 origin-left flex-col transition-all',
           previewMode || 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
           'flex flex-col',
         )}
       >
         <TopbarRight />
-        <PDFViewer className="flex-1">
+        <PDFViewer className="flex-1" showToolbar={false}>
           <CoverTemplate />
         </PDFViewer>
       </div>

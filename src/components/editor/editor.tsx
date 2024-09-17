@@ -14,7 +14,7 @@ import { TextInput } from './input';
 
 export function Editor() {
   return (
-    <div className="space-y-4 p-2">
+    <div className="flex-1 space-y-4 overflow-y-auto px-4 py-8">
       <FormItem label="Department">
         <Combobox
           name="department"
