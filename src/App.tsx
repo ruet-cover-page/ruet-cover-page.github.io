@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
 import './App.css';
-import { PDFViewer } from '@react-pdf/renderer';
+import { PDFViewer } from './components/PDFViewer';
 import { CoverTemplate } from './components/cover-template';
 import { Editor } from './components/editor/editor';
 import { TopbarLeft, TopbarRight } from './components/topbar';
@@ -29,7 +29,7 @@ const App = () => {
         )}
       >
         <TopbarRight />
-        <PDFViewer className="flex-1" showToolbar={false}>
+        <PDFViewer className="flex-1">
           <CoverTemplate />
         </PDFViewer>
       </div>

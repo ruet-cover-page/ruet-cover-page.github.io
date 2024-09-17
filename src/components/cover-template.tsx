@@ -1,8 +1,7 @@
-import PTSerifBold from '@/assets/PT_Serif/PTSerif-Bold.ttf';
-import PTSerif from '@/assets/PT_Serif/PTSerif-Regular.ttf';
-import PTSerifCaption from '@/assets/PT_Serif_Caption/PTSerifCaption-Regular.ttf';
-import PetitFormalScript from '@/assets/Petit_Formal_Script/PetitFormalScript-Regular.ttf';
 import RUETLogo from '@/assets/RUET-Logo.png';
+import MonotypeCorsiva from '@/assets/fonts/Monotype-Corsiva-Regular.ttf';
+import TeXGyreTermesBold from '@/assets/fonts/TeXGyreTermes-Bold.ttf';
+import TeXGyreTermes from '@/assets/fonts/TeXGyreTermes-Regular.ttf';
 import {
   courseNoAtom,
   courseTitleAtom,
@@ -23,18 +22,13 @@ import {
 import { useAtomValue } from 'jotai';
 
 Font.register({
-  family: 'Petit Formal Script',
-  src: PetitFormalScript,
+  family: 'Monotype Corsiva',
+  src: MonotypeCorsiva,
 });
 
 Font.register({
-  family: 'PT Serif Caption',
-  src: PTSerifCaption,
-});
-
-Font.register({
-  family: 'PT Serif',
-  fonts: [{ src: PTSerif }, { src: PTSerifBold, fontWeight: 700 }],
+  family: 'TeX Gyre Termes',
+  fonts: [{ src: TeXGyreTermes }, { src: TeXGyreTermesBold, fontWeight: 700 }],
 });
 
 // Create styles
@@ -42,52 +36,50 @@ const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
     backgroundColor: '#FFFFFF',
-    gap: 10,
-    padding: 72,
-    fontFamily: 'PT Serif Caption',
+    gap: 16,
+    padding: '2.54cm',
+    paddingLeft: '3cm',
+    fontFamily: 'TeX Gyre Termes',
     textAlign: 'center',
   },
   motto: {
     fontSize: 12,
-    fontFamily: 'Petit Formal Script',
+    fontFamily: 'Monotype Corsiva',
     color: '#333333',
   },
   institution: {
-    fontSize: 18,
+    fontSize: 17,
+    marginVertical: 16,
   },
   image: {
     marginVertical: 0,
     marginHorizontal: 'auto',
-    height: 156,
-    width: 135,
+    height: 104,
+    width: 90,
   },
   text: {
     fontSize: 16,
   },
   course: {
-    marginVertical: 24,
+    marginVertical: 16,
     flexDirection: 'column',
-    gap: 10,
   },
   th: {
     fontSize: 16,
     textAlign: 'left',
     flexGrow: 0,
     flexShrink: 0,
-    flexBasis: 132,
+    flexBasis: 120,
     fontWeight: 700,
-    fontFamily: 'PT Serif',
   },
   colon: {
     fontSize: 16,
     fontWeight: 700,
     flexBasis: 16,
-    fontFamily: 'PT Serif',
   },
   td: {
     fontSize: 16,
     textAlign: 'left',
-    fontFamily: 'PT Serif',
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
@@ -108,7 +100,7 @@ export function CoverTemplate() {
       <Page size="A4" style={styles.page}>
         <Text style={styles.motto}>Heaven’s Light is Our Guide</Text>
         <Text style={styles.institution}>
-          Rajshahi University of Engineering & Technology
+          Rajshahi University of Engineering & Technology, Bangladesh
         </Text>
         <Image src={RUETLogo} style={styles.image} />
         <Text style={styles.text}>Department of {department}</Text>
@@ -116,19 +108,21 @@ export function CoverTemplate() {
           <Text style={styles.text}>Course No.: {courseNo}</Text>
           <Text style={styles.text}>Course Title: {courseTitle}</Text>
         </View>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={styles.th}>
-            {type === 'Assignment' ? type : 'Experiment'} No.
-          </Text>
-          <Text style={styles.colon}>:</Text>
-          <Text style={styles.td}>{coverNo.padStart(2, '0')}</Text>
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={styles.th}>
-            {type === 'Assignment' ? type : 'Experiment'} Title
-          </Text>
-          <Text style={styles.colon}>:</Text>
-          <Text style={styles.td}>{coverTitle}</Text>
+        <View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.th}>
+              {type === 'Assignment' ? type : 'Experiment'} No.
+            </Text>
+            <Text style={styles.colon}>:</Text>
+            <Text style={styles.td}>{coverNo.padStart(2, '0')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.th}>
+              {type === 'Assignment' ? type : 'Experiment'} Title
+            </Text>
+            <Text style={styles.colon}>:</Text>
+            <Text style={styles.td}>{coverTitle}</Text>
+          </View>
         </View>
       </Page>
     </Document>
