@@ -14,7 +14,7 @@ const App = () => {
     <main className="fixed inset-0 flex divide-x">
       <div
         className={cn(
-          'flex min-w-0 flex-1 origin-left flex-col transition-all',
+          'flex min-w-0 flex-1 origin-left flex-col divide-y transition-all',
           previewMode && 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
         )}
       >
@@ -23,7 +23,7 @@ const App = () => {
       </div>
       <div
         className={cn(
-          'flex min-w-0 flex-1 origin-left flex-col transition-all',
+          'flex min-w-0 flex-1 origin-left flex-col divide-y transition-all',
           previewMode || 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
           'flex flex-col',
         )}
