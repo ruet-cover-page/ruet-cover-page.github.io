@@ -1,4 +1,4 @@
-import { courseNoAtom } from '@/store/editor';
+import atoms from '@/store/editor';
 import { previewModeAtom } from '@/store/preview-mode';
 import {
   ArrowLeftIcon,
@@ -36,12 +36,12 @@ export function TopbarLeft() {
 
 export function TopbarRight() {
   const setPreviewMode = useSetAtom(previewModeAtom);
-  const courseNo = useAtomValue(courseNoAtom);
+  const courseNo = useAtomValue(atoms.courseNoAtom);
+  const studentID = useAtomValue(atoms.studentID);
   const filename = useMemo(() => {
-    const parts = ['Cover'];
-    if (courseNo) parts.push(courseNo);
+    const parts = ['Cover', courseNo, studentID].filter(Boolean);
     return parts.join('-');
-  }, [courseNo]);
+  }, [courseNo, studentID]);
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-2 bg-secondary p-2">

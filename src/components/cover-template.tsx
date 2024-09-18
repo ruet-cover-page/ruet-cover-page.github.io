@@ -2,14 +2,7 @@ import RUETLogo from '@/assets/RUET-Logo.png';
 import MonotypeCorsiva from '@/assets/fonts/Monotype-Corsiva-Regular.ttf';
 import TeXGyreTermesBold from '@/assets/fonts/TeXGyreTermes-Bold.ttf';
 import TeXGyreTermes from '@/assets/fonts/TeXGyreTermes-Regular.ttf';
-import {
-  courseNoAtom,
-  courseTitleAtom,
-  coverNoAtom,
-  coverTitleAtom,
-  departmentAtom,
-  typeAtom,
-} from '@/store/editor';
+import atoms, { departmentAtom, typeAtom } from '@/store/editor';
 import {
   Document,
   Font,
@@ -64,13 +57,19 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     flexDirection: 'column',
   },
-  th: {
+  thV: {
     fontSize: 16,
     textAlign: 'left',
     flexGrow: 0,
     flexShrink: 0,
     flexBasis: 120,
     fontWeight: 700,
+  },
+  thH: {
+    fontSize: 16,
+    textAlign: 'left',
+    fontWeight: 700,
+    textDecoration: 'underline',
   },
   colon: {
     fontSize: 16,
@@ -90,10 +89,13 @@ const styles = StyleSheet.create({
 export function CoverTemplate() {
   const department = useAtomValue(departmentAtom);
   const type = useAtomValue(typeAtom);
-  const courseNo = useAtomValue(courseNoAtom);
-  const courseTitle = useAtomValue(courseTitleAtom);
-  const coverNo = useAtomValue(coverNoAtom);
-  const coverTitle = useAtomValue(coverTitleAtom);
+  const courseNo = useAtomValue(atoms.courseNoAtom);
+  const courseTitle = useAtomValue(atoms.courseTitleAtom);
+  const coverNo = useAtomValue(atoms.coverNoAtom);
+  const coverTitle = useAtomValue(atoms.coverTitleAtom);
+  const studentSection = useAtomValue(atoms.studentSection);
+  const teacherDepartment = useAtomValue(atoms.teacherDepartment);
+  const dateOfSubmission = useAtomValue(atoms.dateOfSubmission);
 
   return (
     <Document title="Cover Page">
@@ -109,20 +111,60 @@ export function CoverTemplate() {
           <Text style={styles.text}>Course Title: {courseTitle}</Text>
         </View>
         <View>
+          {!!coverNo && (
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.thV}>
+                {type === 'Assignment' ? type : 'Experiment'} No.
+              </Text>
+              <Text style={styles.colon}>:</Text>
+              <Text style={styles.td}>{coverNo.padStart(2, '0')}</Text>
+            </View>
+          )}
           <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.th}>
-              {type === 'Assignment' ? type : 'Experiment'} No.
-            </Text>
-            <Text style={styles.colon}>:</Text>
-            <Text style={styles.td}>{coverNo.padStart(2, '0')}</Text>
-          </View>
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.th}>
+            <Text style={styles.thV}>
               {type === 'Assignment' ? type : 'Experiment'} Title
             </Text>
             <Text style={styles.colon}>:</Text>
             <Text style={styles.td}>{coverTitle}</Text>
           </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginVertical: 16,
+            gap: 32,
+            textAlign: 'left',
+          }}
+        >
+          <View style={{ flex: '1 1 0' }}>
+            <Text style={styles.thH}>Submitted by:</Text>
+            <Text style={styles.text}>{useAtomValue(atoms.studentName)}</Text>
+            <Text style={styles.text}>
+              Roll: {useAtomValue(atoms.studentID)}
+            </Text>
+            {!!studentSection && (
+              <Text style={styles.text}>Section: {studentSection}</Text>
+            )}
+          </View>
+          <View style={{ flex: '1 1 0' }}>
+            <Text style={styles.thH}>Submitted to:</Text>
+            <Text style={styles.text}>{useAtomValue(atoms.teacherName)}</Text>
+            <Text style={styles.text}>
+              {useAtomValue(atoms.teacherDesignation)}
+            </Text>
+            {!!teacherDepartment && (
+              <Text style={styles.text}>
+                Dept. of {teacherDepartment}, RUET
+              </Text>
+            )}
+          </View>
+        </View>
+        <View style={{ marginTop: 'auto', textAlign: 'left' }}>
+          {!!dateOfSubmission && (
+            <Text style={styles.text}>
+              Date of submission: {dateOfSubmission}
+            </Text>
+          )}
         </View>
       </Page>
     </Document>

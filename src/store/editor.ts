@@ -1,4 +1,6 @@
 import { SimpleStorage } from '@/lib/simple-storage';
+import dayjs from 'dayjs';
+import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 
 export const departments = [
@@ -27,6 +29,13 @@ export const departmentAtom = atomWithStorage<(typeof departments)[number]>(
 
 export const types = ['Lab Report', 'Assignment'] as const;
 
+export const designations = [
+  'Lecturer',
+  'Assistant Professor',
+  'Associate Professor',
+  'Professor',
+] as const;
+
 export const typeAtom = atomWithStorage<(typeof types)[number]>(
   'cover-type',
   'Lab Report',
@@ -34,38 +43,22 @@ export const typeAtom = atomWithStorage<(typeof types)[number]>(
   { getOnInit: true },
 );
 
-export const courseNoAtom = atomWithStorage(
-  'course-no',
-  '',
-  new SimpleStorage<string>(),
-  {
+function stringItem(key: string, initialValue: string) {
+  return atomWithStorage(key, initialValue, new SimpleStorage<string>(), {
     getOnInit: true,
-  },
-);
+  });
+}
 
-export const courseTitleAtom = atomWithStorage(
-  'course-title',
-  '',
-  new SimpleStorage<string>(),
-  {
-    getOnInit: true,
-  },
-);
-
-export const coverNoAtom = atomWithStorage(
-  'cover-no',
-  '1',
-  new SimpleStorage<string>(),
-  {
-    getOnInit: true,
-  },
-);
-
-export const coverTitleAtom = atomWithStorage(
-  'cover-title',
-  '',
-  new SimpleStorage<string>(),
-  {
-    getOnInit: true,
-  },
-);
+export default {
+  studentName: stringItem('student-name', ''),
+  studentID: stringItem('student-id', ''),
+  studentSection: stringItem('student-section', ''),
+  courseNoAtom: stringItem('course-no', ''),
+  courseTitleAtom: stringItem('course-title', ''),
+  coverNoAtom: stringItem('cover-no', '1'),
+  coverTitleAtom: stringItem('cover-title', ''),
+  teacherName: stringItem('teacher-name', ''),
+  teacherDesignation: stringItem('teacher-designation', ''),
+  teacherDepartment: stringItem('teacher-department', ''),
+  dateOfSubmission: atom(dayjs(new Date()).format('D MMMM YYYY')),
+};
