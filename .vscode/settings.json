@@ -8,7 +8,8 @@
     "RUET",
     "tailwindcss",
     "Termes",
-    "Topbar"
+    "Topbar",
+    "usehooks"
   ],
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
