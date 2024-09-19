@@ -162,7 +162,7 @@ export function CoverTemplate() {
         <View style={{ marginTop: 'auto', textAlign: 'left' }}>
           {!!dateOfSubmission && (
             <Text style={styles.text}>
-              Date of submission: {dateOfSubmission}
+              Date of Submission: {dateOfSubmission}
             </Text>
           )}
         </View>
