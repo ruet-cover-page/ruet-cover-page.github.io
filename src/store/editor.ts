@@ -6,7 +6,7 @@ import { atomWithStorage } from 'jotai/utils';
 export const departments = [
   'Architecture',
   'Building Engineering and Construction Management',
-  'Chemical and Food Process Engineering',
+  'Chemical Engineering',
   'Civil Engineering',
   'Computer Science and Engineering',
   'Electrical and Computer Engineering',
