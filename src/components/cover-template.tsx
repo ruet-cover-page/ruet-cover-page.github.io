@@ -53,6 +53,11 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
   },
+  textBF: {
+    fontSize: 16,
+    textAlign: 'left',
+    fontWeight: 700,
+  },
   course: {
     marginVertical: 16,
     flexDirection: 'column',
@@ -75,6 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 700,
     flexBasis: 16,
+    textAlign: 'center',
   },
   td: {
     fontSize: 16,
@@ -117,7 +123,9 @@ export function CoverTemplate() {
                 {type === 'Assignment' ? type : 'Experiment'} No.
               </Text>
               <Text style={styles.colon}>:</Text>
-              <Text style={styles.td}>{coverNo.padStart(2, '0')}</Text>
+              <Text style={styles.td}>
+                {coverNo === '0' ? '' : coverNo.padStart(2, '0')}
+              </Text>
             </View>
           )}
           <View style={{ flexDirection: 'row' }}>
@@ -159,11 +167,15 @@ export function CoverTemplate() {
             )}
           </View>
         </View>
-        <View style={{ marginTop: 'auto', textAlign: 'left' }}>
+        <View
+          style={{ marginTop: 'auto', textAlign: 'left', flexDirection: 'row' }}
+        >
           {!!dateOfSubmission && (
-            <Text style={styles.text}>
-              Date of Submission: {dateOfSubmission}
-            </Text>
+            <>
+              <Text style={styles.textBF}>Date of Submission</Text>
+              <Text style={styles.colon}>:</Text>
+              <Text style={styles.text}>{dateOfSubmission}</Text>
+            </>
           )}
         </View>
       </Page>
