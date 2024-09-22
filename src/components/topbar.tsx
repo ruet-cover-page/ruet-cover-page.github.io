@@ -1,3 +1,4 @@
+import icon from '@/assets/icon.svg';
 import atoms from '@/store/editor';
 import { previewModeAtom } from '@/store/preview-mode';
 import {
@@ -17,7 +18,12 @@ export function TopbarLeft() {
   const setPreviewMode = useSetAtom(previewModeAtom);
   return (
     <div className="flex flex-wrap items-center justify-between bg-secondary p-2">
-      Cover Page
+      <div className="flex items-center gap-2">
+        <img src={icon} alt="" className="h-8 w-auto" />
+        <span className="whitespace-nowrap font-semibold text-2xl">
+          Cover Page
+        </span>
+      </div>
       <div className="flex items-center gap-2">
         <ModeToggle />
         <Button
@@ -36,7 +42,7 @@ export function TopbarLeft() {
 
 export function TopbarRight() {
   const setPreviewMode = useSetAtom(previewModeAtom);
-  const courseNo = useAtomValue(atoms.courseNoAtom);
+  const courseNo = useAtomValue(atoms.courseNo);
   const studentID = useAtomValue(atoms.studentID);
   const filename = useMemo(() => {
     const parts = ['Cover', courseNo, studentID].filter(Boolean);

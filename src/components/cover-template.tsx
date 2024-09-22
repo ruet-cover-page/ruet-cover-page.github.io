@@ -1,8 +1,8 @@
 import RUETLogo from '@/assets/RUET-Logo.png';
-import MonotypeCorsiva from '@/assets/fonts/Monotype-Corsiva-Regular.ttf';
 import TeXGyreTermesBold from '@/assets/fonts/TeXGyreTermes-Bold.ttf';
 import TeXGyreTermes from '@/assets/fonts/TeXGyreTermes-Regular.ttf';
-import atoms, { departmentAtom, typeAtom } from '@/store/editor';
+import motto from '@/assets/motto.png';
+import editorStore, { typeAtom } from '@/store/editor';
 import {
   Document,
   Font,
@@ -13,11 +13,6 @@ import {
   View,
 } from '@react-pdf/renderer';
 import { useAtomValue } from 'jotai';
-
-Font.register({
-  family: 'Monotype Corsiva',
-  src: MonotypeCorsiva,
-});
 
 Font.register({
   family: 'TeX Gyre Termes',
@@ -36,9 +31,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   motto: {
+    position: 'absolute',
+    width: '100vw',
+    top: '2.54cm',
     fontSize: 12,
-    fontFamily: 'Monotype Corsiva',
-    color: '#333333',
+    color: 'transparent',
   },
   institution: {
     fontSize: 17,
@@ -49,6 +46,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 'auto',
     height: 104,
     width: 90,
+  },
+  mottoImage: {
+    marginVertical: 0,
+    marginHorizontal: 'auto',
+    height: 11,
+    width: 122,
   },
   text: {
     fontSize: 16,
@@ -93,20 +96,21 @@ const styles = StyleSheet.create({
 
 // Create Document Component
 export function CoverTemplate() {
-  const department = useAtomValue(departmentAtom);
+  const department = useAtomValue(editorStore.studentDepartment);
   const type = useAtomValue(typeAtom);
-  const courseNo = useAtomValue(atoms.courseNoAtom);
-  const courseTitle = useAtomValue(atoms.courseTitleAtom);
-  const coverNo = useAtomValue(atoms.coverNoAtom);
-  const coverTitle = useAtomValue(atoms.coverTitleAtom);
-  const studentSection = useAtomValue(atoms.studentSection);
-  const teacherDepartment = useAtomValue(atoms.teacherDepartment);
-  const dateOfSubmission = useAtomValue(atoms.dateOfSubmission);
+  const courseNo = useAtomValue(editorStore.courseNo);
+  const courseTitle = useAtomValue(editorStore.courseTitle);
+  const coverNo = useAtomValue(editorStore.coverNo);
+  const coverTitle = useAtomValue(editorStore.coverTitle);
+  const studentSection = useAtomValue(editorStore.studentSection);
+  const teacherDepartment = useAtomValue(editorStore.teacherDepartment);
+  const dateOfSubmission = useAtomValue(editorStore.dateOfSubmission);
 
   return (
     <Document title="Cover Page">
       <Page size="A4" style={styles.page}>
         <Text style={styles.motto}>Heaven’s Light is Our Guide</Text>
+        <Image src={motto} style={styles.mottoImage} />
         <Text style={styles.institution}>
           Rajshahi University of Engineering & Technology, Bangladesh
         </Text>
@@ -146,9 +150,11 @@ export function CoverTemplate() {
         >
           <View style={{ flex: '1 1 0' }}>
             <Text style={styles.thH}>Submitted by:</Text>
-            <Text style={styles.text}>{useAtomValue(atoms.studentName)}</Text>
             <Text style={styles.text}>
-              Roll: {useAtomValue(atoms.studentID)}
+              {useAtomValue(editorStore.studentName)}
+            </Text>
+            <Text style={styles.text}>
+              Roll: {useAtomValue(editorStore.studentID)}
             </Text>
             {!!studentSection && (
               <Text style={styles.text}>Section: {studentSection}</Text>
@@ -156,9 +162,11 @@ export function CoverTemplate() {
           </View>
           <View style={{ flex: '1 1 0' }}>
             <Text style={styles.thH}>Submitted to:</Text>
-            <Text style={styles.text}>{useAtomValue(atoms.teacherName)}</Text>
             <Text style={styles.text}>
-              {useAtomValue(atoms.teacherDesignation)}
+              {useAtomValue(editorStore.teacherName)}
+            </Text>
+            <Text style={styles.text}>
+              {useAtomValue(editorStore.teacherDesignation)}
             </Text>
             {!!teacherDepartment && (
               <Text style={styles.text}>

@@ -55,8 +55,8 @@ const departmentMap: Record<string, Department> = {
   '13': Department.MSE,
 };
 
-export const departmentAtom = atomWithStorage<Department>(
-  'department',
+const studentDepartment = atomWithStorage<Department>(
+  'student-department',
   Department.MSE,
   new SimpleStorage<Department>(),
   { getOnInit: true },
@@ -103,7 +103,7 @@ const studentID = atom(
     if (studentID.length >= 4) {
       const code = studentID.substring(2, 4);
       if (code in departmentMap) {
-        set(departmentAtom, departmentMap[code]);
+        set(studentDepartment, departmentMap[code]);
       }
       if (studentID.length >= 7) {
         const roll = +studentID.substring(4, 7);
@@ -121,13 +121,15 @@ const studentID = atom(
 );
 
 export default {
+  editorTab: stringItem('editor-tab', 'student'),
+  studentDepartment,
   studentName,
   studentID,
   studentSection,
-  courseNoAtom: stringItem('course-no', ''),
-  courseTitleAtom: stringItem('course-title', ''),
-  coverNoAtom: stringItem('cover-no', '1'),
-  coverTitleAtom: stringItem('cover-title', ''),
+  courseNo: stringItem('course-no', ''),
+  courseTitle: stringItem('course-title', ''),
+  coverNo: stringItem('cover-no', '1'),
+  coverTitle: stringItem('cover-title', ''),
   teacherName: stringItem('teacher-name', ''),
   teacherDesignation: stringItem('teacher-designation', ''),
   teacherDepartment: stringItem('teacher-department', ''),
