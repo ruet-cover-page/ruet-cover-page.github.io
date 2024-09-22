@@ -38,7 +38,7 @@ export function Editor() {
           <FormItem label="Student ID">
             <TextInput atom={atoms.studentID} />
           </FormItem>
-          <FormItem label="Section">
+          <FormItem label="Section (leave empty if not applicable)">
             <TextInput atom={atoms.studentSection} />
           </FormItem>
         </div>
