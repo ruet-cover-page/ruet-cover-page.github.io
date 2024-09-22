@@ -1,30 +1,42 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
-import atoms, {
-  departmentAtom,
+import editorStore, {
   departments,
   designations,
   typeAtom,
   types,
 } from '@/store/editor';
+import { previewModeAtom } from '@/store/preview-mode';
 import { IdCardIcon, PersonIcon, ReaderIcon } from '@radix-ui/react-icons';
+import { useSetAtom } from 'jotai';
+import { Button } from '../ui/button';
 import { Combobox } from './combobox';
+import { FormDescription } from './form-description';
 import { FormItem } from './form-item';
 import { TextInput } from './input';
 
-const tabContentClass = cn('flex-1 overflow-y-auto space-y-4 p-4');
+const tabContentClass = cn(
+  'flex-1 flex-col gap-y-4 overflow-y-auto p-4 data-[state=active]:flex',
+);
+
+const tabHeaderClass = cn(
+  'mb-4 font-bold text-3xl leading-tight md:text-4xl dark:text-slate-50',
+);
 
 export function Editor() {
+  const setTab = useSetAtom(editorStore.editorTab);
+  const setPreviewMode = useSetAtom(previewModeAtom);
   return (
     <Tabs
       defaultValue="student"
       className="flex flex-1 flex-col overflow-hidden"
+      atom={editorStore.editorTab}
     >
       <TabsList className="h-auto w-full">
         {(
           [
             ['student', PersonIcon],
-            ['password', ReaderIcon],
+            ['subject', ReaderIcon],
             ['teacher', IdCardIcon],
           ] as const
         ).map(([x, Icon]) => (
@@ -34,32 +46,38 @@ export function Editor() {
         ))}
       </TabsList>
       <TabsContent value="student" className={tabContentClass}>
+        <h2 className={tabHeaderClass}>Fill-in your info</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <FormItem label="Student ID">
-            <TextInput atom={atoms.studentID} />
+            <TextInput atom={editorStore.studentID} />
           </FormItem>
-          <FormItem label="Section (leave empty if not applicable)">
-            <TextInput atom={atoms.studentSection} />
+          <FormItem label="Section">
+            <TextInput atom={editorStore.studentSection} />
+            <FormDescription>leave empty if not applicable</FormDescription>
           </FormItem>
         </div>
         <FormItem label="Full Name">
-          <TextInput atom={atoms.studentName} />
+          <TextInput atom={editorStore.studentName} />
         </FormItem>
         <FormItem label="Department">
           <Combobox
             name="department"
-            atom={departmentAtom}
+            atom={editorStore.studentDepartment}
             options={departments.map((x) => ({ label: x, value: x }))}
           />
         </FormItem>
+        <Button className="mt-auto" onClick={() => setTab('subject')}>
+          Next
+        </Button>
       </TabsContent>
-      <TabsContent value="password" className={tabContentClass}>
+      <TabsContent value="subject" className={tabContentClass}>
+        <h2 className={tabHeaderClass}>About the document</h2>
         <div className="grid gap-4 sm:grid-cols-[7rem_1fr]">
           <FormItem label="Course No.">
-            <TextInput atom={atoms.courseNoAtom} />
+            <TextInput atom={editorStore.courseNo} />
           </FormItem>
           <FormItem label="Course Title">
-            <TextInput atom={atoms.courseTitleAtom} />
+            <TextInput atom={editorStore.courseTitle} />
           </FormItem>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -72,7 +90,7 @@ export function Editor() {
           </FormItem>
           <FormItem label="No.">
             <TextInput
-              atom={atoms.coverNoAtom}
+              atom={editorStore.coverNo}
               type="number"
               step={1}
               min={1}
@@ -80,30 +98,46 @@ export function Editor() {
           </FormItem>
         </div>
         <FormItem label="Title">
-          <TextInput atom={atoms.coverTitleAtom} />
+          <TextInput atom={editorStore.coverTitle} />
         </FormItem>
         <FormItem label="Date of submission">
-          <TextInput atom={atoms.dateOfSubmission} />
+          <TextInput atom={editorStore.dateOfSubmission} />
         </FormItem>
+        <Button className="mt-auto" onClick={() => setTab('teacher')}>
+          Next
+        </Button>
       </TabsContent>
       <TabsContent value="teacher" className={tabContentClass}>
+        <h2 className={tabHeaderClass}>Submitting to</h2>
         <FormItem label="Teacher Name">
-          <TextInput atom={atoms.teacherName} />
+          <TextInput atom={editorStore.teacherName} />
         </FormItem>
         <FormItem label="Designation">
           <Combobox
             name="designation"
-            atom={atoms.teacherDesignation}
+            atom={editorStore.teacherDesignation}
             options={designations.map((x) => ({ label: x, value: x }))}
           />
         </FormItem>
         <FormItem label="Department">
           <Combobox
             name="department"
-            atom={atoms.teacherDepartment}
+            atom={editorStore.teacherDepartment}
             options={departments.map((x) => ({ label: x, value: x }))}
           />
         </FormItem>
+        <Button
+          className="mt-auto lt-lg:hidden"
+          onClick={() => setTab('subject')}
+        >
+          Back
+        </Button>
+        <Button
+          className="mt-auto lg:hidden"
+          onClick={() => setPreviewMode(true)}
+        >
+          Let's go
+        </Button>
       </TabsContent>
     </Tabs>
   );
