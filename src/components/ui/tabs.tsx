@@ -2,8 +2,26 @@ import * as TabsPrimitive from '@radix-ui/react-tabs';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+import { type WritableAtom, useAtom } from 'jotai';
 
-const Tabs = TabsPrimitive.Root;
+const Tabs = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root> & {
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    atom: WritableAtom<string, any, void>;
+  }
+>(({ atom, ...props }, ref) => {
+  const [value, setValue] = useAtom(atom);
+  return (
+    <TabsPrimitive.Root
+      ref={ref}
+      value={value}
+      onValueChange={setValue}
+      {...props}
+    />
+  );
+});
+Tabs.displayName = TabsPrimitive.Root.displayName;
 
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
