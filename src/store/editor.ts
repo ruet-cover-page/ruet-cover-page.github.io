@@ -21,6 +21,10 @@ export enum Department {
   URP = 'Urban & Regional Planning',
 }
 
+export const deptShortForm = new Map<Department, string>(
+  Object.entries(Department).map(([key, value]) => [value, key]),
+);
+
 export const departments = [
   Department.Arch,
   Department.BECM,
@@ -132,6 +136,8 @@ export default {
   coverTitle: stringItem('cover-title', ''),
   teacherName: stringItem('teacher-name', ''),
   teacherDesignation: stringItem('teacher-designation', ''),
+  secondTeacherName: stringItem('second-teacher-name', ''),
+  secondTeacherDesignation: stringItem('second-teacher-designation', ''),
   teacherDepartment: stringItem('teacher-department', ''),
   dateOfSubmission: atom(dayjs(new Date()).format('D MMMM YYYY')),
 };
