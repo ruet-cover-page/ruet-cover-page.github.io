@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import editorStore, {
@@ -9,7 +10,6 @@ import editorStore, {
 import { previewModeAtom } from '@/store/preview-mode';
 import { IdCardIcon, PersonIcon, ReaderIcon } from '@radix-ui/react-icons';
 import { useSetAtom } from 'jotai';
-import { Button } from '../ui/button';
 import { Combobox } from './combobox';
 import { FormDescription } from './form-description';
 import { FormItem } from './form-item';
@@ -46,7 +46,7 @@ export function Editor() {
         ))}
       </TabsList>
       <TabsContent value="student" className={tabContentClass}>
-        <h2 className={tabHeaderClass}>Fill-in your info</h2>
+        <h2 className={tabHeaderClass}>Student</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <FormItem label="Student ID">
             <TextInput atom={editorStore.studentID} />
@@ -66,12 +66,16 @@ export function Editor() {
             options={departments.map((x) => ({ label: x, value: x }))}
           />
         </FormItem>
-        <Button className="mt-auto" onClick={() => setTab('subject')}>
+        <Button
+          variant="outline"
+          className="mt-auto"
+          onClick={() => setTab('subject')}
+        >
           Next
         </Button>
       </TabsContent>
       <TabsContent value="subject" className={tabContentClass}>
-        <h2 className={tabHeaderClass}>About the document</h2>
+        <h2 className={tabHeaderClass}>Subject</h2>
         <div className="grid gap-4 sm:grid-cols-[7rem_1fr]">
           <FormItem label="Course No.">
             <TextInput atom={editorStore.courseNo} />
@@ -103,12 +107,16 @@ export function Editor() {
         <FormItem label="Date of submission">
           <TextInput atom={editorStore.dateOfSubmission} />
         </FormItem>
-        <Button className="mt-auto" onClick={() => setTab('teacher')}>
+        <Button
+          variant="outline"
+          className="mt-auto"
+          onClick={() => setTab('teacher')}
+        >
           Next
         </Button>
       </TabsContent>
       <TabsContent value="teacher" className={tabContentClass}>
-        <h2 className={tabHeaderClass}>Submitting to</h2>
+        <h2 className={tabHeaderClass}>Teacher</h2>
         <FormItem label="Teacher Name">
           <TextInput atom={editorStore.teacherName} />
         </FormItem>
@@ -126,13 +134,25 @@ export function Editor() {
             options={departments.map((x) => ({ label: x, value: x }))}
           />
         </FormItem>
+        <FormItem label="Second Teacher Name">
+          <TextInput atom={editorStore.secondTeacherName} />
+        </FormItem>
+        <FormItem label="Second Teacher Designation">
+          <Combobox
+            name="designation"
+            atom={editorStore.secondTeacherDesignation}
+            options={designations.map((x) => ({ label: x, value: x }))}
+          />
+        </FormItem>
         <Button
+          variant="outline"
           className="mt-auto lt-lg:hidden"
           onClick={() => setTab('subject')}
         >
           Back
         </Button>
         <Button
+          variant="outline"
           className="mt-auto lg:hidden"
           onClick={() => setPreviewMode(true)}
         >

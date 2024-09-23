@@ -1,5 +1,5 @@
+import { Input, type InputProps } from '@/components/ui/input';
 import { type WritableAtom, useAtom } from 'jotai';
-import { Input, type InputProps } from '../ui/input';
 
 export function TextInput({
   atom,

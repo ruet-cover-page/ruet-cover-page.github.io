@@ -2,7 +2,11 @@ import RUETLogo from '@/assets/RUET-Logo.png';
 import TeXGyreTermesBold from '@/assets/fonts/TeXGyreTermes-Bold.ttf';
 import TeXGyreTermes from '@/assets/fonts/TeXGyreTermes-Regular.ttf';
 import motto from '@/assets/motto.png';
-import editorStore, { typeAtom } from '@/store/editor';
+import editorStore, {
+  type Department,
+  deptShortForm,
+  typeAtom,
+} from '@/store/editor';
 import {
   Document,
   Font,
@@ -105,6 +109,14 @@ export function CoverTemplate() {
   const studentSection = useAtomValue(editorStore.studentSection);
   const teacherDepartment = useAtomValue(editorStore.teacherDepartment);
   const dateOfSubmission = useAtomValue(editorStore.dateOfSubmission);
+  const secondTeacherName = useAtomValue(editorStore.secondTeacherName);
+  const secondTeacherDesignation = useAtomValue(
+    editorStore.secondTeacherDesignation,
+  );
+
+  const teacherDept = secondTeacherName
+    ? deptShortForm.get(teacherDepartment as Department)
+    : teacherDepartment;
 
   return (
     <Document title="Cover Page">
@@ -169,9 +181,16 @@ export function CoverTemplate() {
               {useAtomValue(editorStore.teacherDesignation)}
             </Text>
             {!!teacherDepartment && (
-              <Text style={styles.text}>
-                Dept. of {teacherDepartment}, RUET
-              </Text>
+              <Text style={styles.text}>Dept. of {teacherDept}, RUET</Text>
+            )}
+            {!!secondTeacherName && (
+              <View style={{ marginTop: 16 }}>
+                <Text style={styles.text}>{secondTeacherName}</Text>
+                <Text style={styles.text}>{secondTeacherDesignation}</Text>
+                {!!teacherDepartment && (
+                  <Text style={styles.text}>Dept. of {teacherDept}, RUET</Text>
+                )}
+              </View>
             )}
           </View>
         </View>

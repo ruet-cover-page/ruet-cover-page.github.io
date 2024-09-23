@@ -1,5 +1,5 @@
+import { Label } from '@/components/ui/label';
 import { type ReactNode, createContext, useId } from 'react';
-import { Label } from '../ui/label';
 
 export const FormItemContext = createContext({ id: '', descriptionID: '' });
 
