@@ -21,6 +21,8 @@ const App = () => {
     return () => mql.removeEventListener('change', handleChange);
   }, []);
 
+  const document = <CoverTemplate />;
+
   return (
     <main className="fixed inset-0 flex divide-x">
       <div
@@ -40,10 +42,8 @@ const App = () => {
             'flex flex-col',
           )}
         >
-          <TopbarRight />
-          <PDFViewer className="flex-1">
-            <CoverTemplate />
-          </PDFViewer>
+          <TopbarRight document={document} />
+          <PDFViewer className="flex-1">{document}</PDFViewer>
         </div>
       )}
     </main>
