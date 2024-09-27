@@ -6,10 +6,10 @@ import {
   DownloadIcon,
   EyeOpenIcon,
 } from '@radix-ui/react-icons';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import type { PDFDownloadLinkProps } from '@react-pdf/renderer';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useMemo } from 'react';
-import { CoverTemplate } from './cover-template';
+import PDFDownloadLink from './PDFDownloadLink';
 import { ModeToggle } from './mode-toggle';
 import { Button } from './ui/button';
 import { LoadingSpinner } from './ui/loading-spinner';
@@ -40,7 +40,9 @@ export function TopbarLeft() {
   );
 }
 
-export function TopbarRight() {
+export function TopbarRight({
+  document,
+}: Pick<PDFDownloadLinkProps, 'document'>) {
   const setPreviewMode = useSetAtom(previewModeAtom);
   const courseNo = useAtomValue(atoms.courseNo);
   const studentID = useAtomValue(atoms.studentID);
@@ -62,10 +64,7 @@ export function TopbarRight() {
       </Button>
       <div className="ms-auto">
         <Button variant="outline" size="icon" asChild>
-          <PDFDownloadLink
-            document={<CoverTemplate />}
-            fileName={`${filename}.pdf`}
-          >
+          <PDFDownloadLink document={document} fileName={`${filename}.pdf`}>
             {({ blob, url, loading, error }) => (
               <>
                 {loading ? (
