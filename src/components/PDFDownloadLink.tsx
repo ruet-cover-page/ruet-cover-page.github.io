@@ -16,6 +16,7 @@ export const PDFDownloadLink = ({
   const [instance, updateInstance] = usePDF();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<string>();
+  fileName = fileName.replace(/[^a-zA-Z.\-_]/g, '').replace(' ', '_');
 
   useEffect(() => {
     if (!isAndroid) return;
@@ -24,7 +25,8 @@ export const PDFDownloadLink = ({
     reader.addEventListener(
       'load',
       () => {
-        setData(reader.result as string);
+        const [prefix, data] = `${reader.result}`.split(',');
+        setData(`${prefix};name=${fileName},${data}`);
         setLoading(false);
       },
       false,
@@ -34,7 +36,7 @@ export const PDFDownloadLink = ({
       reader.readAsDataURL(instance.blob);
       setLoading(true);
     }
-  }, [instance.blob]);
+  }, [instance.blob, fileName]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: updateInstance is stable
   useEffect(() => updateInstance(doc), [doc]);
