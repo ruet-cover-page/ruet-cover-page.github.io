@@ -16,7 +16,9 @@ export const PDFDownloadLink = ({
   const [instance, updateInstance] = usePDF();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<string>();
-  fileName = fileName.replace(/[^a-zA-Z.\-_]/g, '').replace(' ', '_');
+  const fileNameClean = fileName
+    .replace(' ', '_')
+    .replace(/[^a-zA-Z0-9.\-_]/g, '');
 
   useEffect(() => {
     if (getUA !== 'Android APP') return;
@@ -26,7 +28,7 @@ export const PDFDownloadLink = ({
       'load',
       () => {
         const [prefix, data] = `${reader.result}`.split(',');
-        setData(`${prefix};name=${fileName},${data}`);
+        setData(`${prefix};name=${fileNameClean},${data}`);
         setLoading(false);
       },
       false,
@@ -36,7 +38,7 @@ export const PDFDownloadLink = ({
       reader.readAsDataURL(instance.blob);
       setLoading(true);
     }
-  }, [instance.blob, fileName]);
+  }, [instance.blob, fileNameClean]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: updateInstance is stable
   useEffect(() => updateInstance(doc), [doc]);
@@ -51,7 +53,7 @@ export const PDFDownloadLink = ({
     if (instance && window.navigator.msSaveBlob) {
       // IE
       // @ts-ignore
-      window.navigator.msSaveBlob(instance.blob, fileName);
+      window.navigator.msSaveBlob(instance.blob, fileNameClean);
     }
   };
 
@@ -70,7 +72,7 @@ export const PDFDownloadLink = ({
             ? (data ?? instance.url ?? undefined)
             : (instance.url ?? undefined)
         }
-        download={fileName}
+        download={fileNameClean}
         onClick={handleClick}
         {...rest}
       >
