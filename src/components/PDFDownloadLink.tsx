@@ -4,7 +4,7 @@ import {
   usePDF,
 } from '@react-pdf/renderer';
 import { type MouseEvent, useEffect, useState } from 'react';
-import { isAndroid } from 'react-device-detect';
+import { getUA } from 'react-device-detect';
 
 export const PDFDownloadLink = ({
   fileName = 'document.pdf',
@@ -19,7 +19,7 @@ export const PDFDownloadLink = ({
   fileName = fileName.replace(/[^a-zA-Z.\-_]/g, '').replace(' ', '_');
 
   useEffect(() => {
-    if (!isAndroid) return;
+    if (getUA !== 'Android APP') return;
     const reader = new FileReader();
 
     reader.addEventListener(
@@ -65,7 +65,11 @@ export const PDFDownloadLink = ({
   return (
     !loading && (
       <a
-        href={data ?? instance.url ?? undefined}
+        href={
+          getUA === 'Android APP'
+            ? (data ?? instance.url ?? undefined)
+            : (instance.url ?? undefined)
+        }
         download={fileName}
         onClick={handleClick}
         {...rest}
