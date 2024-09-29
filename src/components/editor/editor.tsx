@@ -40,7 +40,7 @@ export function Editor() {
             ['teacher', IdCardIcon],
           ] as const
         ).map(([x, Icon]) => (
-          <TabsTrigger value={x} className="flex-1" key={x}>
+          <TabsTrigger value={x} className="flex-1" key={x} aria-label={x}>
             <Icon className="h-8 w-8" />
           </TabsTrigger>
         ))}
