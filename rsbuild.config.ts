@@ -39,12 +39,12 @@ export default defineConfig({
       ],
     },
     meta: {
-      description: 'Generate cover page for your lab reports and assignments',
+      description: 'Create cover pages for your lab reports and assignments',
       'msapplication-TileColor': '#603cba',
       'og:url': 'https://www.nabilsnigdho.dev/cover-page/',
       'og:title': 'Cover Page',
       'og:description':
-        'Generate cover page for your lab reports and assignments',
+        'Create cover pages for your lab reports and assignments',
       'og:image': 'https://www.nabilsnigdho.dev/cover-page/og.jpg',
       'og:image:width': '1200',
       'og:image:height': '630',
