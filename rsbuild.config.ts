@@ -16,10 +16,10 @@ export default defineConfig({
   },
   plugins: [pluginReact()],
   html: {
-    title: 'Cover Page',
+    title: 'RUET Cover Page',
     favicon: './public/favicon.ico',
     appIcon: {
-      name: 'Cover Page',
+      name: 'RUET Cover Page',
       icons: [
         {
           src: './public/apple-touch-icon.png',
@@ -42,7 +42,7 @@ export default defineConfig({
       description: 'Create cover pages for your lab reports and assignments',
       'msapplication-TileColor': '#603cba',
       'og:url': 'https://www.nabilsnigdho.dev/cover-page/',
-      'og:title': 'Cover Page',
+      'og:title': 'RUET Cover Page',
       'og:description':
         'Create cover pages for your lab reports and assignments',
       'og:image': 'https://www.nabilsnigdho.dev/cover-page/og.jpg',
