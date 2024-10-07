@@ -1,4 +1,4 @@
-# Cover Page
+# RUET Cover Page
 
 ## Setup
 
