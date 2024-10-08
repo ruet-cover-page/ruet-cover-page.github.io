@@ -25,7 +25,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register(`${process.env.ASSET_PREFIX}/sw.js`)
+      .register(`${process.env.ASSET_PREFIX}/sw.js`, {
+        scope: `${process.env.ASSET_PREFIX}/`,
+      })
       .then((registration) => {
         console.log('SW registered: ', registration);
       })
