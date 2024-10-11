@@ -21,6 +21,14 @@ export enum Department {
   URP = 'Urban & Regional Planning',
 }
 
+export const departmentShortMap = Object.fromEntries(
+  Object.entries(Department).map(([key]) => [key.toLowerCase(), key]),
+);
+
+export const departmentLongMap = Object.fromEntries(
+  Object.entries(Department).map(([key, value]) => [key.toLowerCase(), value]),
+);
+
 export const deptShortForm = new Map<Department, string>(
   Object.entries(Department).map(([key, value]) => [value, key]),
 );
