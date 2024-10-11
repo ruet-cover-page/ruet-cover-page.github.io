@@ -10,6 +10,7 @@ import type { PDFDownloadLinkProps } from '@react-pdf/renderer';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useMemo } from 'react';
 import PDFDownloadLink from './PDFDownloadLink';
+import { CoverTemplate } from './cover-template';
 import { ModeToggle } from './mode-toggle';
 import { Button } from './ui/button';
 import { LoadingSpinner } from './ui/loading-spinner';
@@ -64,18 +65,7 @@ export function TopbarRight({
       </Button>
       <div className="ms-auto">
         <Button variant="outline" size="icon" asChild>
-          <PDFDownloadLink document={document} fileName={`${filename}.pdf`}>
-            {({ blob, url, loading, error }) => (
-              <>
-                {loading ? (
-                  <LoadingSpinner />
-                ) : (
-                  <DownloadIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
-                )}
-                <span className="sr-only">Download</span>
-              </>
-            )}
-          </PDFDownloadLink>
+          <PDFDownloadLink document={document} fileName={`${filename}.pdf`} />
         </Button>
       </div>
     </div>
