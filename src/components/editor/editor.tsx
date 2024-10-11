@@ -14,6 +14,8 @@ import { Combobox } from './combobox';
 import { FormDescription } from './form-description';
 import { FormItem } from './form-item';
 import { TextInput } from './input';
+import { SecondTeacherName } from './second-teacher-name';
+import { TeacherName } from './teacher-name';
 
 const tabContentClass = cn(
   'flex-1 flex-col gap-y-4 overflow-y-auto p-4 data-[state=active]:flex',
@@ -118,7 +120,7 @@ export function Editor() {
       <TabsContent value="teacher" className={tabContentClass}>
         <h2 className={tabHeaderClass}>Teacher</h2>
         <FormItem label="Teacher Name">
-          <TextInput atom={editorStore.teacherName} />
+          <TeacherName />
         </FormItem>
         <FormItem label="Designation">
           <Combobox
@@ -135,7 +137,7 @@ export function Editor() {
           />
         </FormItem>
         <FormItem label="Second Teacher Name">
-          <TextInput atom={editorStore.secondTeacherName} />
+          <SecondTeacherName />
         </FormItem>
         <FormItem label="Second Teacher Designation">
           <Combobox
