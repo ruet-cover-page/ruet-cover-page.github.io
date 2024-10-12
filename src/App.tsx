@@ -1,14 +1,17 @@
 import { useAtomValue } from 'jotai';
 import './App.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { PDFViewer } from './components/PDFViewer';
 import { CoverTemplate } from './components/cover-template';
 import { Editor } from './components/editor/editor';
 import { TopbarLeft, TopbarRight } from './components/topbar';
+import { PDF } from './components/ui/pdf-context';
 import { cn } from './lib/utils';
 import { previewModeAtom } from './store/preview-mode';
 
 const mql = window.matchMedia('(max-width: 1023px)');
+const queryClient = new QueryClient();
 
 const App = () => {
   const previewMode = useAtomValue(previewModeAtom);
@@ -18,6 +21,7 @@ const App = () => {
     const handleChange = (event: { matches: boolean }) =>
       setIsMobile(event.matches);
     mql.addEventListener('change', handleChange);
+
     return () => mql.removeEventListener('change', handleChange);
   }, []);
 
@@ -25,27 +29,31 @@ const App = () => {
 
   return (
     <main className="fixed inset-0 flex divide-x">
-      <div
-        className={cn(
-          'flex min-w-0 flex-1 origin-left flex-col divide-y transition-all',
-          previewMode && 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
-        )}
-      >
-        <TopbarLeft />
-        <Editor />
-      </div>
-      {(!isMobile || previewMode) && (
+      <QueryClientProvider client={queryClient}>
         <div
           className={cn(
             'flex min-w-0 flex-1 origin-left flex-col divide-y transition-all',
-            previewMode || 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
-            'flex flex-col',
+            previewMode && 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
           )}
         >
-          <TopbarRight document={document} />
-          <PDFViewer className="flex-1">{document}</PDFViewer>
+          <TopbarLeft />
+          <Editor />
         </div>
-      )}
+        {(!isMobile || previewMode) && (
+          <div
+            className={cn(
+              'flex min-w-0 flex-1 origin-left flex-col divide-y transition-all',
+              previewMode || 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
+              'flex flex-col',
+            )}
+          >
+            <PDF document={document}>
+              <TopbarRight document={document} />
+              <PDFViewer className="flex-1">{document}</PDFViewer>
+            </PDF>
+          </div>
+        )}
+      </QueryClientProvider>
     </main>
   );
 };

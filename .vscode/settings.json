@@ -3,7 +3,9 @@
     "BECM",
     "biomejs",
     "clsx",
+    "cmdk",
     "Corsiva",
+    "hookform",
     "keyval",
     "Mechatronics",
     "rsbuild",
@@ -11,6 +13,7 @@
     "rspack",
     "RUET",
     "tailwindcss",
+    "tanstack",
     "Termes",
     "Topbar",
     "usehooks"
@@ -37,7 +40,7 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.tabSize": 2,
   "editor.formatOnSave": true,

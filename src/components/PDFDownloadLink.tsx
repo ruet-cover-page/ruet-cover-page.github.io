@@ -1,10 +1,9 @@
-import {
-  type BlobProviderParams,
-  type PDFDownloadLinkProps,
-  usePDF,
-} from '@react-pdf/renderer';
-import { type MouseEvent, useEffect, useState } from 'react';
+import { DownloadIcon } from '@radix-ui/react-icons';
+import { type PDFDownloadLinkProps, usePDF } from '@react-pdf/renderer';
+import { type MouseEvent, useContext, useEffect, useState } from 'react';
 import { getUA } from 'react-device-detect';
+import { LoadingSpinner } from './ui/loading-spinner';
+import { PDFContext } from './ui/pdf-context';
 
 export const PDFDownloadLink = ({
   fileName = 'document.pdf',
@@ -13,7 +12,7 @@ export const PDFDownloadLink = ({
   onClick,
   ...rest
 }: PDFDownloadLinkProps) => {
-  const [instance, updateInstance] = usePDF();
+  const [instance] = useContext(PDFContext) ?? usePDF();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<string>();
   const fileNameClean = fileName
@@ -39,9 +38,6 @@ export const PDFDownloadLink = ({
       setLoading(true);
     }
   }, [instance.blob, fileNameClean]);
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: updateInstance is stable
-  useEffect(() => updateInstance(doc), [doc]);
 
   if (!doc) {
     console.warn('You should pass a valid document to PDFDownloadLink');
@@ -76,9 +72,16 @@ export const PDFDownloadLink = ({
         onClick={handleClick}
         {...rest}
       >
-        {typeof children === 'function'
-          ? children(instance as BlobProviderParams)
-          : children}
+        {(({ loading }) => (
+          <>
+            {loading ? (
+              <LoadingSpinner />
+            ) : (
+              <DownloadIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+            )}
+            <span className="sr-only">Download</span>
+          </>
+        ))(instance)}
       </a>
     )
   );
