@@ -77,7 +77,7 @@ export const PDFDownloadLink = ({
             {loading ? (
               <LoadingSpinner />
             ) : (
-              <DownloadIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+              <DownloadIcon className="h-[1.2rem] w-[1.2rem]" />
             )}
             <span className="sr-only">Download</span>
           </>

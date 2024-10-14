@@ -10,6 +10,7 @@ import type { PDFDownloadLinkProps } from '@react-pdf/renderer';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useMemo } from 'react';
 import PDFDownloadLink from './PDFDownloadLink';
+import { About } from './about';
 import { CoverTemplate } from './cover-template';
 import { ModeToggle } from './mode-toggle';
 import { Button } from './ui/button';
@@ -26,6 +27,7 @@ export function TopbarLeft() {
         </span>
       </div>
       <div className="flex items-center gap-2">
+        <About />
         <ModeToggle />
         <Button
           variant="outline"
@@ -33,7 +35,7 @@ export function TopbarLeft() {
           onClick={() => setPreviewMode(true)}
           className="lg:hidden"
         >
-          <EyeOpenIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+          <EyeOpenIcon className="h-[1.2rem] w-[1.2rem]" />
           <span className="sr-only">Back</span>
         </Button>
       </div>
@@ -60,7 +62,7 @@ export function TopbarRight({
         onClick={() => setPreviewMode(false)}
         className="lg:hidden"
       >
-        <ArrowLeftIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+        <ArrowLeftIcon className="h-[1.2rem] w-[1.2rem]" />
         <span className="sr-only">Back</span>
       </Button>
       <div className="ms-auto">

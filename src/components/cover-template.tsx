@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     top: '2.54cm',
     fontSize: 12,
     color: 'transparent',
+    left: 0,
   },
   institution: {
     fontSize: 17,
