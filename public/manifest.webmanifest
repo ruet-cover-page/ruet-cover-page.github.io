@@ -15,10 +15,13 @@
   ],
   "short_name": "ruet-cover-page",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "lang": "en",
+  "dir": "ltr",
   "description": "Create cover pages for your lab reports and assignments",
+  "categories": ["utility"],
   "theme_color": "#ffffff",
   "launch_handler": {
     "client_mode": "auto"
@@ -38,6 +41,13 @@
       "type": "image/webp",
       "form_factor": "wide",
       "label": "Cover page customizations"
+    },
+    {
+      "src": "/screenshot3.webp",
+      "sizes": "412x915",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Mobile View"
     }
   ]
 }
