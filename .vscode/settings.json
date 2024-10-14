@@ -11,6 +11,7 @@
     "Mahmud",
     "Mechatronics",
     "Nabil",
+    "nabilsnigdho",
     "rsbuild",
     "RSDOCTOR",
     "rspack",
@@ -19,7 +20,8 @@
     "tanstack",
     "Termes",
     "Topbar",
-    "usehooks"
+    "usehooks",
+    "webp"
   ],
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

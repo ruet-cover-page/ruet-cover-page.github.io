@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import editorStore, {
   departments,
   designations,
+  studentDepartments,
   typeAtom,
   types,
 } from '@/store/editor';
@@ -75,7 +76,7 @@ export function Editor() {
           <Combobox
             name="department"
             atom={editorStore.studentDepartment}
-            options={departments.map((x) => ({ label: x, value: x }))}
+            options={studentDepartments.map((x) => ({ label: x, value: x }))}
           />
         </FormItem>
         <Button
