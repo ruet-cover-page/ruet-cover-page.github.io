@@ -36,6 +36,7 @@ const tabHeaderClass = cn(
 export function Editor() {
   const setTab = useSetAtom(editorStore.editorTab);
   const setPreviewMode = useSetAtom(previewModeAtom);
+  const courseCode = useAtomValue(editorStore.courseCode);
   return (
     <Tabs
       defaultValue="student"
@@ -88,7 +89,7 @@ export function Editor() {
       <TabsContent value="subject" className={tabContentClass}>
         <h2 className={tabHeaderClass}>Subject</h2>
         <div className="grid gap-4 sm:grid-cols-[7rem_1fr]">
-          <FormItem label="Course No.">
+          <FormItem label={courseCode ? 'Course Code' : 'Course No.'}>
             <TextInput atom={editorStore.courseNo} />
           </FormItem>
           <FormItem label="Course Title">
@@ -178,6 +179,10 @@ export function Editor() {
           label="Add borders to submitted by and submitted to table"
         />
         <SwitchInput atom={editorStore.watermark} label="Add watermark" />
+        <SwitchInput
+          atom={editorStore.courseCode}
+          label="Use 'Course Code' instead of 'Course No.'"
+        />
       </TabsContent>
     </Tabs>
   );
