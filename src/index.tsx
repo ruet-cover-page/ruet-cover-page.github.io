@@ -33,9 +33,22 @@ if ('serviceWorker' in navigator && import.meta.env.PROD) {
       .then((registration) => {
         console.log('SW registered: ', registration);
         registration.addEventListener('updatefound', () => {
+          const installingWorker = registration.installing;
           console.log('Service Worker update found!');
-          defaultStore.set(showUpdateAtom, true);
+
+          installingWorker?.addEventListener('statechange', () => {
+            if (installingWorker.state === 'installed') {
+              if (navigator.serviceWorker.controller) {
+                // New update available, trigger prompt or reload
+                console.log('New content available...');
+                defaultStore.set(showUpdateAtom, true);
+              } else {
+                console.log('Content cached for offline use.');
+              }
+            }
+          });
         });
+        registration.update();
       })
       .catch((registrationError) => {
         console.log('SW registration failed: ', registrationError);
