@@ -1,6 +1,7 @@
 {
   "name": "ruet-cover-page",
   "private": true,
+  "license": "MIT",
   "version": "1.0.0",
   "scripts": {
     "build": "rsbuild build && workbox generateSW workbox-config.js && cp public/manifest.webmanifest dist/manifest.webmanifest",
