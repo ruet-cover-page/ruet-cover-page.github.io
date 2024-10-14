@@ -18,6 +18,10 @@ export enum Department {
   ME = 'Mechanical Engineering',
   MTE = 'Mechatronics Engineering',
   URP = 'Urban & Regional Planning',
+  Chem = 'Chemistry',
+  Math = 'Mathematics',
+  Phy = 'Physics',
+  Hum = 'Humanities',
 }
 
 export const departmentShortMap = Object.fromEntries(
@@ -47,7 +51,21 @@ export const departments = [
   Department.ME,
   Department.MTE,
   Department.URP,
+  Department.Chem,
+  Department.Math,
+  Department.Phy,
+  Department.Hum,
 ];
+
+export const studentDepartments = departments.filter(
+  (x) =>
+    ![
+      Department.Chem,
+      Department.Math,
+      Department.Phy,
+      Department.Hum,
+    ].includes(x),
+);
 
 const departmentMap: Record<string, Department> = {
   '00': Department.CE,
