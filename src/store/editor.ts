@@ -1,5 +1,4 @@
 import { SimpleStorage } from '@/lib/simple-storage';
-import dayjs from 'dayjs';
 import { createStore, get as idbGet, set as idbSet } from 'idb-keyval';
 import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
@@ -95,13 +94,19 @@ function stringItem(key: string, initialValue: string) {
     getOnInit: true,
   });
 }
+
+function booleanItem(key: string, initialValue: boolean) {
+  return atomWithStorage(key, initialValue, undefined, {
+    getOnInit: true,
+  });
+}
 const studentNameIDBStore = createStore('student-name', 'student-name');
-const _studentName = stringItem('student-name', '');
+const _studentNameAtom = stringItem('student-name', '');
 const _studentIDAtom = stringItem('student-id', '');
 const studentName = atom(
-  (get) => get(_studentName),
+  (get) => get(_studentNameAtom),
   (get, set, studentName: string) => {
-    set(_studentName, studentName);
+    set(_studentNameAtom, studentName);
     const studentID = get(_studentIDAtom);
     if (studentID.length >= 7)
       idbSet(studentID, studentName, studentNameIDBStore);
@@ -125,7 +130,37 @@ const studentID = atom(
           else if (roll <= 180) set(studentSection, 'C');
         }
         idbGet(studentID, studentNameIDBStore).then((x) => {
-          if (x) set(studentName, x);
+          if (x) set(_studentNameAtom, x);
+        });
+      }
+    }
+  },
+);
+
+const courseTitleIDBStore = createStore('course-title', 'course-title');
+const _courseTitleAtom = stringItem('course-title', '');
+const _courseNoAtom = stringItem('course-no', '');
+const courseTitle = atom(
+  (get) => get(_courseTitleAtom),
+  (get, set, courseTitle: string) => {
+    set(_courseTitleAtom, courseTitle);
+    const courseNo = get(_courseNoAtom);
+    if (courseNo.length >= 7)
+      idbSet(courseNo, courseTitle, courseTitleIDBStore);
+  },
+);
+const courseNo = atom(
+  (get) => get(_courseNoAtom),
+  (get, set, courseNo: string) => {
+    set(_courseNoAtom, courseNo);
+    if (courseNo.length >= 3) {
+      // const code = courseNo.substring(0, 3);
+      // if (code in departmentMap) {
+      //   set(studentDepartment, departmentMap[code]);
+      // }
+      if (courseNo.length >= 7) {
+        idbGet(courseNo, courseTitleIDBStore).then((x) => {
+          if (x) set(_courseTitleAtom, x);
         });
       }
     }
@@ -138,8 +173,8 @@ export default {
   studentName,
   studentID,
   studentSection,
-  courseNo: stringItem('course-no', ''),
-  courseTitle: stringItem('course-title', ''),
+  courseNo,
+  courseTitle,
   coverNo: stringItem('cover-no', '1'),
   coverTitle: stringItem('cover-title', ''),
   teacherName: stringItem('teacher-name', ''),
@@ -147,5 +182,11 @@ export default {
   secondTeacherName: stringItem('second-teacher-name', ''),
   secondTeacherDesignation: stringItem('second-teacher-designation', ''),
   teacherDepartment: stringItem('teacher-department', ''),
-  dateOfSubmission: atom(dayjs(new Date()).format('D MMMM YYYY')),
+  dateOfExperiment: atom<null | Date>(new Date()),
+  dateOfSubmission: atom<null | Date>(new Date()),
+  /**
+   * Settings
+   */
+  formToBorder: booleanItem('formToBorder', false),
+  watermark: booleanItem('watermark', false),
 };

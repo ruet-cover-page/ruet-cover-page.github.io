@@ -16,6 +16,7 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer';
+import dayjs from 'dayjs';
 import { useAtomValue } from 'jotai';
 
 Font.register({
@@ -50,6 +51,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 'auto',
     height: 104,
     width: 90,
+  },
+  watermark: {
+    height: 416,
+    width: 360,
+    opacity: 0.25,
+    position: 'absolute',
+    left: 117.64,
+    top: 212,
   },
   mottoImage: {
     marginVertical: 0,
@@ -109,10 +118,17 @@ export function CoverTemplate() {
   const studentSection = useAtomValue(editorStore.studentSection);
   const teacherDepartment = useAtomValue(editorStore.teacherDepartment);
   const dateOfSubmission = useAtomValue(editorStore.dateOfSubmission);
+  const dateOfExperiment = useAtomValue(editorStore.dateOfExperiment);
   const secondTeacherName = useAtomValue(editorStore.secondTeacherName);
   const secondTeacherDesignation = useAtomValue(
     editorStore.secondTeacherDesignation,
   );
+
+  /**
+   * Settings
+   */
+  const fromToBorder = useAtomValue(editorStore.formToBorder);
+  const watermark = useAtomValue(editorStore.watermark);
 
   const teacherDept = secondTeacherName
     ? deptShortForm.get(teacherDepartment as Department)
@@ -121,6 +137,7 @@ export function CoverTemplate() {
   return (
     <Document title="Cover Page">
       <Page size="A4" style={styles.page}>
+        {watermark && <Image src={RUETLogo} style={styles.watermark} />}
         <Text style={styles.motto}>Heaven’s Light is Our Guide</Text>
         <Image src={motto} style={styles.mottoImage} />
         <Text style={styles.institution}>
@@ -156,11 +173,20 @@ export function CoverTemplate() {
           style={{
             flexDirection: 'row',
             marginVertical: 16,
-            gap: 32,
             textAlign: 'left',
+            marginBottom: 'auto',
+            border: fromToBorder ? '2px solid #000000' : undefined,
           }}
         >
-          <View style={{ flex: '1 1 0' }}>
+          <View
+            style={{
+              flex: '1 1 0',
+              paddingRight: 16,
+              borderRight: fromToBorder ? '1px solid #000000' : undefined,
+              paddingHorizontal: fromToBorder ? 16 : undefined,
+              paddingBottom: fromToBorder ? 8 : undefined,
+            }}
+          >
             <Text style={styles.thH}>Submitted by:</Text>
             <Text style={styles.text}>
               {useAtomValue(editorStore.studentName)}
@@ -172,7 +198,15 @@ export function CoverTemplate() {
               <Text style={styles.text}>Section: {studentSection}</Text>
             )}
           </View>
-          <View style={{ flex: '1 1 0' }}>
+          <View
+            style={{
+              flex: '1 1 0',
+              paddingLeft: 16,
+              borderLeft: fromToBorder ? '1px solid #000000' : undefined,
+              paddingHorizontal: fromToBorder ? 16 : undefined,
+              paddingBottom: fromToBorder ? 8 : undefined,
+            }}
+          >
             <Text style={styles.thH}>Submitted to:</Text>
             <Text style={styles.text}>
               {useAtomValue(editorStore.teacherName)}
@@ -194,16 +228,25 @@ export function CoverTemplate() {
             )}
           </View>
         </View>
-        <View
-          style={{ marginTop: 'auto', textAlign: 'left', flexDirection: 'row' }}
-        >
-          {!!dateOfSubmission && (
-            <>
-              <Text style={styles.textBF}>Date of Submission</Text>
+        <View>
+          {type === 'Lab Report' && (
+            <View style={{ textAlign: 'left', flexDirection: 'row' }}>
+              <Text style={styles.textBF}>Date of Experiment</Text>
               <Text style={styles.colon}>:</Text>
-              <Text style={styles.text}>{dateOfSubmission}</Text>
-            </>
+              <Text style={styles.text}>
+                {dateOfExperiment &&
+                  dayjs(dateOfExperiment).format('D MMMM YYYY')}
+              </Text>
+            </View>
           )}
+          <View style={{ textAlign: 'left', flexDirection: 'row' }}>
+            <Text style={styles.textBF}>Date of Submission</Text>
+            <Text style={styles.colon}>:</Text>
+            <Text style={styles.text}>
+              {dateOfSubmission &&
+                dayjs(dateOfSubmission).format('D MMMM YYYY')}
+            </Text>
+          </View>
         </View>
       </Page>
     </Document>

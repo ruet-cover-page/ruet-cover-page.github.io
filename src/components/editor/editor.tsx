@@ -8,13 +8,21 @@ import editorStore, {
   types,
 } from '@/store/editor';
 import { previewModeAtom } from '@/store/preview-mode';
-import { IdCardIcon, PersonIcon, ReaderIcon } from '@radix-ui/react-icons';
-import { useSetAtom } from 'jotai';
+import {
+  IdCardIcon,
+  MixerVerticalIcon,
+  PersonIcon,
+  ReaderIcon,
+} from '@radix-ui/react-icons';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { DateInput } from './DateInput';
 import { Combobox } from './combobox';
 import { FormDescription } from './form-description';
 import { FormItem } from './form-item';
 import { TextInput } from './input';
 import { SecondTeacherName } from './second-teacher-name';
+import { SelectInput } from './select-input';
+import { SwitchInput } from './switch-input';
 import { TeacherName } from './teacher-name';
 
 const tabContentClass = cn(
@@ -40,6 +48,7 @@ export function Editor() {
             ['student', PersonIcon],
             ['subject', ReaderIcon],
             ['teacher', IdCardIcon],
+            ['settings', MixerVerticalIcon],
           ] as const
         ).map(([x, Icon]) => (
           <TabsTrigger value={x} className="flex-1" key={x} aria-label={x}>
@@ -88,7 +97,7 @@ export function Editor() {
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <FormItem label="Type">
-            <Combobox
+            <SelectInput<(typeof types)[number]>
               name="type"
               atom={typeAtom}
               options={types.map((x) => ({ label: x, value: x }))}
@@ -106,8 +115,9 @@ export function Editor() {
         <FormItem label="Title">
           <TextInput atom={editorStore.coverTitle} />
         </FormItem>
+        <DateOfExperiment />
         <FormItem label="Date of submission">
-          <TextInput atom={editorStore.dateOfSubmission} />
+          <DateInput atom={editorStore.dateOfSubmission} />
         </FormItem>
         <Button
           variant="outline"
@@ -161,6 +171,26 @@ export function Editor() {
           Let's go
         </Button>
       </TabsContent>
+      <TabsContent value="settings" className={tabContentClass}>
+        <h2 className={tabHeaderClass}>Settings</h2>
+        <SwitchInput
+          atom={editorStore.formToBorder}
+          label="Add borders to submitted by and submitted to table"
+        />
+        <SwitchInput atom={editorStore.watermark} label="Add watermark" />
+      </TabsContent>
     </Tabs>
+  );
+}
+
+function DateOfExperiment() {
+  const type = useAtomValue(typeAtom);
+
+  return (
+    type === 'Lab Report' && (
+      <FormItem label="Date of experiment">
+        <DateInput atom={editorStore.dateOfExperiment} />
+      </FormItem>
+    )
   );
 }

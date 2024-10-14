@@ -16,6 +16,9 @@
       "quoteStyle": "single"
     }
   },
+  "css": {
+    "parser": { "cssModules": true }
+  },
   "linter": {
     "enabled": true,
     "rules": {
