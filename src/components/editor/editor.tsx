@@ -38,6 +38,8 @@ export function Editor() {
   const setTab = useSetAtom(editorStore.editorTab);
   const setPreviewMode = useSetAtom(previewModeAtom);
   const courseCode = useAtomValue(editorStore.courseCode);
+  const teacherName = useAtomValue(editorStore.teacherName);
+  const secondTeacherName = useAtomValue(editorStore.secondTeacherName);
   return (
     <Tabs
       defaultValue="student"
@@ -134,13 +136,15 @@ export function Editor() {
         <FormItem label="Teacher Name">
           <TeacherName />
         </FormItem>
-        <FormItem label="Designation">
-          <Combobox
-            name="designation"
-            atom={editorStore.teacherDesignation}
-            options={designations.map((x) => ({ label: x, value: x }))}
-          />
-        </FormItem>
+        {!!teacherName && (
+          <FormItem label="Designation">
+            <Combobox
+              name="designation"
+              atom={editorStore.teacherDesignation}
+              options={designations.map((x) => ({ label: x, value: x }))}
+            />
+          </FormItem>
+        )}
         <FormItem label="Department">
           <Combobox
             name="department"
@@ -151,13 +155,15 @@ export function Editor() {
         <FormItem label="Second Teacher Name">
           <SecondTeacherName />
         </FormItem>
-        <FormItem label="Second Teacher Designation">
-          <Combobox
-            name="designation"
-            atom={editorStore.secondTeacherDesignation}
-            options={designations.map((x) => ({ label: x, value: x }))}
-          />
-        </FormItem>
+        {!!secondTeacherName && (
+          <FormItem label="Second Teacher Designation">
+            <Combobox
+              name="designation"
+              atom={editorStore.secondTeacherDesignation}
+              options={designations.map((x) => ({ label: x, value: x }))}
+            />
+          </FormItem>
+        )}
         <Button
           variant="outline"
           className="mt-auto lt-lg:hidden"
