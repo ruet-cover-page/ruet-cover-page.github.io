@@ -48,6 +48,7 @@
     "@rsbuild/core": "^1.0.13",
     "@rsbuild/plugin-react": "^1.0.3",
     "@rsdoctor/rspack-plugin": "^0.4.6",
+    "@tailwindcss/typography": "^0.5.15",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "husky": "^9.1.6",
