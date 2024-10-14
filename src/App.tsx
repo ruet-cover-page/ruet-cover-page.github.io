@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { PDFViewer } from './components/PDFViewer';
 import { CoverTemplate } from './components/cover-template';
 import { Editor } from './components/editor/editor';
+import { InApp } from './components/in-app';
 import { TopbarLeft, TopbarRight } from './components/topbar';
 import { PDF } from './components/ui/pdf-context';
 import { cn } from './lib/utils';
@@ -44,7 +45,6 @@ const App = () => {
             className={cn(
               'flex min-w-0 flex-1 origin-left flex-col divide-y transition-all',
               previewMode || 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
-              'flex flex-col',
             )}
           >
             <PDF document={document}>
@@ -54,6 +54,7 @@ const App = () => {
           </div>
         )}
       </QueryClientProvider>
+      <InApp />
     </main>
   );
 };

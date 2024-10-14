@@ -117,6 +117,8 @@ export function CoverTemplate() {
   const coverNo = useAtomValue(editorStore.coverNo);
   const coverTitle = useAtomValue(editorStore.coverTitle);
   const studentSection = useAtomValue(editorStore.studentSection);
+  const teacherName = useAtomValue(editorStore.teacherName);
+  const teacherDesignation = useAtomValue(editorStore.teacherDesignation);
   const teacherDepartment = useAtomValue(editorStore.teacherDepartment);
   const dateOfSubmission = useAtomValue(editorStore.dateOfSubmission);
   const dateOfExperiment = useAtomValue(editorStore.dateOfExperiment);
@@ -212,14 +214,14 @@ export function CoverTemplate() {
             }}
           >
             <Text style={styles.thH}>Submitted to:</Text>
-            <Text style={styles.text}>
-              {useAtomValue(editorStore.teacherName)}
-            </Text>
-            <Text style={styles.text}>
-              {useAtomValue(editorStore.teacherDesignation)}
-            </Text>
-            {!!teacherDepartment && (
-              <Text style={styles.text}>Dept. of {teacherDept}, RUET</Text>
+            {!!teacherName && (
+              <>
+                <Text style={styles.text}>{teacherName}</Text>
+                <Text style={styles.text}>{teacherDesignation}</Text>
+                {!!teacherDepartment && (
+                  <Text style={styles.text}>Dept. of {teacherDept}, RUET</Text>
+                )}
+              </>
             )}
             {!!secondTeacherName && (
               <View style={{ marginTop: 16 }}>
