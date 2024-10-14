@@ -6,6 +6,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { pdfjs } from 'react-pdf';
 import App from './App';
+import { defaultStore } from './store';
+import { showUpdateAtom } from './store/dialogs';
 
 const rootEl = document.getElementById('root');
 if (rootEl) {
@@ -30,6 +32,10 @@ if ('serviceWorker' in navigator && import.meta.env.PROD) {
       })
       .then((registration) => {
         console.log('SW registered: ', registration);
+        registration.addEventListener('updatefound', () => {
+          console.log('Service Worker update found!');
+          defaultStore.set(showUpdateAtom, true);
+        });
       })
       .catch((registrationError) => {
         console.log('SW registration failed: ', registrationError);
