@@ -4,7 +4,6 @@ import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 
 export default defineConfig({
   output: {
-    assetPrefix: '/cover-page/',
     inlineScripts: /[\\/]inline-script\.\w+\.js$/,
   },
   performance: {
@@ -41,11 +40,11 @@ export default defineConfig({
     meta: {
       description: 'Create cover pages for your lab reports and assignments',
       'msapplication-TileColor': '#603cba',
-      'og:url': 'https://www.nabilsnigdho.dev/cover-page/',
+      'og:url': 'http://ruet-cover-page.github.io/',
       'og:title': 'RUET Cover Page',
       'og:description':
         'Create cover pages for your lab reports and assignments',
-      'og:image': 'https://www.nabilsnigdho.dev/cover-page/og.jpg',
+      'og:image': 'http://ruet-cover-page.github.io/og.jpg',
       'og:image:width': '1200',
       'og:image:height': '630',
       'og:image:type': 'image/jpeg',
