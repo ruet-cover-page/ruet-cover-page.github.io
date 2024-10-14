@@ -189,4 +189,5 @@ export default {
    */
   formToBorder: booleanItem('formToBorder', false),
   watermark: booleanItem('watermark', false),
+  courseCode: booleanItem('courseCode', false),
 };

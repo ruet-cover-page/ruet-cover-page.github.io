@@ -129,6 +129,7 @@ export function CoverTemplate() {
    */
   const fromToBorder = useAtomValue(editorStore.formToBorder);
   const watermark = useAtomValue(editorStore.watermark);
+  const courseCode = useAtomValue(editorStore.courseCode);
 
   const teacherDept = secondTeacherName
     ? deptShortForm.get(teacherDepartment as Department)
@@ -146,7 +147,9 @@ export function CoverTemplate() {
         <Image src={RUETLogo} style={styles.image} />
         <Text style={styles.text}>Department of {department}</Text>
         <View style={styles.course}>
-          <Text style={styles.text}>Course No.: {courseNo}</Text>
+          <Text style={styles.text}>
+            {courseCode ? 'Course Code' : 'Course No.'}: {courseNo}
+          </Text>
           <Text style={styles.text}>Course Title: {courseTitle}</Text>
         </View>
         <View>
