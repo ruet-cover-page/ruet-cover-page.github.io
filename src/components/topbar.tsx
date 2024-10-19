@@ -1,20 +1,14 @@
 import icon from '@/assets/icon.svg';
 import atoms from '@/store/editor';
 import { previewModeAtom } from '@/store/preview-mode';
-import {
-  ArrowLeftIcon,
-  DownloadIcon,
-  EyeOpenIcon,
-} from '@radix-ui/react-icons';
+import { ArrowLeftIcon, EyeOpenIcon } from '@radix-ui/react-icons';
 import type { PDFDownloadLinkProps } from '@react-pdf/renderer';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useMemo } from 'react';
 import PDFDownloadLink from './PDFDownloadLink';
 import { About } from './about';
-import { CoverTemplate } from './cover-template';
 import { ModeToggle } from './mode-toggle';
 import { Button } from './ui/button';
-import { LoadingSpinner } from './ui/loading-spinner';
 
 export function TopbarLeft() {
   const setPreviewMode = useSetAtom(previewModeAtom);

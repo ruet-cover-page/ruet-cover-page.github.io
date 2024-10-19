@@ -8,6 +8,7 @@ import { Editor } from './components/editor/editor';
 import { InApp } from './components/in-app';
 import { TopbarLeft, TopbarRight } from './components/topbar';
 import { PDF } from './components/ui/pdf-context';
+import { Update } from './components/update';
 import { cn } from './lib/utils';
 import { previewModeAtom } from './store/preview-mode';
 
@@ -55,6 +56,7 @@ const App = () => {
         )}
       </QueryClientProvider>
       <InApp />
+      <Update />
     </main>
   );
 };
