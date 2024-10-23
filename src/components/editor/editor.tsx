@@ -20,11 +20,12 @@ import { DateInput } from './DateInput';
 import { Combobox } from './combobox';
 import { FormDescription } from './form-description';
 import { FormItem } from './form-item';
-import { TextInput } from './input';
 import { SecondTeacherName } from './second-teacher-name';
 import { SelectInput } from './select-input';
 import { SwitchInput } from './switch-input';
 import { TeacherName } from './teacher-name';
+import { TextInput } from './text-input';
+import { TextAreaInput } from './textarea-input';
 
 const tabContentClass = cn(
   'flex-1 flex-col gap-y-4 overflow-y-auto p-4 data-[state=active]:flex',
@@ -117,7 +118,7 @@ export function Editor() {
           </FormItem>
         </div>
         <FormItem label="Title">
-          <TextInput atom={editorStore.coverTitle} />
+          <TextAreaInput atom={editorStore.coverTitle} rows={3} />
         </FormItem>
         <DateOfExperiment />
         <FormItem label="Date of submission">
