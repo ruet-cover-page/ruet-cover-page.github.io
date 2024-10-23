@@ -5,6 +5,9 @@ import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 export default defineConfig({
   output: {
     inlineScripts: /[\\/]inline-script\.\w+\.js$/,
+    sourceMap: {
+      js: 'source-map',
+    },
   },
   performance: {
     chunkSplit: {
@@ -17,6 +20,7 @@ export default defineConfig({
   html: {
     title: 'RUET Cover Page',
     favicon: './public/favicon.ico',
+    template: './src/index.html',
     appIcon: {
       name: 'RUET Cover Page',
       icons: [
