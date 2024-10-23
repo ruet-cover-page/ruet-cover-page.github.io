@@ -1,8 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base" layer(my-base);
+@import "tailwindcss/components" layer(my-components);
+@import "react-date-picker/dist/DatePicker.css" layer(date-picker);
+@import "react-calendar/dist/Calendar.css" layer(calendar);
+@import "tailwindcss/utilities" layer(my-utilities);
 
-@layer base {
+@layer my-base {
   :root {
     --background: 0.0 0.00% 100.00%;
     --foreground: 210.0 72.73% 4.31%;
@@ -78,14 +80,19 @@
 
     --radius: 0.5rem;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer calendar {
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    @apply bg-secondary;
   }
 }
