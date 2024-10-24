@@ -1,5 +1,5 @@
 import { SimpleStorage } from '@/lib/simple-storage';
-import { createStore, get as idbGet, set as idbSet } from 'idb-keyval';
+import * as idbKeyVal from 'idb-keyval';
 import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 
@@ -118,7 +118,10 @@ function booleanItem(key: string, initialValue: boolean) {
     getOnInit: true,
   });
 }
-const studentNameIDBStore = createStore('student-name', 'student-name');
+const studentNameIDBStore = idbKeyVal.createStore(
+  'student-name',
+  'student-name',
+);
 const _studentNameAtom = stringItem('student-name', '');
 const _studentIDAtom = stringItem('student-id', '');
 const studentName = atom(
@@ -127,7 +130,7 @@ const studentName = atom(
     set(_studentNameAtom, studentName);
     const studentID = get(_studentIDAtom);
     if (studentID.length >= 7)
-      idbSet(studentID, studentName, studentNameIDBStore);
+      idbKeyVal.set(studentID, studentName, studentNameIDBStore);
   },
 );
 const studentSection = stringItem('student-section', '');
@@ -147,7 +150,7 @@ const studentID = atom(
           else if (roll <= 120) set(studentSection, 'B');
           else if (roll <= 180) set(studentSection, 'C');
         }
-        idbGet(studentID, studentNameIDBStore).then((x) => {
+        idbKeyVal.get(studentID, studentNameIDBStore).then((x) => {
           if (x) set(_studentNameAtom, x);
         });
       }
@@ -155,7 +158,10 @@ const studentID = atom(
   },
 );
 
-const courseTitleIDBStore = createStore('course-title', 'course-title');
+const courseTitleIDBStore = idbKeyVal.createStore(
+  'course-title',
+  'course-title',
+);
 const _courseTitleAtom = stringItem('course-title', '');
 const _courseNoAtom = stringItem('course-no', '');
 const courseTitle = atom(
@@ -164,7 +170,7 @@ const courseTitle = atom(
     set(_courseTitleAtom, courseTitle);
     const courseNo = get(_courseNoAtom);
     if (courseNo.length >= 7)
-      idbSet(courseNo, courseTitle, courseTitleIDBStore);
+      idbKeyVal.set(courseNo, courseTitle, courseTitleIDBStore);
   },
 );
 const courseNo = atom(
@@ -177,7 +183,7 @@ const courseNo = atom(
       //   set(studentDepartment, departmentMap[code]);
       // }
       if (courseNo.length >= 7) {
-        idbGet(courseNo, courseTitleIDBStore).then((x) => {
+        idbKeyVal.get(courseNo, courseTitleIDBStore).then((x) => {
           if (x) set(_courseTitleAtom, x);
         });
       }
