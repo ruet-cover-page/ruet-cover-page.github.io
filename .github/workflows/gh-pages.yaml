@@ -38,6 +38,11 @@ jobs:
 
       - name: Build
         run: bun run build
+        env:
+          PUBLIC_THEME_KEY: ${{ vars.PUBLIC_THEME_KEY }}
+          PUBLIC_DEFAULT_THEME: ${{ vars.PUBLIC_DEFAULT_THEME }}
+          PUBLIC_API: ${{ vars.PUBLIC_API }}
+          PUBLIC_UMAMI_WEBSITE_ID: ${{ vars.PUBLIC_UMAMI_WEBSITE_ID }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
