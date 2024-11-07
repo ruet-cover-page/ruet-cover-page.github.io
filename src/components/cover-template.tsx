@@ -108,6 +108,16 @@ const styles = StyleSheet.create({
   },
 });
 
+const dataListItem = (key: string, value: string, keySize?: number) => (
+  <View style={{ flexDirection: 'row' }}>
+    <Text style={{ ...styles.thV, flexBasis: keySize ?? styles.thV.flexBasis }}>
+      {key}
+    </Text>
+    <Text style={styles.colon}>:</Text>
+    <Text style={styles.td}>{value}</Text>
+  </View>
+);
+
 // Create Document Component
 export function CoverTemplate() {
   const department = useAtomValue(editorStore.studentDepartment);
@@ -117,6 +127,7 @@ export function CoverTemplate() {
   const coverNo = useAtomValue(editorStore.coverNo);
   const coverTitle = useAtomValue(editorStore.coverTitle);
   const studentSection = useAtomValue(editorStore.studentSection);
+  const studentID = useAtomValue(editorStore.studentID);
   const teacherName = useAtomValue(editorStore.teacherName);
   const teacherDesignation = useAtomValue(editorStore.teacherDesignation);
   const teacherDepartment = useAtomValue(editorStore.teacherDepartment);
@@ -133,10 +144,97 @@ export function CoverTemplate() {
   const fromToBorder = useAtomValue(editorStore.formToBorder);
   const watermark = useAtomValue(editorStore.watermark);
   const courseCode = useAtomValue(editorStore.courseCode);
+  const studentSeries = useAtomValue(editorStore.studentSeries);
+  const studentSession = useAtomValue(editorStore.studentSession);
+  const courseInfoBellowTitle = useAtomValue(editorStore.courseInfoBellowTitle);
+  const datesBellowTitle = useAtomValue(editorStore.datesBellowTitle);
 
   const teacherDept = secondTeacherName
     ? deptShortForm.get(teacherDepartment as Department)
     : teacherDepartment;
+
+  const studentTeacherTable = (
+    <View
+      style={{
+        flexDirection: 'row',
+        marginVertical: 16,
+        textAlign: 'left',
+        marginBottom: 'auto',
+        border: fromToBorder ? '2px solid #000000' : undefined,
+      }}
+    >
+      <View
+        style={{
+          flex: '1 1 0',
+          paddingRight: 16,
+          borderRight: fromToBorder ? '1px solid #000000' : undefined,
+          paddingHorizontal: fromToBorder ? 16 : undefined,
+          paddingBottom: fromToBorder ? 8 : undefined,
+        }}
+      >
+        <Text style={styles.thH}>Submitted by:</Text>
+        <Text style={styles.text}>{useAtomValue(editorStore.studentName)}</Text>
+        <Text style={styles.text}>Roll: {studentID}</Text>
+        {!!studentSection && (
+          <Text style={styles.text}>Section: {studentSection}</Text>
+        )}
+        {studentSession && studentID.length >= 2 && (
+          <Text style={styles.text}>
+            Session: 20{studentID.slice(0, 2)}-{+studentID.slice(0, 2) + 1}
+          </Text>
+        )}
+      </View>
+      <View
+        style={{
+          flex: '1 1 0',
+          paddingLeft: 16,
+          borderLeft: fromToBorder ? '1px solid #000000' : undefined,
+          paddingHorizontal: fromToBorder ? 16 : undefined,
+          paddingBottom: fromToBorder ? 8 : undefined,
+        }}
+      >
+        <Text style={styles.thH}>Submitted to:</Text>
+        {!!teacherName && (
+          <>
+            <Text style={styles.text}>{teacherName}</Text>
+            <Text style={styles.text}>{teacherDesignation}</Text>
+            {!!teacherDepartment && (
+              <Text style={styles.text}>Dept. of {teacherDept}, RUET</Text>
+            )}
+          </>
+        )}
+        {!!secondTeacherName && (
+          <View style={{ marginTop: 16 }}>
+            <Text style={styles.text}>{secondTeacherName}</Text>
+            <Text style={styles.text}>{secondTeacherDesignation}</Text>
+            {!!teacherDepartment && (
+              <Text style={styles.text}>Dept. of {teacherDept}, RUET</Text>
+            )}
+          </View>
+        )}
+      </View>
+    </View>
+  );
+  const dates = (
+    <>
+      {type === 'Lab Report' && (
+        <View style={{ textAlign: 'left', flexDirection: 'row' }}>
+          <Text style={styles.textBF}>Date of Experiment</Text>
+          <Text style={styles.colon}>:</Text>
+          <Text style={styles.text}>
+            {dateOfExperiment && dayjs(dateOfExperiment).format('D MMMM YYYY')}
+          </Text>
+        </View>
+      )}
+      <View style={{ textAlign: 'left', flexDirection: 'row' }}>
+        <Text style={styles.textBF}>Date of Submission</Text>
+        <Text style={styles.colon}>:</Text>
+        <Text style={styles.text}>
+          {dateOfSubmission && dayjs(dateOfSubmission).format('D MMMM YYYY')}
+        </Text>
+      </View>
+    </>
+  );
 
   return (
     <Document title="Cover Page">
@@ -148,112 +246,49 @@ export function CoverTemplate() {
           Rajshahi University of Engineering & Technology, Bangladesh
         </Text>
         <Image src={RUETLogo} style={styles.image} />
-        <Text style={styles.text}>Department of {department}</Text>
-        <View style={styles.course}>
-          <Text style={styles.text}>
-            {courseCode ? 'Course Code' : 'Course No.'}: {courseNo}
-          </Text>
-          <Text style={styles.text}>Course Title: {courseTitle}</Text>
-        </View>
         <View>
-          {!!coverNo && (
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={styles.thV}>
-                {type === 'Assignment' ? type : 'Experiment'} No.
-              </Text>
-              <Text style={styles.colon}>:</Text>
-              <Text style={styles.td}>
-                {coverNo === '0' ? '' : coverNo.padStart(2, '0')}
-              </Text>
-            </View>
+          <Text style={styles.text}>Department of {department}</Text>
+          {studentSeries && studentID.length >= 2 && (
+            <Text style={styles.text}>{studentID.slice(0, 2)} Series</Text>
           )}
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.thV}>
-              {type === 'Assignment' ? type : 'Experiment'} Title
-            </Text>
-            <Text style={styles.colon}>:</Text>
-            <Text style={styles.td}>{coverTitle}</Text>
-          </View>
         </View>
+        {!courseInfoBellowTitle && (
+          <View style={styles.course}>
+            <Text style={styles.text}>
+              {courseCode ? 'Course Code' : 'Course No.'}: {courseNo}
+            </Text>
+            <Text style={styles.text}>Course Title: {courseTitle}</Text>
+          </View>
+        )}
         <View
           style={{
-            flexDirection: 'row',
-            marginVertical: 16,
-            textAlign: 'left',
-            marginBottom: 'auto',
-            border: fromToBorder ? '2px solid #000000' : undefined,
+            marginVertical:
+              (courseInfoBellowTitle ? 16 : 0) + (datesBellowTitle ? 16 : 0),
           }}
         >
-          <View
-            style={{
-              flex: '1 1 0',
-              paddingRight: 16,
-              borderRight: fromToBorder ? '1px solid #000000' : undefined,
-              paddingHorizontal: fromToBorder ? 16 : undefined,
-              paddingBottom: fromToBorder ? 8 : undefined,
-            }}
-          >
-            <Text style={styles.thH}>Submitted by:</Text>
-            <Text style={styles.text}>
-              {useAtomValue(editorStore.studentName)}
-            </Text>
-            <Text style={styles.text}>
-              Roll: {useAtomValue(editorStore.studentID)}
-            </Text>
-            {!!studentSection && (
-              <Text style={styles.text}>Section: {studentSection}</Text>
+          {!!coverNo &&
+            dataListItem(
+              `${type === 'Assignment' ? type : 'Experiment'} No.`,
+              coverNo === '0' ? '' : coverNo.padStart(2, '0'),
             )}
-          </View>
-          <View
-            style={{
-              flex: '1 1 0',
-              paddingLeft: 16,
-              borderLeft: fromToBorder ? '1px solid #000000' : undefined,
-              paddingHorizontal: fromToBorder ? 16 : undefined,
-              paddingBottom: fromToBorder ? 8 : undefined,
-            }}
-          >
-            <Text style={styles.thH}>Submitted to:</Text>
-            {!!teacherName && (
-              <>
-                <Text style={styles.text}>{teacherName}</Text>
-                <Text style={styles.text}>{teacherDesignation}</Text>
-                {!!teacherDepartment && (
-                  <Text style={styles.text}>Dept. of {teacherDept}, RUET</Text>
-                )}
-              </>
-            )}
-            {!!secondTeacherName && (
-              <View style={{ marginTop: 16 }}>
-                <Text style={styles.text}>{secondTeacherName}</Text>
-                <Text style={styles.text}>{secondTeacherDesignation}</Text>
-                {!!teacherDepartment && (
-                  <Text style={styles.text}>Dept. of {teacherDept}, RUET</Text>
-                )}
-              </View>
-            )}
-          </View>
-        </View>
-        <View>
-          {type === 'Lab Report' && (
-            <View style={{ textAlign: 'left', flexDirection: 'row' }}>
-              <Text style={styles.textBF}>Date of Experiment</Text>
-              <Text style={styles.colon}>:</Text>
-              <Text style={styles.text}>
-                {dateOfExperiment &&
-                  dayjs(dateOfExperiment).format('D MMMM YYYY')}
-              </Text>
-            </View>
+          {dataListItem(
+            `${type === 'Assignment' ? type : 'Experiment'} Title`,
+            coverTitle,
           )}
-          <View style={{ textAlign: 'left', flexDirection: 'row' }}>
-            <Text style={styles.textBF}>Date of Submission</Text>
-            <Text style={styles.colon}>:</Text>
-            <Text style={styles.text}>
-              {dateOfSubmission &&
-                dayjs(dateOfSubmission).format('D MMMM YYYY')}
-            </Text>
-          </View>
+          {courseInfoBellowTitle && (
+            <>
+              {dataListItem(
+                courseCode ? 'Course Code' : 'Course No.',
+                courseNo,
+                90,
+              )}
+              {dataListItem('Course Title', courseTitle, 90)}
+            </>
+          )}
+          {datesBellowTitle && dates}
         </View>
+        {studentTeacherTable}
+        {!datesBellowTitle && <View>{dates}</View>}
       </Page>
     </Document>
   );

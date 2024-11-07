@@ -214,4 +214,8 @@ export default {
   formToBorder: booleanItem('formToBorder', false),
   watermark: booleanItem('watermark', false),
   courseCode: booleanItem('courseCode', false),
+  studentSeries: booleanItem('studentSeries', false),
+  studentSession: booleanItem('studentSession', false),
+  courseInfoBellowTitle: booleanItem('courseInfoBellowTitle', false),
+  datesBellowTitle: booleanItem('datesBellowTitle', false),
 };

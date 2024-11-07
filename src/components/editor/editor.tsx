@@ -191,6 +191,22 @@ export function Editor() {
           atom={editorStore.courseCode}
           label="Use 'Course Code' instead of 'Course No.'"
         />
+        <SwitchInput
+          atom={editorStore.studentSeries}
+          label="Show student series"
+        />
+        <SwitchInput
+          atom={editorStore.studentSession}
+          label="Show student session"
+        />
+        <SwitchInput
+          atom={editorStore.courseInfoBellowTitle}
+          label="Show course information bellow title"
+        />
+        <SwitchInput
+          atom={editorStore.datesBellowTitle}
+          label="Show dates bellow title instead of at the bottom"
+        />
       </TabsContent>
     </Tabs>
   );
