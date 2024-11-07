@@ -174,9 +174,9 @@ export function CoverTemplate() {
       >
         <Text style={styles.thH}>Submitted by:</Text>
         <Text style={styles.text}>{useAtomValue(editorStore.studentName)}</Text>
-        <Text style={styles.text}>Roll: {studentID}</Text>
+        <Text style={styles.text}>{`Roll: ${studentID}`}</Text>
         {!!studentSection && (
-          <Text style={styles.text}>Section: {studentSection}</Text>
+          <Text style={styles.text}>{`Section: ${studentSection}`}</Text>
         )}
         {studentSession && studentID.length >= 2 && (
           <Text style={styles.text}>
@@ -199,7 +199,7 @@ export function CoverTemplate() {
             <Text style={styles.text}>{teacherName}</Text>
             <Text style={styles.text}>{teacherDesignation}</Text>
             {!!teacherDepartment && (
-              <Text style={styles.text}>Dept. of {teacherDept}, RUET</Text>
+              <Text style={styles.text}>{`Dept. of ${teacherDept}, RUET`}</Text>
             )}
           </>
         )}
@@ -208,7 +208,7 @@ export function CoverTemplate() {
             <Text style={styles.text}>{secondTeacherName}</Text>
             <Text style={styles.text}>{secondTeacherDesignation}</Text>
             {!!teacherDepartment && (
-              <Text style={styles.text}>Dept. of {teacherDept}, RUET</Text>
+              <Text style={styles.text}>{`Dept. of ${teacherDept}, RUET`}</Text>
             )}
           </View>
         )}
@@ -247,7 +247,7 @@ export function CoverTemplate() {
         </Text>
         <Image src={RUETLogo} style={styles.image} />
         <View>
-          <Text style={styles.text}>Department of {department}</Text>
+          <Text style={styles.text}>{`Department of ${department}`}</Text>
           {studentSeries && studentID.length >= 2 && (
             <Text style={styles.text}>{studentID.slice(0, 2)} Series</Text>
           )}
@@ -255,9 +255,9 @@ export function CoverTemplate() {
         {!courseInfoBellowTitle && (
           <View style={styles.course}>
             <Text style={styles.text}>
-              {courseCode ? 'Course Code' : 'Course No.'}: {courseNo}
+              {`${courseCode ? 'Course Code' : 'Course No.'}: ${courseNo}`}
             </Text>
-            <Text style={styles.text}>Course Title: {courseTitle}</Text>
+            <Text style={styles.text}>{`Course Title: ${courseTitle}`}</Text>
           </View>
         )}
         <View
