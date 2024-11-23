@@ -243,7 +243,7 @@ export function CoverTemplate() {
         <Text style={styles.motto}>Heaven’s Light is Our Guide</Text>
         <Image src={motto} style={styles.mottoImage} />
         <Text style={styles.institution}>
-          Rajshahi University of Engineering & Technology, Bangladesh
+          Rajshahi University of Engineering & Technology
         </Text>
         <Image src={RUETLogo} style={styles.image} />
         <View>

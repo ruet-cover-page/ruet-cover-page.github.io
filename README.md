@@ -1,4 +1,4 @@
-# RUET Cover Page
+# RUET Cover Page Generator
 
 ## Setup
 

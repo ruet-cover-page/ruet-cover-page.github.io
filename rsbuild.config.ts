@@ -18,11 +18,11 @@ export default defineConfig({
   },
   plugins: [pluginReact()],
   html: {
-    title: 'RUET Cover Page',
+    title: 'RUET Cover Page Generator',
     favicon: './public/favicon.ico',
     template: './src/index.html',
     appIcon: {
-      name: 'RUET Cover Page',
+      name: 'RUET Cover Page Generator',
       icons: [
         {
           src: './public/apple-touch-icon.png',
@@ -45,7 +45,7 @@ export default defineConfig({
       description: 'Create cover pages for your lab reports and assignments',
       'msapplication-TileColor': '#603cba',
       'og:url': 'http://ruet-cover-page.github.io/',
-      'og:title': 'RUET Cover Page',
+      'og:title': 'RUET Cover Page Generator',
       'og:description':
         'Create cover pages for your lab reports and assignments',
       'og:image': 'http://ruet-cover-page.github.io/og.jpg',
