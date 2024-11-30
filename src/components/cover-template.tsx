@@ -75,10 +75,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontWeight: 700,
   },
-  course: {
-    marginVertical: 16,
-    flexDirection: 'column',
-  },
   thV: {
     fontSize: 16,
     textAlign: 'left',
@@ -253,7 +249,12 @@ export function CoverTemplate() {
           )}
         </View>
         {!courseInfoBellowTitle && (
-          <View style={styles.course}>
+          <View
+            style={{
+              marginVertical: !secondTeacherName ? 16 : 0,
+              flexDirection: 'column',
+            }}
+          >
             <Text style={styles.text}>
               {`${courseCode ? 'Course Code' : 'Course No.'}: ${courseNo}`}
             </Text>
@@ -262,8 +263,9 @@ export function CoverTemplate() {
         )}
         <View
           style={{
-            marginVertical:
-              (courseInfoBellowTitle ? 16 : 0) + (datesBellowTitle ? 16 : 0),
+            marginVertical: !secondTeacherName
+              ? (courseInfoBellowTitle ? 16 : 0) + (datesBellowTitle ? 16 : 0)
+              : 0,
           }}
         >
           {!!coverNo &&

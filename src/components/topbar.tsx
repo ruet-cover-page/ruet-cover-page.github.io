@@ -13,11 +13,11 @@ import { Button } from './ui/button';
 export function TopbarLeft() {
   const setPreviewMode = useSetAtom(previewModeAtom);
   return (
-    <div className="flex flex-wrap items-center justify-between bg-secondary p-2">
+    <div className="flex flex-wrap items-center justify-between gap-2 bg-secondary p-2">
       <div className="flex items-center gap-2">
         <img src={icon} alt="" className="h-8 w-auto" />
         <h1 className="whitespace-nowrap font-semibold text-2xl">
-          Cover Page Generator
+          Cover Page <span className="lt-sm:sr-only">Generator</span>
         </h1>
       </div>
       <div className="flex items-center gap-2">
@@ -43,10 +43,16 @@ export function TopbarRight({
   const setPreviewMode = useSetAtom(previewModeAtom);
   const courseNo = useAtomValue(atoms.courseNo);
   const studentID = useAtomValue(atoms.studentID);
+  const coverNo = useAtomValue(atoms.coverNo);
   const filename = useMemo(() => {
-    const parts = ['Cover', courseNo, studentID].filter(Boolean);
+    const parts = [
+      'Cover',
+      courseNo,
+      studentID,
+      coverNo.padStart(2, '0'),
+    ].filter(Boolean);
     return parts.join('-');
-  }, [courseNo, studentID]);
+  }, [courseNo, studentID, coverNo]);
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-2 bg-secondary p-2">

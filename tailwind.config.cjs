@@ -1,4 +1,4 @@
-const { fontFamily } = require('tailwindcss/defaultTheme');
+const { screens } = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -14,7 +14,8 @@ module.exports = {
     },
     extend: {
       screens: {
-        'lt-lg': { max: '1023px' },
+        'lt-lg': { max: `${Number.parseInt(screens.lg) - 0.1}px` },
+        'lt-sm': { max: `${Number.parseInt(screens.sm) - 0.1}px` },
       },
       colors: {
         border: 'hsl(var(--border))',
