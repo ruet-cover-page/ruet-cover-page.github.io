@@ -21,7 +21,7 @@ import editorAtoms, {
 } from '@/store/editor';
 import { useQuery } from '@tanstack/react-query';
 import { Command as CommandPrimitive } from 'cmdk';
-import { atom, useAtom, useSetAtom } from 'jotai';
+import { type WritableAtom, atom, useAtom, useSetAtom } from 'jotai';
 import { matchSorter } from 'match-sorter';
 import {
   type ReactNode,
@@ -29,17 +29,23 @@ import {
   useDeferredValue,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 
-const selectedAtom = atom('');
-
-export function TeacherName() {
+export function TeacherName({
+  nameAtom,
+  designationAtom,
+}: {
+  nameAtom: WritableAtom<string, [string], void>;
+  designationAtom: WritableAtom<string, [string], void>;
+}) {
   const [open, setOpen] = useState(false);
-  const [value, onValueChange] = useAtom(editorAtoms.teacherName);
+  const [value, onValueChange] = useAtom(nameAtom);
   const search = useDeferredValue(value);
-  const setDesignation = useSetAtom(editorAtoms.teacherDesignation);
+  const setDesignation = useSetAtom(designationAtom);
   const setDepartment = useSetAtom(editorAtoms.teacherDepartment);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const { data: teachers, isLoading } = useQuery({
     queryKey: ['teachers'],
@@ -76,17 +82,21 @@ export function TeacherName() {
     setOpen(false);
   };
 
-  const setSelected = useSetAtom(selectedAtom);
+  const [selected, setSelected] = useState('');
 
   useEffect(() => {
     const selected = filteredTeachers?.[0]?.id;
     selected && setSelected(selected);
-  }, [filteredTeachers, setSelected]);
+  }, [filteredTeachers]);
 
   return (
     <div className="flex items-center">
       <Popover open={open} onOpenChange={setOpen}>
-        <MemoisedCommand>
+        <Command
+          shouldFilter={false}
+          value={selected}
+          onValueChange={setSelected}
+        >
           <PopoverAnchor asChild>
             <CommandPrimitive.Input
               asChild
@@ -98,7 +108,7 @@ export function TeacherName() {
               onMouseDown={() => setOpen((open) => !!value || !open)}
               onFocus={() => setOpen(true)}
             >
-              <Input placeholder="Teacher" />
+              <Input placeholder="Teacher" ref={inputRef} />
             </CommandPrimitive.Input>
           </PopoverAnchor>
           {!open && <CommandList aria-hidden="true" className="hidden" />}
@@ -108,7 +118,7 @@ export function TeacherName() {
             onInteractOutside={(e) => {
               if (
                 e.target instanceof Element &&
-                e.target.hasAttribute('cmdk-input')
+                e.target === inputRef.current
               ) {
                 e.preventDefault();
               }
@@ -145,21 +155,8 @@ export function TeacherName() {
               ) : null}
             </CommandList>
           </PopoverContent>
-        </MemoisedCommand>
+        </Command>
       </Popover>
     </div>
   );
 }
-
-const MemoisedCommand = memo(function MemoisedCommand({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  const [selected, setSelected] = useAtom(selectedAtom);
-  return (
-    <Command shouldFilter={false} value={selected} onValueChange={setSelected}>
-      {children}
-    </Command>
-  );
-});

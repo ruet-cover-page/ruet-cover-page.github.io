@@ -20,7 +20,6 @@ import { DateInput } from './DateInput';
 import { Combobox } from './combobox';
 import { FormDescription } from './form-description';
 import { FormItem } from './form-item';
-import { SecondTeacherName } from './second-teacher-name';
 import { SelectInput } from './select-input';
 import { SwitchInput } from './switch-input';
 import { TeacherName } from './teacher-name';
@@ -135,7 +134,10 @@ export function Editor() {
       <TabsContent value="teacher" className={tabContentClass}>
         <h2 className={tabHeaderClass}>Teacher</h2>
         <FormItem label="Teacher Name">
-          <TeacherName />
+          <TeacherName
+            nameAtom={editorStore.teacherName}
+            designationAtom={editorStore.teacherDesignation}
+          />
         </FormItem>
         {!!teacherName && (
           <FormItem label="Designation">
@@ -154,7 +156,10 @@ export function Editor() {
           />
         </FormItem>
         <FormItem label="Second Teacher Name">
-          <SecondTeacherName />
+          <TeacherName
+            nameAtom={editorStore.secondTeacherName}
+            designationAtom={editorStore.secondTeacherDesignation}
+          />
         </FormItem>
         {!!secondTeacherName && (
           <FormItem label="Second Teacher Designation">
