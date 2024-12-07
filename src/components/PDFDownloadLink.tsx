@@ -1,3 +1,5 @@
+import { defaultStore } from '@/store';
+import editor from '@/store/editor';
 import { DownloadIcon } from '@radix-ui/react-icons';
 import { type PDFDownloadLinkProps, usePDF } from '@react-pdf/renderer';
 import { type MouseEvent, useContext, useEffect, useState } from 'react';
@@ -57,6 +59,18 @@ export const PDFDownloadLink = ({
     event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>,
   ) => {
     handleDownloadIE();
+    try {
+      // @ts-ignore
+      window.umami?.track('download-cover-page', {
+        studentId: defaultStore.get(editor.studentID) || 'Blank',
+        courseNo: defaultStore.get(editor.courseNo) || 'Blank',
+        courseTitle: defaultStore.get(editor.courseTitle) || 'Blank',
+        teacher: defaultStore.get(editor.teacherName) || 'Blank',
+        watermark: defaultStore.get(editor.watermark) ? 'true' : 'false',
+      });
+    } catch (err) {
+      console.error();
+    }
     if (typeof onClick === 'function') onClick(event, instance);
   };
 
