@@ -118,6 +118,7 @@ export function Editor() {
         </div>
         <FormItem label="Title">
           <TextAreaInput atom={editorStore.coverTitle} rows={3} />
+          <FormDescription>leave empty if not applicable</FormDescription>
         </FormItem>
         <DateOfExperiment />
         <FormItem label="Date of submission">
@@ -155,20 +156,26 @@ export function Editor() {
             options={departments.map((x) => ({ label: x, value: x }))}
           />
         </FormItem>
-        <FormItem label="Second Teacher Name">
-          <TeacherName
-            nameAtom={editorStore.secondTeacherName}
-            designationAtom={editorStore.secondTeacherDesignation}
-          />
-        </FormItem>
-        {!!secondTeacherName && (
-          <FormItem label="Second Teacher Designation">
-            <Combobox
-              name="designation"
-              atom={editorStore.secondTeacherDesignation}
-              options={designations.map((x) => ({ label: x, value: x }))}
-            />
-          </FormItem>
+        {!!teacherName && (
+          <>
+            <hr className="-mx-4 mt-2 border-input" />
+            <FormItem label="Second Teacher Name">
+              <TeacherName
+                nameAtom={editorStore.secondTeacherName}
+                designationAtom={editorStore.secondTeacherDesignation}
+              />
+            </FormItem>
+            {!!secondTeacherName && (
+              <FormItem label="Second Teacher Designation">
+                <Combobox
+                  name="designation"
+                  atom={editorStore.secondTeacherDesignation}
+                  options={designations.map((x) => ({ label: x, value: x }))}
+                />
+              </FormItem>
+            )}
+            <hr className="-mx-4 mt-2 border-input" />
+          </>
         )}
         <Button
           variant="outline"

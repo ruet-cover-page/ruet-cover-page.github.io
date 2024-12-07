@@ -169,7 +169,9 @@ export function CoverTemplate() {
         }}
       >
         <Text style={styles.thH}>Submitted by:</Text>
-        <Text style={styles.text}>{useAtomValue(editorStore.studentName)}</Text>
+        <Text style={styles.text}>
+          {useAtomValue(editorStore.studentName) || '.'}
+        </Text>
         <Text style={styles.text}>{`Roll: ${studentID}`}</Text>
         {!!studentSection && (
           <Text style={styles.text}>{`Section: ${studentSection}`}</Text>
@@ -273,10 +275,11 @@ export function CoverTemplate() {
               `${type === 'Assignment' ? type : 'Experiment'} No.`,
               coverNo === '0' ? '' : coverNo.padStart(2, '0'),
             )}
-          {dataListItem(
-            `${type === 'Assignment' ? type : 'Experiment'} Title`,
-            coverTitle,
-          )}
+          {!!coverTitle &&
+            dataListItem(
+              `${type === 'Assignment' ? type : 'Experiment'} Title`,
+              coverTitle,
+            )}
           {courseInfoBellowTitle && (
             <>
               {dataListItem(

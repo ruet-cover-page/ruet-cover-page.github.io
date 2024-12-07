@@ -19,29 +19,25 @@ import editorAtoms, {
   departmentLongMap,
   departmentShortMap,
 } from '@/store/editor';
+import { Cross1Icon } from '@radix-ui/react-icons';
 import { useQuery } from '@tanstack/react-query';
 import { Command as CommandPrimitive } from 'cmdk';
-import { type WritableAtom, atom, useAtom, useSetAtom } from 'jotai';
+import { type WritableAtom, useAtom, useSetAtom } from 'jotai';
+import { type RESET, useResetAtom } from 'jotai/utils';
 import { matchSorter } from 'match-sorter';
-import {
-  type ReactNode,
-  memo,
-  useDeferredValue,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
+import { Button } from '../ui/button';
 
 export function TeacherName({
   nameAtom,
   designationAtom,
 }: {
-  nameAtom: WritableAtom<string, [string], void>;
+  nameAtom: WritableAtom<string, [string | typeof RESET], void>;
   designationAtom: WritableAtom<string, [string], void>;
 }) {
   const [open, setOpen] = useState(false);
   const [value, onValueChange] = useAtom(nameAtom);
+  const reset = useResetAtom(nameAtom);
   const search = useDeferredValue(value);
   const setDesignation = useSetAtom(designationAtom);
   const setDepartment = useSetAtom(editorAtoms.teacherDepartment);
@@ -97,20 +93,33 @@ export function TeacherName({
           value={selected}
           onValueChange={setSelected}
         >
-          <PopoverAnchor asChild>
-            <CommandPrimitive.Input
-              asChild
-              value={value}
-              onValueChange={onValueChange}
-              onKeyDown={(e) => {
-                setOpen(e.key !== 'Escape');
-              }}
-              onMouseDown={() => setOpen((open) => !!value || !open)}
-              onFocus={() => setOpen(true)}
-            >
-              <Input placeholder="Teacher" ref={inputRef} />
-            </CommandPrimitive.Input>
-          </PopoverAnchor>
+          <div className="relative">
+            <PopoverAnchor asChild>
+              <CommandPrimitive.Input
+                asChild
+                value={value}
+                onValueChange={onValueChange}
+                onKeyDown={(e) => {
+                  setOpen(e.key !== 'Escape');
+                }}
+                onMouseDown={() => setOpen((open) => !!value || !open)}
+                onFocus={() => setOpen(true)}
+              >
+                <Input placeholder="Teacher" ref={inputRef} />
+              </CommandPrimitive.Input>
+            </PopoverAnchor>
+            {!!value && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute right-0 bottom-0 z-10"
+                aria-label="reset"
+                onClick={reset}
+              >
+                <Cross1Icon className="h-4 w-4 opacity-50" />
+              </Button>
+            )}
+          </div>
           {!open && <CommandList aria-hidden="true" className="hidden" />}
           <PopoverContent
             asChild

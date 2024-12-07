@@ -1,7 +1,7 @@
 import { SimpleStorage } from '@/lib/simple-storage';
 import * as idbKeyVal from 'idb-keyval';
 import { atom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
+import { RESET, atomWithStorage } from 'jotai/utils';
 
 export enum Department {
   Arch = 'Architecture',
@@ -84,10 +84,10 @@ const departmentMap: Record<string, Department> = {
   '13': Department.MSE,
 };
 
-const studentDepartment = atomWithStorage<Department>(
+const studentDepartment = atomWithStorage<Department | ''>(
   'student-department',
-  Department.MSE,
-  new SimpleStorage<Department>(),
+  '',
+  new SimpleStorage<Department | ''>(),
   { getOnInit: true },
 );
 
@@ -126,7 +126,8 @@ const _studentNameAtom = stringItem('student-name', '');
 const _studentIDAtom = stringItem('student-id', '');
 const studentName = atom(
   (get) => get(_studentNameAtom),
-  (get, set, studentName: string) => {
+  (get, set, studentName: string | typeof RESET) => {
+    if (studentName === RESET) return set(_studentNameAtom, '');
     set(_studentNameAtom, studentName);
     const studentID = get(_studentIDAtom);
     if (studentID.length >= 7)
@@ -136,7 +137,8 @@ const studentName = atom(
 const studentSection = stringItem('student-section', '');
 const studentID = atom(
   (get) => get(_studentIDAtom),
-  (get, set, studentID: string) => {
+  (get, set, studentID: string | typeof RESET) => {
+    if (studentID === RESET) return set(_studentIDAtom, '');
     set(_studentIDAtom, studentID);
     if (studentID.length >= 4) {
       const code = studentID.substring(2, 4);
@@ -166,7 +168,8 @@ const _courseTitleAtom = stringItem('course-title', '');
 const _courseNoAtom = stringItem('course-no', '');
 const courseTitle = atom(
   (get) => get(_courseTitleAtom),
-  (get, set, courseTitle: string) => {
+  (get, set, courseTitle: string | typeof RESET) => {
+    if (courseTitle === RESET) return set(_courseTitleAtom, '');
     set(_courseTitleAtom, courseTitle);
     const courseNo = get(_courseNoAtom);
     if (courseNo.length >= 7)
@@ -175,7 +178,8 @@ const courseTitle = atom(
 );
 const courseNo = atom(
   (get) => get(_courseNoAtom),
-  (get, set, courseNo: string) => {
+  (get, set, courseNo: string | typeof RESET) => {
+    if (courseNo === RESET) return set(_courseNoAtom, '');
     set(_courseNoAtom, courseNo);
     if (courseNo.length >= 3) {
       // const code = courseNo.substring(0, 3);

@@ -1,4 +1,9 @@
-import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
+import {
+  CaretSortIcon,
+  CheckIcon,
+  Cross1Icon,
+  Cross2Icon,
+} from '@radix-ui/react-icons';
 import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -17,6 +22,7 @@ import {
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { type WritableAtom, useAtom } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 
 export function Combobox({
   name,
@@ -29,25 +35,37 @@ export function Combobox({
   options: { value: string; label: string }[];
 }) {
   const [value, setValue] = useAtom(atom);
+  const reset = useResetAtom(atom);
   const [open, setOpen] = React.useState(false);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <div className="relative">
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            // biome-ignore lint/a11y/useSemanticElements: <explanation>
+            role="combobox"
+            aria-expanded={open}
+            className="w-full justify-between"
+            aria-label={name}
+          >
+            {value
+              ? options.find((option) => option.value === value)?.label
+              : `Select ${name}...`}
+            <CaretSortIcon className="mr-8 ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
         <Button
-          variant="outline"
-          // biome-ignore lint/a11y/useSemanticElements: <explanation>
-          role="combobox"
-          aria-expanded={open}
-          className="w-full justify-between"
-          aria-label={name}
+          variant="ghost"
+          size="icon"
+          className="absolute right-0 z-10"
+          aria-label="reset"
+          onClick={reset}
         >
-          {value
-            ? options.find((option) => option.value === value)?.label
-            : `Select ${name}...`}
-          <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <Cross1Icon className="h-4 w-4 opacity-50" />
         </Button>
-      </PopoverTrigger>
+      </div>
       <PopoverContent className="w-[var(--radix-popper-anchor-width)] p-0">
         <Command>
           <CommandInput placeholder={`Search ${name}...`} className="h-9" />
