@@ -26,7 +26,7 @@ export function TextInput<
         onChange={(event) => setValue(event.currentTarget.value as S)}
         {...props}
       />
-      {!!value && (
+      {!!value && props.type !== 'number' && (
         <Button
           variant="ghost"
           size="icon"
