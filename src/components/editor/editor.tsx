@@ -81,6 +81,10 @@ export function Editor() {
             options={studentDepartments.map((x) => ({ label: x, value: x }))}
           />
         </FormItem>
+        <FormItem label="Group">
+          <TextInput atom={editorStore.studentGroup} />
+          <FormDescription>leave empty if not applicable</FormDescription>
+        </FormItem>
         <Button
           variant="outline"
           className="mt-auto"

@@ -201,6 +201,7 @@ export default {
   studentName,
   studentID,
   studentSection,
+  studentGroup: stringItem('student-group', ''),
   courseNo,
   courseTitle,
   coverNo: stringItem('cover-no', '1'),

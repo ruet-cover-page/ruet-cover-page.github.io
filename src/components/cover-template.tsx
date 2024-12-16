@@ -142,6 +142,7 @@ export function CoverTemplate() {
   const courseCode = useAtomValue(editorStore.courseCode);
   const studentSeries = useAtomValue(editorStore.studentSeries);
   const studentSession = useAtomValue(editorStore.studentSession);
+  const studentGroup = useAtomValue(editorStore.studentGroup);
   const courseInfoBellowTitle = useAtomValue(editorStore.courseInfoBellowTitle);
   const datesBellowTitle = useAtomValue(editorStore.datesBellowTitle);
 
@@ -172,6 +173,9 @@ export function CoverTemplate() {
         <Text style={styles.text}>
           {useAtomValue(editorStore.studentName) || '.'}
         </Text>
+        {studentGroup && (
+          <Text style={styles.text}>{`Group: ${studentGroup}`}</Text>
+        )}
         <Text style={styles.text}>{`Roll: ${studentID}`}</Text>
         {!!studentSection && (
           <Text style={styles.text}>{`Section: ${studentSection}`}</Text>
