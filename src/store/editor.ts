@@ -208,9 +208,10 @@ export default {
   coverTitle: stringItem('cover-title', ''),
   teacherName: stringItem('teacher-name', ''),
   teacherDesignation: stringItem('teacher-designation', ''),
+  teacherDepartment: stringItem('teacher-department', ''),
   secondTeacherName: stringItem('second-teacher-name', ''),
   secondTeacherDesignation: stringItem('second-teacher-designation', ''),
-  teacherDepartment: stringItem('teacher-department', ''),
+  secondTeacherDepartment: stringItem('second-teacher-department', ''),
   dateOfExperiment: atom<null | Date>(new Date()),
   dateOfSubmission: atom<null | Date>(new Date()),
   /**

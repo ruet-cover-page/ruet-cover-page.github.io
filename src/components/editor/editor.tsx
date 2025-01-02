@@ -142,6 +142,7 @@ export function Editor() {
           <TeacherName
             nameAtom={editorStore.teacherName}
             designationAtom={editorStore.teacherDesignation}
+            departmentAtom={editorStore.teacherDepartment}
           />
         </FormItem>
         {!!teacherName && (
@@ -167,16 +168,26 @@ export function Editor() {
               <TeacherName
                 nameAtom={editorStore.secondTeacherName}
                 designationAtom={editorStore.secondTeacherDesignation}
+                departmentAtom={editorStore.secondTeacherDepartment}
               />
             </FormItem>
             {!!secondTeacherName && (
-              <FormItem label="Second Teacher Designation">
-                <Combobox
-                  name="designation"
-                  atom={editorStore.secondTeacherDesignation}
-                  options={designations.map((x) => ({ label: x, value: x }))}
-                />
-              </FormItem>
+              <>
+                <FormItem label="Second Teacher Designation">
+                  <Combobox
+                    name="designation"
+                    atom={editorStore.secondTeacherDesignation}
+                    options={designations.map((x) => ({ label: x, value: x }))}
+                  />
+                </FormItem>
+                <FormItem label="Second Teacher Department">
+                  <Combobox
+                    name="department"
+                    atom={editorStore.secondTeacherDepartment}
+                    options={departments.map((x) => ({ label: x, value: x }))}
+                  />
+                </FormItem>
+              </>
             )}
             <hr className="-mx-4 mt-2 border-input" />
           </>

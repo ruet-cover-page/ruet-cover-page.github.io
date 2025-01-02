@@ -15,10 +15,7 @@ import {
   PopoverContent,
 } from '@/components/ui/popover';
 import { Skeleton } from '@/components/ui/skeleton';
-import editorAtoms, {
-  departmentLongMap,
-  departmentShortMap,
-} from '@/store/editor';
+import { departmentLongMap, departmentShortMap } from '@/store/editor';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import { useQuery } from '@tanstack/react-query';
 import { Command as CommandPrimitive } from 'cmdk';
@@ -31,16 +28,18 @@ import { Button } from '../ui/button';
 export function TeacherName({
   nameAtom,
   designationAtom,
+  departmentAtom,
 }: {
   nameAtom: WritableAtom<string, [string | typeof RESET], void>;
   designationAtom: WritableAtom<string, [string], void>;
+  departmentAtom: WritableAtom<string, [string], void>;
 }) {
   const [open, setOpen] = useState(false);
   const [value, onValueChange] = useAtom(nameAtom);
   const reset = useResetAtom(nameAtom);
   const search = useDeferredValue(value);
   const setDesignation = useSetAtom(designationAtom);
-  const setDepartment = useSetAtom(editorAtoms.teacherDepartment);
+  const setDepartment = useSetAtom(departmentAtom);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const { data: teachers, isLoading } = useQuery({
