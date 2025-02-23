@@ -17,7 +17,7 @@ export function TopbarLeft() {
       <div className="flex items-center gap-2">
         <img src={icon} alt="" className="h-8 w-auto" />
         <h1 className="whitespace-nowrap font-semibold text-2xl">
-          Cover Page <span className="lt-sm:sr-only">Generator</span>
+          Cover Page <span className="min-sm::sr-only">Generator</span>
         </h1>
       </div>
       <div className="flex items-center gap-2">

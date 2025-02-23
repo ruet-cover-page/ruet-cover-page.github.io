@@ -35,6 +35,16 @@ export function About() {
             lab reports. Just fill in details like the title, your name, and the
             date, and instantly generate a ready-to-download PDF.
           </p>
+          <Button asChild variant="outline">
+            <a
+              href="https://github.com/ruet-cover-page/ruet-cover-page.github.io/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2"
+            >
+              <GitHubLogoIcon className="inline" /> Fork
+            </a>
+          </Button>
           <h2>Features</h2>
           <ul>
             {(
@@ -87,14 +97,7 @@ export function About() {
           <p>
             This frontend of this project is open sourced and licensed under the
             MIT license, meaning it's free to use, share, and adapt. The source
-            code is available in this{' '}
-            <a
-              href="https://github.com/ruet-cover-page/ruet-cover-page.github.io/"
-              className="inline-flex items-center gap-1 underline"
-            >
-              <GitHubLogoIcon className="inline" /> github repository
-            </a>
-            .
+            code is available in github.
           </p>
           <p>
             However the backend is close sourced. The backend is used to fetch

@@ -35,7 +35,7 @@ const App = () => {
         <div
           className={cn(
             'flex min-w-0 flex-1 origin-left flex-col divide-y transition-all',
-            previewMode && 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
+            previewMode && 'min-lg::invisible min-lg::grow-0 min-lg::scale-x-0',
           )}
         >
           <TopbarLeft />
@@ -45,7 +45,8 @@ const App = () => {
           <div
             className={cn(
               'flex min-w-0 flex-1 origin-left flex-col divide-y transition-all',
-              previewMode || 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
+              previewMode ||
+                'min-lg::invisible min-lg::grow-0 min-lg::scale-x-0',
             )}
           >
             <PDF document={document}>

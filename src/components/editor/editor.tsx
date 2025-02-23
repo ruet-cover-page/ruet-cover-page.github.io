@@ -194,7 +194,7 @@ export function Editor() {
         )}
         <Button
           variant="outline"
-          className="mt-auto lt-lg:hidden"
+          className="mt-auto min-lg::hidden"
           onClick={() => setTab('subject')}
         >
           Back
