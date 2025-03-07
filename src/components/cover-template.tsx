@@ -173,14 +173,14 @@ export function CoverTemplate() {
         <Text style={styles.text}>
           {useAtomValue(editorStore.studentName) || '.'}
         </Text>
-        {studentGroup && (
+        {!!studentGroup && (
           <Text style={styles.text}>{`Group: ${studentGroup}`}</Text>
         )}
         <Text style={styles.text}>{`Roll: ${studentID}`}</Text>
         {!!studentSection && (
           <Text style={styles.text}>{`Section: ${studentSection}`}</Text>
         )}
-        {studentSession && studentID.length >= 2 && (
+        {!!studentSession && studentID.length >= 2 && (
           <Text style={styles.text}>
             Session: 20{studentID.slice(0, 2)}-{+studentID.slice(0, 2) + 1}
           </Text>

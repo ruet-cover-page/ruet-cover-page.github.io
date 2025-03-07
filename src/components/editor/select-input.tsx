@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/select';
 
 import { type WritableAtom, useAtom } from 'jotai';
+import { FormItemContext } from './form-item';
 
 export function SelectInput<
   S extends string,
@@ -23,10 +24,11 @@ export function SelectInput<
   options: { value: string; label: string }[];
 }) {
   const [value, setValue] = useAtom(atom);
+  const { id } = React.useContext(FormItemContext);
 
   return (
     <Select value={value} onValueChange={setValue}>
-      <SelectTrigger>
+      <SelectTrigger id={id}>
         <SelectValue placeholder={name} />
       </SelectTrigger>
       <SelectContent>

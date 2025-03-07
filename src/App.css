@@ -95,4 +95,8 @@
   .react-calendar__navigation button:enabled:focus {
     @apply bg-secondary;
   }
+
+  select.react-date-picker__inputGroup__input:focus {
+    @apply bg-background text-foreground;
+  }
 }

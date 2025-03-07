@@ -22,8 +22,16 @@ import { Command as CommandPrimitive } from 'cmdk';
 import { type WritableAtom, useAtom, useSetAtom } from 'jotai';
 import { type RESET, useResetAtom } from 'jotai/utils';
 import { matchSorter } from 'match-sorter';
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useContext,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Button } from '../ui/button';
+import { FormItemContext } from './form-item';
 
 export function TeacherName({
   nameAtom,
@@ -41,6 +49,7 @@ export function TeacherName({
   const setDesignation = useSetAtom(designationAtom);
   const setDepartment = useSetAtom(departmentAtom);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const { id } = useContext(FormItemContext);
 
   const { data: teachers, isLoading } = useQuery({
     queryKey: ['teachers'],
@@ -83,6 +92,14 @@ export function TeacherName({
     const selected = filteredTeachers?.[0]?.id;
     selected && setSelected(selected);
   }, [filteredTeachers]);
+
+  useEffect(() => {
+    inputRef.current?.setAttribute('id', id);
+    inputRef.current
+      ?.closest('[cmdk-root]')
+      ?.querySelector('label')
+      ?.setAttribute('for', id);
+  });
 
   return (
     <div className="flex items-center">

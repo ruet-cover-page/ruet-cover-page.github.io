@@ -23,6 +23,7 @@ import {
 import { cn } from '@/lib/utils';
 import { type WritableAtom, useAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
+import { FormItemContext } from './form-item';
 
 export function Combobox({
   name,
@@ -37,6 +38,7 @@ export function Combobox({
   const [value, setValue] = useAtom(atom);
   const reset = useResetAtom(atom);
   const [open, setOpen] = React.useState(false);
+  const { id } = React.useContext(FormItemContext);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -49,6 +51,7 @@ export function Combobox({
             aria-expanded={open}
             className="w-full justify-between"
             aria-label={name}
+            id={id}
           >
             {value
               ? options.find((option) => option.value === value)?.label
