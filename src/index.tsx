@@ -1,6 +1,5 @@
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-import './lib/inline-script';
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';

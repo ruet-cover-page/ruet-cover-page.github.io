@@ -4,16 +4,8 @@ import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 
 export default defineConfig({
   output: {
-    inlineScripts: /[\\/]inline-script\.\w+\.js$/,
     sourceMap: {
       js: 'source-map',
-    },
-  },
-  performance: {
-    chunkSplit: {
-      forceSplitting: {
-        'inline-script': /inline-script/,
-      },
     },
   },
   plugins: [pluginReact()],

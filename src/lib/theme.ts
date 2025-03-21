@@ -41,3 +41,9 @@ export function applyTheme(_theme?: Theme) {
     el.style.colorScheme = theme;
   }
 }
+
+window
+  .matchMedia('(prefers-color-scheme: dark)')
+  .addEventListener('change', (e) => {
+    if (!getManualTheme()) applyTheme(getSystemTheme(e));
+  });

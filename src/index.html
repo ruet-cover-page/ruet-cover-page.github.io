@@ -1,7 +1,30 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="<%= process.env.PUBLIC_UMAMI_WEBSITE_ID %>"></script>
+    <script>
+      try {
+        var themes = ["light", "dark"];
+        var el = document.documentElement;
+        var theme =
+          localStorage.getItem("<%= import.meta.env.PUBLIC_THEME_KEY %>") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        el.classList.remove(...themes);
+        el.classList.add(theme);
+
+        if (themes.includes(theme)) {
+          el.style.colorScheme = theme;
+        }
+      } catch (e) {
+        //
+      }
+    </script>
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="<%= import.meta.env.PUBLIC_UMAMI_WEBSITE_ID %>"
+    ></script>
   </head>
   <body>
     <div id="<%= mountId %>"></div>
