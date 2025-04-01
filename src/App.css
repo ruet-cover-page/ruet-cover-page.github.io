@@ -91,12 +91,28 @@
 }
 
 @layer calendar {
-  .react-calendar__navigation button:enabled:hover,
-  .react-calendar__navigation button:enabled:focus {
+  .react-date-picker__calendar
+    button:not(.react-calendar__tile--active):enabled:hover,
+  .react-date-picker__calendar
+    button:not(.react-calendar__tile--active):enabled:focus {
     @apply bg-secondary;
   }
 
   select.react-date-picker__inputGroup__input:focus {
     @apply bg-background text-foreground;
+  }
+
+  .react-calendar__navigation button:disabled {
+    @apply opacity-50 bg-neutral-500/25;
+  }
+
+  .dark {
+    .react-calendar__tile--now {
+      @apply bg-cyan-950;
+    }
+
+    .react-calendar__tile--hasActive {
+      @apply bg-blue-700;
+    }
   }
 }

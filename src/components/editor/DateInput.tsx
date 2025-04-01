@@ -34,7 +34,7 @@ export function DateInput({
         clearIcon={<Cross1Icon className="hover:text-blue-500" />}
         calendarProps={{
           className: 'bg-background',
-          tileClassName: 'hover:bg-secondary px-4 py-2',
+          tileClassName: 'px-4 py-2',
         }}
         {...props}
       />
