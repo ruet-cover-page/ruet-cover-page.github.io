@@ -7,11 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
 import { themeAtom } from '@/store/theme';
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 
 export function ModeToggle() {
-  const setTheme = useSetAtom(themeAtom);
+  const [theme, setTheme] = useAtom(themeAtom);
 
   return (
     <DropdownMenu>
@@ -23,15 +24,18 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme('light')}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('auto')}>
-          Auto
-        </DropdownMenuItem>
+        {['light', 'dark', 'auto'].map((x) => (
+          <DropdownMenuItem
+            key={x}
+            className={cn(
+              'capitalize',
+              theme === x && 'bg-accent text-accent-foreground',
+            )}
+            onClick={() => setTheme(x)}
+          >
+            {x}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

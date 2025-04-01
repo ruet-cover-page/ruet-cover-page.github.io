@@ -17,7 +17,7 @@ export function TopbarLeft() {
       <div className="flex items-center gap-2">
         <img src={icon} alt="" className="h-8 w-auto" />
         <h1 className="whitespace-nowrap font-semibold text-2xl">
-          Cover Page <span className="lt-sm:sr-only">Generator</span>
+          Cover Page <span className="max-sm:sr-only">Generator</span>
         </h1>
       </div>
       <div className="flex items-center gap-2">
@@ -37,9 +37,7 @@ export function TopbarLeft() {
   );
 }
 
-export function TopbarRight({
-  document,
-}: Pick<PDFDownloadLinkProps, 'document'>) {
+export function TopbarRight() {
   const setPreviewMode = useSetAtom(previewModeAtom);
   const courseNo = useAtomValue(atoms.courseNo);
   const studentID = useAtomValue(atoms.studentID);
@@ -67,7 +65,7 @@ export function TopbarRight({
       </Button>
       <div className="ms-auto">
         <Button variant="outline" size="icon" asChild>
-          <PDFDownloadLink document={document} fileName={`${filename}.pdf`} />
+          <PDFDownloadLink fileName={`${filename}.pdf`} />
         </Button>
       </div>
     </div>

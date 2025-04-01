@@ -1,7 +1,18 @@
 import { cn } from '@/lib/utils';
-import type ReactPDF from '@react-pdf/renderer';
-import { usePDF } from '@react-pdf/renderer';
-import { memo, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  type DocumentProps,
+  type UsePDFInstance,
+  usePDF,
+} from '@react-pdf/renderer';
+import {
+  type RefObject,
+  memo,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Document, Page } from 'react-pdf';
 import { useDebouncedCallback } from 'use-debounce';
 import { useResizeObserver } from 'usehooks-ts';
@@ -21,13 +32,11 @@ const MemoizedPDFViewer = memo(
     isLoadingRef,
     instanceRef,
   }: {
-    debouncedInstance: ReactPDF.UsePDFInstance;
+    debouncedInstance: UsePDFInstance;
     fitSize: { width: number; height: number } | undefined;
-    setDebouncedInstance: React.Dispatch<
-      React.SetStateAction<ReactPDF.UsePDFInstance>
-    >;
-    isLoadingRef: React.MutableRefObject<boolean>;
-    instanceRef: React.MutableRefObject<ReactPDF.UsePDFInstance>;
+    setDebouncedInstance: React.Dispatch<React.SetStateAction<UsePDFInstance>>;
+    isLoadingRef: React.RefObject<boolean>;
+    instanceRef: React.RefObject<UsePDFInstance>;
   }) => {
     isLoadingRef.current = true;
     const loading = (
@@ -72,7 +81,7 @@ export function PDFViewer({
   className,
   ...props
 }: {
-  children: React.ReactElement<ReactPDF.DocumentProps>;
+  children: React.ReactElement<DocumentProps>;
 } & React.HTMLAttributes<HTMLDivElement>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<Size>({
@@ -92,11 +101,11 @@ export function PDFViewer({
   const onResize = useDebouncedCallback(setSize, 200);
 
   useResizeObserver({
-    ref: containerRef,
+    ref: containerRef as RefObject<HTMLElement>,
     onResize,
   });
 
-  const [instance] = useContext(PDFContext) ?? usePDF();
+  const [instance] = usePDF({ document: children });
 
   const [debouncedInstance, setDebouncedInstance] = useState(instance);
   const isLoadingRef = useRef(false);

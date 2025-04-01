@@ -46,7 +46,7 @@ export function Editor() {
       className="flex flex-1 flex-col overflow-hidden"
       atom={editorStore.editorTab}
     >
-      <TabsList className="h-auto w-full">
+      <TabsList className="h-auto w-full rounded-none">
         {(
           [
             ['student', PersonIcon],
@@ -56,7 +56,7 @@ export function Editor() {
           ] as const
         ).map(([x, Icon]) => (
           <TabsTrigger value={x} className="flex-1" key={x} aria-label={x}>
-            <Icon className="h-8 w-8" />
+            <Icon className="size-8" />
           </TabsTrigger>
         ))}
       </TabsList>
@@ -194,7 +194,7 @@ export function Editor() {
         )}
         <Button
           variant="outline"
-          className="mt-auto lt-lg:hidden"
+          className="mt-auto max-lg:hidden"
           onClick={() => setTab('subject')}
         >
           Back

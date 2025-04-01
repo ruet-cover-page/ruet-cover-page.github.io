@@ -62,4 +62,9 @@ export default defineConfig({
       }
     },
   },
+  performance: {
+    prefetch: {
+      type: 'all-chunks',
+    },
+  },
 });

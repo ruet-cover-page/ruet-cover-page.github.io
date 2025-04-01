@@ -13,10 +13,6 @@ module.exports = {
       },
     },
     extend: {
-      screens: {
-        'lt-lg': { max: `${Number.parseInt(screens.lg) - 0.1}px` },
-        'lt-sm': { max: `${Number.parseInt(screens.sm) - 0.1}px` },
-      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

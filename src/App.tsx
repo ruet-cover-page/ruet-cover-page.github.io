@@ -7,7 +7,6 @@ import { CoverTemplate } from './components/cover-template';
 import { Editor } from './components/editor/editor';
 import { InApp } from './components/in-app';
 import { TopbarLeft, TopbarRight } from './components/topbar';
-import { PDF } from './components/ui/pdf-context';
 import { Update } from './components/update';
 import { cn } from './lib/utils';
 import { previewModeAtom } from './store/preview-mode';
@@ -27,15 +26,13 @@ const App = () => {
     return () => mql.removeEventListener('change', handleChange);
   }, []);
 
-  const document = <CoverTemplate />;
-
   return (
     <main className="fixed inset-0 flex divide-x">
       <QueryClientProvider client={queryClient}>
         <div
           className={cn(
             'flex min-w-0 flex-1 origin-left flex-col divide-y transition-all',
-            previewMode && 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
+            previewMode && 'max-lg:invisible max-lg:grow-0 max-lg:scale-x-0',
           )}
         >
           <TopbarLeft />
@@ -45,13 +42,11 @@ const App = () => {
           <div
             className={cn(
               'flex min-w-0 flex-1 origin-left flex-col divide-y transition-all',
-              previewMode || 'lt-lg:invisible lt-lg:grow-0 lt-lg:scale-x-0',
+              previewMode || 'max-lg:invisible max-lg:grow-0 max-lg:scale-x-0',
             )}
           >
-            <PDF document={document}>
-              <TopbarRight document={document} />
-              <PDFViewer className="flex-1">{document}</PDFViewer>
-            </PDF>
+            <TopbarRight />
+            <PDFViewer className="flex-1">{<CoverTemplate />}</PDFViewer>
           </div>
         )}
       </QueryClientProvider>

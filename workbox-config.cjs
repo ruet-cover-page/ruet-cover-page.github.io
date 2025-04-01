@@ -3,4 +3,5 @@ module.exports = {
   globPatterns: ['**/*.{mjs,txt,png,ico,html,webmanifest,jpg,css,ttf,js}'],
   swDest: 'dist/sw.js',
   ignoreURLParametersMatching: [/^utm_/, /^fbclid$/],
+  maximumFileSizeToCacheInBytes: 3000000,
 };
