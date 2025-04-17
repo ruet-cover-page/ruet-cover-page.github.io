@@ -1,0 +1,19 @@
+@media (max-width: 639.9px) {
+  .input:focus {
+    width: 100%;
+  }
+
+  .container:has(.input:focus) {
+    background-color: var(--popover);
+    position: fixed;
+    inset: 0px;
+    z-index: 50;
+    padding: 1rem /* 16px */;
+    margin: 0px;
+    align-items: flex-start;
+
+    .back {
+      display: flex;
+    }
+  }
+}

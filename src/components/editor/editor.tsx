@@ -8,6 +8,7 @@ import editorStore, {
   typeAtom,
   types,
 } from '@/store/editor';
+import { teacherEffect } from '@/store/effects/editor';
 import { previewModeAtom } from '@/store/preview-mode';
 import {
   IdCardIcon,
@@ -15,7 +16,7 @@ import {
   PersonIcon,
   ReaderIcon,
 } from '@radix-ui/react-icons';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { DateInput } from './DateInput';
 import { Combobox } from './combobox';
 import { FormDescription } from './form-description';
@@ -40,6 +41,9 @@ export function Editor() {
   const courseCode = useAtomValue(editorStore.courseCode);
   const teacherName = useAtomValue(editorStore.teacherName);
   const secondTeacherName = useAtomValue(editorStore.secondTeacherName);
+
+  useAtom(teacherEffect);
+
   return (
     <Tabs
       defaultValue="student"
@@ -116,7 +120,7 @@ export function Editor() {
               atom={editorStore.coverNo}
               type="number"
               step={1}
-              min={1}
+              min={0}
             />
           </FormItem>
         </div>

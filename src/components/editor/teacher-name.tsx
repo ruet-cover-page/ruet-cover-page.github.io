@@ -15,8 +15,9 @@ import {
   PopoverContent,
 } from '@/components/ui/popover';
 import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 import { departmentLongMap, departmentShortMap } from '@/store/editor';
-import { Cross1Icon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon, Cross1Icon } from '@radix-ui/react-icons';
 import { useQuery } from '@tanstack/react-query';
 import { Command as CommandPrimitive } from 'cmdk';
 import { type WritableAtom, useAtom, useSetAtom } from 'jotai';
@@ -32,6 +33,7 @@ import {
 } from 'react';
 import { Button } from '../ui/button';
 import { FormItemContext } from './form-item';
+import classes from './teacher-name.module.css';
 
 export function TeacherName({
   nameAtom,
@@ -102,7 +104,15 @@ export function TeacherName({
   });
 
   return (
-    <div className="flex items-center">
+    <div className={cn('flex items-center gap-2', classes.container)}>
+      <Button
+        variant="outline"
+        size="icon"
+        className={cn('hidden', classes.back)}
+      >
+        <ArrowLeftIcon className="h-[1.2rem] w-[1.2rem]" />
+        <span className="sr-only">Back</span>
+      </Button>
       <Popover open={open} onOpenChange={setOpen}>
         <Command
           shouldFilter={false}
@@ -120,6 +130,7 @@ export function TeacherName({
                 }}
                 onMouseDown={() => setOpen((open) => !!value || !open)}
                 onFocus={() => setOpen(true)}
+                className={classes.input}
               >
                 <Input placeholder="Teacher" ref={inputRef} />
               </CommandPrimitive.Input>
@@ -148,7 +159,7 @@ export function TeacherName({
                 e.preventDefault();
               }
             }}
-            className="w-[var(--radix-popper-anchor-width)] p-0"
+            className="w-screen sm:w-[var(--radix-popper-anchor-width)] p-0"
           >
             <CommandList>
               {isLoading && (
