@@ -4,9 +4,7 @@ import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 
 export default defineConfig({
   output: {
-    sourceMap: {
-      js: 'source-map',
-    },
+    sourceMap: false,
   },
   plugins: [pluginReact()],
   html: {
