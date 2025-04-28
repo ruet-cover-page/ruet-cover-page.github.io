@@ -145,6 +145,7 @@ export function CoverTemplate() {
   const studentGroup = useAtomValue(editorStore.studentGroup);
   const courseInfoBellowTitle = useAtomValue(editorStore.courseInfoBellowTitle);
   const datesBellowTitle = useAtomValue(editorStore.datesBellowTitle);
+  const manualSubmittedBy = useAtomValue(editorStore.manualSubmittedBy);
 
   const teacherDept = secondTeacherName
     ? deptShortForm.get(teacherDepartment as Department)
@@ -170,20 +171,28 @@ export function CoverTemplate() {
         }}
       >
         <Text style={styles.thH}>Submitted by:</Text>
-        <Text style={styles.text}>
-          {useAtomValue(editorStore.studentName) || '.'}
-        </Text>
-        {!!studentGroup && (
-          <Text style={styles.text}>{`Group: ${studentGroup}`}</Text>
-        )}
-        <Text style={styles.text}>{`Roll: ${studentID}`}</Text>
-        {!!studentSection && (
-          <Text style={styles.text}>{`Section: ${studentSection}`}</Text>
-        )}
-        {!!studentSession && studentID.length >= 2 && (
-          <Text style={styles.text}>
-            Session: 20{studentID.slice(0, 2)}-{+studentID.slice(0, 2) + 1}
+        {manualSubmittedBy ? (
+          <Text style={{ ...styles.text, fontSize: 12 }}>
+            {useAtomValue(editorStore.manualSubmittedByText)}
           </Text>
+        ) : (
+          <>
+            <Text style={styles.text}>
+              {useAtomValue(editorStore.studentName) || '.'}
+            </Text>
+            {!!studentGroup && (
+              <Text style={styles.text}>{`Group: ${studentGroup}`}</Text>
+            )}
+            <Text style={styles.text}>{`Roll: ${studentID}`}</Text>
+            {!!studentSection && (
+              <Text style={styles.text}>{`Section: ${studentSection}`}</Text>
+            )}
+            {!!studentSession && studentID.length >= 2 && (
+              <Text style={styles.text}>
+                Session: 20{studentID.slice(0, 2)}-{+studentID.slice(0, 2) + 1}
+              </Text>
+            )}
+          </>
         )}
       </View>
       <View

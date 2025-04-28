@@ -215,9 +215,11 @@ export default {
   secondTeacherDepartment: stringItem('second-teacher-department', ''),
   dateOfExperiment: atom<null | Date>(dayjs().subtract(7, 'days').toDate()),
   dateOfSubmission: atom<null | Date>(new Date()),
+  manualSubmittedByText: stringItem('manualSubmittedByText', ''),
   /**
    * Settings
    */
+  manualSubmittedBy: booleanItem('manualSubmittedBy', false),
   formToBorder: booleanItem('formToBorder', false),
   watermark: booleanItem('watermark', false),
   courseCode: booleanItem('courseCode', false),

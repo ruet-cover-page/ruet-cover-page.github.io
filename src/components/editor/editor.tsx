@@ -41,6 +41,7 @@ export function Editor() {
   const courseCode = useAtomValue(editorStore.courseCode);
   const teacherName = useAtomValue(editorStore.teacherName);
   const secondTeacherName = useAtomValue(editorStore.secondTeacherName);
+  const manualSubmittedBy = useAtomValue(editorStore.manualSubmittedBy);
 
   useAtom(teacherEffect);
 
@@ -66,18 +67,30 @@ export function Editor() {
       </TabsList>
       <TabsContent value="student" className={tabContentClass}>
         <h2 className={tabHeaderClass}>Student</h2>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <FormItem label="Student ID">
-            <TextInput atom={editorStore.studentID} />
+        <SwitchInput
+          atom={editorStore.manualSubmittedBy}
+          label="Manual Input"
+        />
+        {manualSubmittedBy ? (
+          <FormItem label="Submitted By">
+            <TextAreaInput atom={editorStore.manualSubmittedByText} rows={10} />
           </FormItem>
-          <FormItem label="Section">
-            <TextInput atom={editorStore.studentSection} />
-            <FormDescription>leave empty if not applicable</FormDescription>
-          </FormItem>
-        </div>
-        <FormItem label="Full Name">
-          <TextInput atom={editorStore.studentName} />
-        </FormItem>
+        ) : (
+          <>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <FormItem label="Student ID">
+                <TextInput atom={editorStore.studentID} />
+              </FormItem>
+              <FormItem label="Section">
+                <TextInput atom={editorStore.studentSection} />
+                <FormDescription>leave empty if not applicable</FormDescription>
+              </FormItem>
+            </div>
+            <FormItem label="Full Name">
+              <TextInput atom={editorStore.studentName} />
+            </FormItem>
+          </>
+        )}
         <FormItem label="Department">
           <Combobox
             name="department"
