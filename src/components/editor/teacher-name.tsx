@@ -16,10 +16,15 @@ import {
 } from '@/components/ui/popover';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
-import { departmentLongMap, departmentShortMap } from '@/store/editor';
+import {
+  departmentLongMap,
+  departmentShortMap,
+  teachersIDBStore,
+} from '@/store/editor';
 import { ArrowLeftIcon, Cross1Icon } from '@radix-ui/react-icons';
 import { useQuery } from '@tanstack/react-query';
 import { Command as CommandPrimitive } from 'cmdk';
+import * as idbKeyVal from 'idb-keyval';
 import { type WritableAtom, useAtom, useSetAtom } from 'jotai';
 import { type RESET, useResetAtom } from 'jotai/utils';
 import { matchSorter } from 'match-sorter';
@@ -56,12 +61,37 @@ export function TeacherName({
   const { data: teachers, isLoading } = useQuery({
     queryKey: ['teachers'],
     queryFn: async () => {
-      const res = await fetch(`${process.env.PUBLIC_API}/teachers`);
-      const data = await res.json();
-      return (data.list as { name: string; post: string; dept: string }[])
-        .filter((x) => x.post !== 'Head')
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map((x, i) => ({ ...x, id: `${x.name} ${x.dept} ${x.post}:${i}` }));
+      try {
+        const updatedAt = (await idbKeyVal.get(
+          'updatedAt',
+          teachersIDBStore,
+        )) as Date | null;
+        if (new Date().getTime() - (updatedAt?.getTime() || 0) < 36e5) {
+          const teachers = await idbKeyVal.get('teachers', teachersIDBStore);
+          if (Array.isArray(teachers)) return teachers;
+        }
+        const res = await fetch(`${process.env.PUBLIC_API}/teachers`);
+        const data = await res.json();
+        const teachers = (
+          data.list as { name: string; post: string; dept: string }[]
+        )
+          .filter((x) => x.post !== 'Head')
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((x, i) => ({ ...x, id: `${x.name} ${x.dept} ${x.post}:${i}` }));
+
+        await idbKeyVal.setMany(
+          [
+            ['updatedAt', new Date()],
+            ['teachers', teachers],
+          ],
+          teachersIDBStore,
+        );
+
+        return teachers;
+      } catch {
+        const teachers = await idbKeyVal.get('teachers', teachersIDBStore);
+        return Array.isArray(teachers) ? teachers : [];
+      }
     },
   });
 
@@ -118,6 +148,7 @@ export function TeacherName({
           shouldFilter={false}
           value={selected}
           onValueChange={setSelected}
+          className="bg-transparent"
         >
           <div className="relative">
             <PopoverAnchor asChild>

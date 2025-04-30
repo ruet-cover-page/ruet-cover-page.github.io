@@ -133,6 +133,7 @@ export function CoverTemplate() {
   const secondTeacherDesignation = useAtomValue(
     editorStore.secondTeacherDesignation,
   );
+  const manualSubmittedByText = useAtomValue(editorStore.manualSubmittedByText);
 
   /**
    * Settings
@@ -172,8 +173,16 @@ export function CoverTemplate() {
       >
         <Text style={styles.thH}>Submitted by:</Text>
         {manualSubmittedBy ? (
-          <Text style={{ ...styles.text, fontSize: 12 }}>
-            {useAtomValue(editorStore.manualSubmittedByText)}
+          <Text
+            style={{
+              ...styles.text,
+              fontSize: Math.min(
+                16,
+                144 / (manualSubmittedByText.split('\n').length || 1),
+              ),
+            }}
+          >
+            {manualSubmittedByText}
           </Text>
         ) : (
           <>

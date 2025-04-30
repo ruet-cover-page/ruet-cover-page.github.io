@@ -92,7 +92,7 @@ const studentDepartment = atomWithStorage<Department | ''>(
   { getOnInit: true },
 );
 
-export const types = ['Lab Report', 'Assignment'] as const;
+export const types = ['Lab Report', 'Assignment', 'Report'] as const;
 
 export const designations = [
   'Lecturer',
@@ -195,6 +195,8 @@ const courseNo = atom(
     }
   },
 );
+
+export const teachersIDBStore = idbKeyVal.createStore('teachers', 'teachers');
 
 export default {
   editorTab: stringItem('editor-tab', 'student'),
