@@ -47,7 +47,6 @@ server.close(() => {
   console.log('Server stopped.');
 });
 
-await $`bun workbox generateSW workbox-config.cjs`;
 await Bun.write(
   path.join(__dirname, 'dist/manifest.webmanifest'),
   Bun.file(path.join(__dirname, 'public/manifest.webmanifest')),

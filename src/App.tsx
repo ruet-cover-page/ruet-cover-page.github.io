@@ -5,9 +5,7 @@ import { useEffect, useState } from 'react';
 import { PDFViewer } from './components/PDFViewer';
 import { CoverTemplate } from './components/cover-template';
 import { Editor } from './components/editor/editor';
-import { InApp } from './components/in-app';
 import { TopbarLeft, TopbarRight } from './components/topbar';
-import { Update } from './components/update';
 import { cn } from './lib/utils';
 import { previewModeAtom } from './store/preview-mode';
 
@@ -50,8 +48,6 @@ const App = () => {
           </div>
         )}
       </QueryClientProvider>
-      <InApp />
-      <Update />
     </main>
   );
 };
