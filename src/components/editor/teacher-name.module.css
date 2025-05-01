@@ -1,9 +1,5 @@
 @media (max-width: 639.9px) {
-  .input:focus {
-    width: 100%;
-  }
-
-  .container:has(.input:focus) {
+  .containerFullScreen {
     background-color: var(--popover);
     position: fixed;
     inset: 0px;
@@ -12,8 +8,21 @@
     margin: 0px;
     align-items: flex-start;
 
+    .command {
+      height: auto;
+    }
+    .backDrop {
+      background-color: var(--popover);
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+    }
     .back {
       display: flex;
+    }
+    .input {
+      width: 100%;
     }
   }
 }

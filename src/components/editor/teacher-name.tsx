@@ -116,7 +116,6 @@ export function TeacherName({
       dept && setDepartment(dept);
     }
     setOpen(false);
-    inputRef.current?.blur();
   };
 
   const [selected, setSelected] = useState('');
@@ -135,11 +134,23 @@ export function TeacherName({
   });
 
   return (
-    <div className={cn('flex items-center gap-2', classes.container)}>
+    <div
+      className={cn(
+        'flex items-center gap-2',
+        open && classes.containerFullScreen,
+      )}
+    >
+      <button
+        type="button"
+        className={cn('hidden', classes.backDrop)}
+        onClick={() => setOpen(false)}
+        tabIndex={-1}
+      />
       <Button
         variant="outline"
         size="icon"
         className={cn('hidden', classes.back)}
+        onClick={() => setOpen(false)}
       >
         <ArrowLeftIcon className="h-[1.2rem] w-[1.2rem]" />
         <span className="sr-only">Back</span>
@@ -149,7 +160,7 @@ export function TeacherName({
           shouldFilter={false}
           value={selected}
           onValueChange={setSelected}
-          className="bg-transparent"
+          className={cn('bg-transparent', classes.command)}
         >
           <div className="relative">
             <PopoverAnchor asChild>
@@ -173,7 +184,10 @@ export function TeacherName({
                 size="icon"
                 className="absolute right-0 bottom-0 z-10"
                 aria-label="reset"
-                onClick={reset}
+                onClick={() => {
+                  reset();
+                  inputRef.current?.focus();
+                }}
               >
                 <Cross1Icon className="h-4 w-4 opacity-50" />
               </Button>
@@ -183,14 +197,8 @@ export function TeacherName({
           <PopoverContent
             asChild
             onOpenAutoFocus={(e) => e.preventDefault()}
-            onInteractOutside={(e) => {
-              if (
-                e.target instanceof Element &&
-                e.target === inputRef.current
-              ) {
-                e.preventDefault();
-              }
-            }}
+            onInteractOutside={(e) => e.preventDefault()}
+            onFocus={() => inputRef.current?.focus()}
             className="w-screen sm:w-[var(--radix-popper-anchor-width)] p-0"
           >
             <CommandList>
