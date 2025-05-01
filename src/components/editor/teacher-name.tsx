@@ -116,6 +116,7 @@ export function TeacherName({
       dept && setDepartment(dept);
     }
     setOpen(false);
+    inputRef.current?.blur();
   };
 
   const [selected, setSelected] = useState('');
