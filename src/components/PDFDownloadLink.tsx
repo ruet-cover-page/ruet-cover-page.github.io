@@ -26,13 +26,30 @@ export const PDFDownloadLink = ({
   ) => {
     startTransition(async () => {
       try {
-        await fileSave(
-          await pdf(<CoverTemplate key={Math.random()} />).toBlob(),
-          {
-            fileName: fileNameClean,
-            extensions: ['.pdf'],
-          },
-        );
+        const blob = await pdf(<CoverTemplate key={Math.random()} />).toBlob();
+        if (window.navigator.userAgent === 'ruet-cover-page-gen') {
+          const fileReader = new FileReader();
+          fileReader.onloadend = () => {
+            (
+              window as {
+                ReactNativeWebView?: {
+                  postMessage(msg: string): void;
+                };
+              }
+            ).ReactNativeWebView?.postMessage(
+              JSON.stringify({
+                dataURI: fileReader.result,
+                fileName: fileNameClean,
+              }),
+            );
+          };
+          fileReader.readAsDataURL(blob);
+          return;
+        }
+        await fileSave(blob, {
+          fileName: fileNameClean,
+          extensions: ['.pdf'],
+        });
       } catch (error) {
         console.error(error);
         alert('Could not download!');
