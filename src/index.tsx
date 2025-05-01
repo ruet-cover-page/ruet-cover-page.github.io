@@ -22,7 +22,11 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
+if (
+  'serviceWorker' in navigator &&
+  import.meta.env.PROD &&
+  navigator.userAgent !== 'ruet-cover-page-gen'
+) {
   const { Workbox } = await import('workbox-window');
 
   const wb = new Workbox('/sw.js');
