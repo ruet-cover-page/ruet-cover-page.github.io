@@ -17,6 +17,8 @@ if (rootEl) {
   );
 }
 
+document.getElementById('loading-toast')?.remove();
+
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
   import.meta.url,

@@ -32,6 +32,26 @@
     ></script>
   </head>
   <body>
+    <div
+      id="loading-toast"
+      style="
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        right: 1rem;
+        background: #333e;
+        color: white;
+        padding: 1.5rem 1rem;
+        text-align: center;
+        font-family: sans-serif;
+        font-size: 14px;
+        z-index: 9999;
+        border-radius: 1rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      "
+    >
+      Loading...
+    </div>
     <div id="<%= mountId %>"></div>
   </body>
 </html>
