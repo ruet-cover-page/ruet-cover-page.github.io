@@ -1,22 +1,33 @@
 import path from 'node:path';
 import { $ } from 'bun';
-import httpServer from 'http-server';
 import puppeteer from 'puppeteer';
 
 const PORT = 3030;
+const DIST_DIR = path.join(import.meta.dir, 'dist');
 
-const startServer = () => {
-  const server = httpServer.createServer({
-    root: path.join(__dirname, 'dist'),
-  });
-  return new Promise<typeof server>((resolve) => {
-    server.listen(PORT, 'localhost', () => {
-      console.log(`Server started at http://localhost:${PORT}`);
-      resolve(server);
-    });
-  });
-};
-const server = await startServer();
+const server = Bun.serve({
+  port: PORT,
+  async fetch(req) {
+    const url = new URL(req.url);
+    const filePath = path.join(DIST_DIR, decodeURIComponent(url.pathname));
+
+    try {
+      const file = Bun.file(filePath);
+      if (!(await file.exists())) {
+        // Fallback to index.html for SPA routing
+        return new Response(Bun.file(path.join(DIST_DIR, 'index.html')));
+      }
+      return new Response(file);
+    } catch {
+      return new Response('404 Not Found', { status: 404 });
+    }
+  },
+});
+
+console.log(
+  `🚀 Bun server streaming from ${DIST_DIR} at http://localhost:${PORT}`,
+);
+
 const browser = await puppeteer.launch({
   headless: true,
   args: ['--no-sandbox'],
@@ -43,9 +54,8 @@ const updatedHTML = indexHTML
 await Bun.write(path.join(__dirname, 'dist/index.html'), updatedHTML);
 
 await browser.close();
-server.close(() => {
-  console.log('Server stopped.');
-});
+await server.stop();
+console.log('Server stopped.');
 
 await $`bun workbox generateSW workbox-config.cjs`;
 await Bun.write(
