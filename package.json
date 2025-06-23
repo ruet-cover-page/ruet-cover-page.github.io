@@ -63,7 +63,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "prettier": "^3.6.0",
-    "puppeteer": "^24.4.0",
+    "puppeteer": "^24.10.2",
     "tailwindcss": "^4.1.10",
     "typescript": "^5.8.3",
     "workbox-cli": "^7.3.0",
