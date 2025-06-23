@@ -148,3 +148,13 @@
     }
   }
 }
+
+@font-face {
+  font-family: "TeX Gyre Termes";
+  src: url("./assets/fonts/TeXGyreTermes-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+canvas {
+  font-family: "TeX Gyre Termes", sans-serif;
+}

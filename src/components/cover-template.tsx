@@ -1,12 +1,3 @@
-import RUETLogo from '@/assets/RUET-Logo.png';
-import TeXGyreTermesBold from '@/assets/fonts/TeXGyreTermes-Bold.ttf';
-import TeXGyreTermes from '@/assets/fonts/TeXGyreTermes-Regular.ttf';
-import motto from '@/assets/motto.png';
-import editorStore, {
-  type Department,
-  deptShortForm,
-  typeAtom,
-} from '@/store/editor';
 import {
   Document,
   Font,
@@ -18,6 +9,16 @@ import {
 } from '@react-pdf/renderer';
 import dayjs from 'dayjs';
 import { useAtomValue } from 'jotai';
+import TeXGyreTermesBold from '@/assets/fonts/TeXGyreTermes-Bold.ttf';
+import TeXGyreTermes from '@/assets/fonts/TeXGyreTermes-Regular.ttf';
+import motto from '@/assets/motto.png';
+import RUETLogo from '@/assets/RUET-Logo.png';
+import { getBestFitFontSize } from '@/lib/best-fit-font-size';
+import editorStore, {
+  type Department,
+  deptShortForm,
+  typeAtom,
+} from '@/store/editor';
 
 Font.register({
   family: 'TeX Gyre Termes',
@@ -133,6 +134,7 @@ export function CoverTemplate() {
   const secondTeacherDesignation = useAtomValue(
     editorStore.secondTeacherDesignation,
   );
+  const studentName = useAtomValue(editorStore.studentName);
   const manualSubmittedByText = useAtomValue(editorStore.manualSubmittedByText);
 
   /**
@@ -151,6 +153,17 @@ export function CoverTemplate() {
   const teacherDept = secondTeacherName
     ? deptShortForm.get(teacherDepartment as Department)
     : teacherDepartment;
+
+  const manualFontSize = manualSubmittedBy
+    ? getBestFitFontSize({
+        text: manualSubmittedByText,
+        fontFamily: 'TeX Gyre Termes',
+        maxHeight: 170,
+        maxWidth: 230,
+        minFontSize: 1,
+        maxFontSize: 16,
+      })
+    : undefined;
 
   const studentTeacherTable = (
     <View
@@ -176,19 +189,15 @@ export function CoverTemplate() {
           <Text
             style={{
               ...styles.text,
-              fontSize: Math.min(
-                16,
-                144 / (manualSubmittedByText.split('\n').length || 1),
-              ),
+              fontSize: manualFontSize,
+              lineHeight: manualFontSize && Math.max(1, manualFontSize / 12),
             }}
           >
             {manualSubmittedByText}
           </Text>
         ) : (
           <>
-            <Text style={styles.text}>
-              {useAtomValue(editorStore.studentName) || '.'}
-            </Text>
+            <Text style={styles.text}>{studentName || '.'}</Text>
             {!!studentGroup && (
               <Text style={styles.text}>{`Group: ${studentGroup}`}</Text>
             )}
