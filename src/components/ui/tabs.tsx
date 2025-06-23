@@ -1,9 +1,7 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs';
+import { useAtom, type WritableAtom } from 'jotai';
 import * as React from 'react';
-
 import { cn } from '@/lib/utils';
-
-import { type WritableAtom, useAtom } from 'jotai';
 
 const Tabs = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.Root>,

@@ -1,5 +1,5 @@
 import { CalendarIcon, Cross1Icon } from '@radix-ui/react-icons';
-import { type WritableAtom, useAtom } from 'jotai';
+import { useAtom, type WritableAtom } from 'jotai';
 import type { Value } from 'node_modules/react-date-picker/dist/esm/shared/types';
 import { useContext, useEffect, useRef } from 'react';
 import DatePicker, { type DatePickerProps } from 'react-date-picker';

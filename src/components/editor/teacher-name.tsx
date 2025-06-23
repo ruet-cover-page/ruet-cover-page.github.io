@@ -2,6 +2,21 @@
  * @link https://github.com/Balastrong/shadcn-autocomplete-demo/
  */
 
+import { ArrowLeftIcon, Cross1Icon } from '@radix-ui/react-icons';
+import { useQuery } from '@tanstack/react-query';
+import { Command as CommandPrimitive } from 'cmdk';
+import * as idbKeyVal from 'idb-keyval';
+import { useAtom, useSetAtom, type WritableAtom } from 'jotai';
+import { type RESET, useResetAtom } from 'jotai/utils';
+import { matchSorter } from 'match-sorter';
+import {
+  useContext,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   Command,
   CommandGroup,
@@ -21,21 +36,6 @@ import {
   departmentShortMap,
   teachersIDBStore,
 } from '@/store/editor';
-import { ArrowLeftIcon, Cross1Icon } from '@radix-ui/react-icons';
-import { useQuery } from '@tanstack/react-query';
-import { Command as CommandPrimitive } from 'cmdk';
-import * as idbKeyVal from 'idb-keyval';
-import { type WritableAtom, useAtom, useSetAtom } from 'jotai';
-import { type RESET, useResetAtom } from 'jotai/utils';
-import { matchSorter } from 'match-sorter';
-import {
-  useContext,
-  useDeferredValue,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
 import { Button } from '../ui/button';
 import { FormItemContext } from './form-item';
 import classes from './teacher-name.module.css';
@@ -66,7 +66,7 @@ export function TeacherName({
           'updatedAt',
           teachersIDBStore,
         )) as Date | null;
-        if (new Date().getTime() - (updatedAt?.getTime() || 0) < 36e5) {
+        if (Date.now() - (updatedAt?.getTime() || 0) < 36e5) {
           const teachers = await idbKeyVal.get('teachers', teachersIDBStore);
           if (Array.isArray(teachers)) return teachers;
         }

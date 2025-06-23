@@ -1,13 +1,11 @@
-import { cn } from '@/lib/utils';
 import {
   type DocumentProps,
   type UsePDFInstance,
   usePDF,
 } from '@react-pdf/renderer';
 import {
-  type RefObject,
   memo,
-  useContext,
+  type RefObject,
   useEffect,
   useMemo,
   useRef,
@@ -16,8 +14,8 @@ import {
 import { Document, Page } from 'react-pdf';
 import { useDebouncedCallback } from 'use-debounce';
 import { useResizeObserver } from 'usehooks-ts';
+import { cn } from '@/lib/utils';
 import { coverSkeleton } from './cover-skeleton';
-import { PDFContext } from './ui/pdf-context';
 
 type Size = {
   width?: number;

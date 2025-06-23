@@ -1,13 +1,12 @@
+import { ArrowLeftIcon, EyeOpenIcon } from '@radix-ui/react-icons';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { useMemo } from 'react';
 import icon from '@/assets/icon.svg';
 import atoms from '@/store/editor';
 import { previewModeAtom } from '@/store/preview-mode';
-import { ArrowLeftIcon, EyeOpenIcon } from '@radix-ui/react-icons';
-import type { PDFDownloadLinkProps } from '@react-pdf/renderer';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { useMemo } from 'react';
-import PDFDownloadLink from './PDFDownloadLink';
 import { About } from './about';
 import { ModeToggle } from './mode-toggle';
+import PDFDownloadLink from './PDFDownloadLink';
 import { Button } from './ui/button';
 
 export function TopbarLeft() {

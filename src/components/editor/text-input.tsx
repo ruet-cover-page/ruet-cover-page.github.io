@@ -1,8 +1,8 @@
-import { Input, type InputProps } from '@/components/ui/input';
 import { Cross1Icon } from '@radix-ui/react-icons';
-import { type WritableAtom, useAtom } from 'jotai';
+import { useAtom, type WritableAtom } from 'jotai';
 import { type RESET, useResetAtom } from 'jotai/utils';
 import { useContext } from 'react';
+import { Input } from '@/components/ui/input';
 import { Button } from '../ui/button';
 import { FormItemContext } from './form-item';
 
@@ -14,7 +14,7 @@ export function TextInput<
   ...props
 }: {
   atom: T;
-} & InputProps) {
+} & React.ComponentProps<'input'>) {
   const [value, setValue] = useAtom(atom);
   const reset = useResetAtom(atom);
   const { id } = useContext(FormItemContext);

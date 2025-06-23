@@ -303,12 +303,12 @@ export function CoverTemplate() {
         >
           {!!coverNo &&
             dataListItem(
-              `${type === 'Assignment' ? type : 'Experiment'} No.`,
+              `${type !== 'Lab Report' ? type : 'Experiment'} No.`,
               coverNo === '0' ? '' : coverNo.padStart(2, '0'),
             )}
           {!!coverTitle &&
             dataListItem(
-              `${type === 'Assignment' ? type : 'Experiment'} Title`,
+              `${type !== 'Lab Report' ? type : 'Experiment'} Title`,
               coverTitle,
             )}
           {courseInfoBellowTitle && (

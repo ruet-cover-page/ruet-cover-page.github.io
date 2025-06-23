@@ -2,6 +2,9 @@
  * @link https://github.com/Balastrong/shadcn-autocomplete-demo/
  */
 
+import { CheckIcon } from '@radix-ui/react-icons';
+import { Command as CommandPrimitive } from 'cmdk';
+import { useMemo, useState } from 'react';
 import {
   Command,
   CommandEmpty,
@@ -17,9 +20,6 @@ import {
 } from '@/components/ui/popover';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
-import { CheckIcon } from '@radix-ui/react-icons';
-import { Command as CommandPrimitive } from 'cmdk';
-import { useMemo, useState } from 'react';
 
 type Props<T extends string> = {
   selectedValue: T;

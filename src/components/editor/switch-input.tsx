@@ -1,7 +1,7 @@
+import { useAtom, type WritableAtom } from 'jotai';
+import { useId } from 'react';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { type WritableAtom, useAtom } from 'jotai';
-import { useId } from 'react';
 
 export function SwitchInput<T extends WritableAtom<boolean, [boolean], void>>({
   atom,

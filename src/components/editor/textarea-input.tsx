@@ -1,6 +1,6 @@
-import { Textarea, type TextareaProps } from '@/components/ui/textarea';
-import { type WritableAtom, useAtom } from 'jotai';
+import { useAtom, type WritableAtom } from 'jotai';
 import { useContext } from 'react';
+import { Textarea, type TextareaProps } from '@/components/ui/textarea';
 import { FormItemContext } from './form-item';
 
 export function TextAreaInput<

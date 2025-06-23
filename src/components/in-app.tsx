@@ -1,3 +1,4 @@
+import { useAtom } from 'jotai';
 import {
   Dialog,
   DialogContent,
@@ -5,7 +6,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { isInAppAtom } from '@/store/dialogs';
-import { useAtom } from 'jotai';
 
 export function InApp() {
   const [isInApp, setIsInApp] = useAtom(isInAppAtom);

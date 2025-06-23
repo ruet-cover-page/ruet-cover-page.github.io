@@ -1,3 +1,10 @@
+import {
+  IdCardIcon,
+  MixerVerticalIcon,
+  PersonIcon,
+  ReaderIcon,
+} from '@radix-ui/react-icons';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
@@ -10,15 +17,9 @@ import editorStore, {
 } from '@/store/editor';
 import { teacherEffect } from '@/store/effects/editor';
 import { previewModeAtom } from '@/store/preview-mode';
-import {
-  IdCardIcon,
-  MixerVerticalIcon,
-  PersonIcon,
-  ReaderIcon,
-} from '@radix-ui/react-icons';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { DateInput } from './DateInput';
+import { Switch } from '../ui/switch';
 import { Combobox } from './combobox';
+import { DateInput } from './DateInput';
 import { FormDescription } from './form-description';
 import { FormItem } from './form-item';
 import { SelectInput } from './select-input';
@@ -120,23 +121,7 @@ export function Editor() {
             <TextInput atom={editorStore.courseTitle} />
           </FormItem>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <FormItem label="Type">
-            <SelectInput<(typeof types)[number]>
-              name="type"
-              atom={typeAtom}
-              options={types.map((x) => ({ label: x, value: x }))}
-            />
-          </FormItem>
-          <FormItem label="No.">
-            <TextInput
-              atom={editorStore.coverNo}
-              type="number"
-              step={1}
-              min={0}
-            />
-          </FormItem>
-        </div>
+        <TypeAndCoverNo />
         <FormItem label="Title">
           <TextAreaInput atom={editorStore.coverTitle} rows={3} />
           <FormDescription>leave empty if not applicable</FormDescription>
@@ -265,5 +250,39 @@ function DateOfExperiment() {
         <DateInput atom={editorStore.dateOfExperiment} />
       </FormItem>
     )
+  );
+}
+
+function TypeAndCoverNo() {
+  const type = useAtomValue(typeAtom);
+  const [coverNo, setCoverNo] = useAtom(editorStore.coverNo);
+
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      <FormItem label="Type">
+        <SelectInput<(typeof types)[number]>
+          name="type"
+          atom={typeAtom}
+          options={types.map((x) => ({ label: x, value: x }))}
+        />
+      </FormItem>
+      <FormItem
+        label={`${type} No.`}
+        actions={
+          <Switch
+            defaultChecked={coverNo !== ''}
+            onCheckedChange={(x) => setCoverNo(x ? '1' : '')}
+          />
+        }
+      >
+        <TextInput
+          atom={editorStore.coverNo}
+          disabled={coverNo === ''}
+          type="number"
+          step={1}
+          min={0}
+        />
+      </FormItem>
+    </div>
   );
 }

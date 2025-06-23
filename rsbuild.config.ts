@@ -47,7 +47,7 @@ export default defineConfig({
     },
   },
   tools: {
-    rspack(config, { appendPlugins }) {
+    rspack(_config, { appendPlugins }) {
       // Only register the plugin when RSDOCTOR is true, as the plugin will increase the build time.
       if (process.env.RSDOCTOR) {
         appendPlugins(

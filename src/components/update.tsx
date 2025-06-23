@@ -1,3 +1,4 @@
+import { useAtomValue } from 'jotai';
 import star from '@/assets/star.svg';
 import {
   Dialog,
@@ -6,7 +7,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { updatePrompt } from '@/store/dialogs';
-import { useAtomValue } from 'jotai';
 import { Button } from './ui/button';
 
 export function Update() {

@@ -1,14 +1,9 @@
-import { defaultStore } from '@/store';
-import editor from '@/store/editor';
 import { DownloadIcon } from '@radix-ui/react-icons';
 import { pdf } from '@react-pdf/renderer';
 import { fileSave } from 'browser-fs-access';
-import {
-  type ComponentProps,
-  type MouseEvent,
-  createElement,
-  useTransition,
-} from 'react';
+import { type ComponentProps, type MouseEvent, useTransition } from 'react';
+import { defaultStore } from '@/store';
+import editor from '@/store/editor';
 import { CoverTemplate } from './cover-template';
 import { LoadingSpinner } from './ui/loading-spinner';
 
@@ -22,7 +17,7 @@ export const PDFDownloadLink = ({
     .replace(/[^a-zA-Z0-9.\-_]/g, '');
 
   const handleClick = (
-    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+    _event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => {
     startTransition(async () => {
       try {
@@ -64,7 +59,7 @@ export const PDFDownloadLink = ({
         teacher: defaultStore.get(editor.teacherName) || 'Blank',
         watermark: defaultStore.get(editor.watermark) ? 'true' : 'false',
       });
-    } catch (err) {
+    } catch (_err) {
       console.error();
     }
   };

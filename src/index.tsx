@@ -39,7 +39,7 @@ if (
     }
   });
 
-  wb.addEventListener('waiting', (event) => {
+  wb.addEventListener('waiting', (_event) => {
     console.log(
       `A new service worker has installed, but it can't activate` +
         'until all tabs running the current version have fully unloaded.',

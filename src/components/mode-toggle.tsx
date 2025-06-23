@@ -1,5 +1,5 @@
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
-
+import { useAtom } from 'jotai';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { themeAtom } from '@/store/theme';
-import { useAtom, useSetAtom } from 'jotai';
 
 export function ModeToggle() {
   const [theme, setTheme] = useAtom(themeAtom);

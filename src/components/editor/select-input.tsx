@@ -1,5 +1,5 @@
+import { useAtom, type WritableAtom } from 'jotai';
 import * as React from 'react';
-
 import {
   Select,
   SelectContent,
@@ -7,8 +7,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-
-import { type WritableAtom, useAtom } from 'jotai';
 import { FormItemContext } from './form-item';
 
 export function SelectInput<
@@ -28,7 +26,7 @@ export function SelectInput<
 
   return (
     <Select value={value} onValueChange={setValue}>
-      <SelectTrigger id={id}>
+      <SelectTrigger id={id} className="w-full">
         <SelectValue placeholder={name} />
       </SelectTrigger>
       <SelectContent>

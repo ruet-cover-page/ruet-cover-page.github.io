@@ -1,8 +1,8 @@
-import { SimpleStorage } from '@/lib/simple-storage';
 import dayjs from 'dayjs';
 import * as idbKeyVal from 'idb-keyval';
 import { atom } from 'jotai';
-import { RESET, atomWithStorage } from 'jotai/utils';
+import { atomWithStorage, RESET } from 'jotai/utils';
+import { SimpleStorage } from '@/lib/simple-storage';
 
 export enum Department {
   Arch = 'Architecture',
@@ -138,7 +138,7 @@ const studentName = atom(
 const studentSection = stringItem('student-section', '');
 const studentID = atom(
   (get) => get(_studentIDAtom),
-  (get, set, studentID: string | typeof RESET) => {
+  (_get, set, studentID: string | typeof RESET) => {
     if (studentID === RESET) return set(_studentIDAtom, '');
     set(_studentIDAtom, studentID);
     if (studentID.length >= 4) {
@@ -179,7 +179,7 @@ const courseTitle = atom(
 );
 const courseNo = atom(
   (get) => get(_courseNoAtom),
-  (get, set, courseNo: string | typeof RESET) => {
+  (_get, set, courseNo: string | typeof RESET) => {
     if (courseNo === RESET) return set(_courseNoAtom, '');
     set(_courseNoAtom, courseNo);
     if (courseNo.length >= 3) {

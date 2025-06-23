@@ -1,11 +1,7 @@
-import {
-  CaretSortIcon,
-  CheckIcon,
-  Cross1Icon,
-  Cross2Icon,
-} from '@radix-ui/react-icons';
+import { CaretSortIcon, CheckIcon, Cross1Icon } from '@radix-ui/react-icons';
+import { useAtom, type WritableAtom } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 import * as React from 'react';
-
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -21,8 +17,6 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { type WritableAtom, useAtom } from 'jotai';
-import { useResetAtom } from 'jotai/utils';
 import { FormItemContext } from './form-item';
 
 export function Combobox({

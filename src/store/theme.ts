@@ -1,10 +1,10 @@
+import { atomWithStorage } from 'jotai/utils';
 import {
-  type Theme,
   applyTheme,
   getManualTheme,
   getSystemTheme,
+  type Theme,
 } from '@/lib/theme';
-import { atomWithStorage } from 'jotai/utils';
 
 export const themeAtom = atomWithStorage<Theme | 'auto'>(
   import.meta.env.PUBLIC_THEME_KEY,

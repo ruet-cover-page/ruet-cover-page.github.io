@@ -1,12 +1,3 @@
-import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import {
   EyeOpenIcon,
   GitHubLogoIcon,
@@ -15,6 +6,14 @@ import {
   MixerVerticalIcon,
   MobileIcon,
 } from '@radix-ui/react-icons';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 
 export function About() {
   return (
