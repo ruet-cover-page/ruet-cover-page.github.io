@@ -92,7 +92,7 @@ const studentDepartment = atomWithStorage<Department | ''>(
   { getOnInit: true },
 );
 
-export const types = ['Lab Report', 'Assignment', 'Report'] as const;
+export const types = ['Lab Report', 'Assignment', 'Report', 'Thesis'] as const;
 
 export const designations = [
   'Lecturer',
@@ -101,7 +101,7 @@ export const designations = [
   'Professor',
 ] as const;
 
-export const typeAtom = atomWithStorage<(typeof types)[number]>(
+const type = atomWithStorage<(typeof types)[number]>(
   'cover-type',
   'Lab Report',
   new SimpleStorage<(typeof types)[number]>(),
@@ -119,6 +119,7 @@ function booleanItem(key: string, initialValue: boolean) {
     getOnInit: true,
   });
 }
+const coverNo = stringItem('cover-no', '1');
 const studentNameIDBStore = idbKeyVal.createStore(
   'student-name',
   'student-name',
@@ -207,7 +208,8 @@ export default {
   studentGroup: stringItem('student-group', ''),
   courseNo,
   courseTitle,
-  coverNo: stringItem('cover-no', '1'),
+  type,
+  coverNo,
   coverTitle: stringItem('cover-title', ''),
   teacherName: stringItem('teacher-name', ''),
   teacherDesignation: stringItem('teacher-designation', ''),

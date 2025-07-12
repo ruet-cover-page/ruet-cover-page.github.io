@@ -3,7 +3,7 @@ import type { SyncStorage } from 'jotai/vanilla/utils/atomWithStorage';
 export class SimpleStorage<T extends string> implements SyncStorage<T> {
   getItem(key: string, initialValue: T) {
     const savedValue = localStorage.getItem(key);
-    return (savedValue as T) || initialValue;
+    return (savedValue as T) ?? initialValue;
   }
   setItem(key: string, value: T) {
     localStorage.setItem(key, value);

@@ -14,11 +14,7 @@ import TeXGyreTermes from '@/assets/fonts/TeXGyreTermes-Regular.ttf';
 import motto from '@/assets/motto.png';
 import RUETLogo from '@/assets/RUET-Logo.png';
 import { getBestFitFontSize } from '@/lib/best-fit-font-size';
-import editorStore, {
-  type Department,
-  deptShortForm,
-  typeAtom,
-} from '@/store/editor';
+import editorStore, { type Department, deptShortForm } from '@/store/editor';
 
 Font.register({
   family: 'TeX Gyre Termes',
@@ -118,7 +114,7 @@ const dataListItem = (key: string, value: string, keySize?: number) => (
 // Create Document Component
 export function CoverTemplate() {
   const department = useAtomValue(editorStore.studentDepartment);
-  const type = useAtomValue(typeAtom);
+  const type = useAtomValue(editorStore.type);
   const courseNo = useAtomValue(editorStore.courseNo);
   const courseTitle = useAtomValue(editorStore.courseTitle);
   const coverNo = useAtomValue(editorStore.coverNo);
@@ -165,6 +161,82 @@ export function CoverTemplate() {
       })
     : undefined;
 
+  const isThesis = type === 'Thesis';
+
+  const studentInfo = (
+    <View
+      style={{
+        flex: '1 1 0',
+        paddingRight: 16,
+        borderRight: fromToBorder ? '1px solid #000000' : undefined,
+        paddingHorizontal: fromToBorder ? 16 : undefined,
+        paddingBottom: fromToBorder ? 8 : undefined,
+      }}
+    >
+      <Text style={styles.thH}>Submitted by:</Text>
+      {manualSubmittedBy ? (
+        <Text
+          style={{
+            ...styles.text,
+            fontSize: manualFontSize,
+            lineHeight: manualFontSize && Math.max(1, manualFontSize / 12),
+          }}
+        >
+          {manualSubmittedByText}
+        </Text>
+      ) : (
+        <>
+          <Text style={styles.text}>{studentName || '.'}</Text>
+          {!!studentGroup && (
+            <Text style={styles.text}>{`Group: ${studentGroup}`}</Text>
+          )}
+          <Text style={styles.text}>{`Roll: ${studentID}`}</Text>
+          {!!studentSection && (
+            <Text style={styles.text}>{`Section: ${studentSection}`}</Text>
+          )}
+          {!!studentSession && studentID.length >= 2 && (
+            <Text style={styles.text}>
+              Session: 20{studentID.slice(0, 2)}-{+studentID.slice(0, 2) + 1}
+            </Text>
+          )}
+        </>
+      )}
+    </View>
+  );
+  const teacherInfo = (
+    <View
+      style={{
+        flex: '1 1 0',
+        paddingLeft: 16,
+        borderLeft: fromToBorder ? '1px solid #000000' : undefined,
+        paddingHorizontal: fromToBorder ? 16 : undefined,
+        paddingBottom: fromToBorder ? 8 : undefined,
+      }}
+    >
+      <Text style={styles.thH}>
+        {isThesis ? 'Supervised by:' : 'Submitted to:'}
+      </Text>
+      {!!teacherName && (
+        <>
+          <Text style={styles.text}>{teacherName}</Text>
+          <Text style={styles.text}>{teacherDesignation}</Text>
+          {!!teacherDepartment && (
+            <Text style={styles.text}>{`Dept. of ${teacherDept}, RUET`}</Text>
+          )}
+        </>
+      )}
+      {!!secondTeacherName && (
+        <View style={{ marginTop: 16 }}>
+          <Text style={styles.text}>{secondTeacherName}</Text>
+          <Text style={styles.text}>{secondTeacherDesignation}</Text>
+          {!!teacherDepartment && (
+            <Text style={styles.text}>{`Dept. of ${teacherDept}, RUET`}</Text>
+          )}
+        </View>
+      )}
+    </View>
+  );
+
   const studentTeacherTable = (
     <View
       style={{
@@ -175,73 +247,17 @@ export function CoverTemplate() {
         border: fromToBorder ? '2px solid #000000' : undefined,
       }}
     >
-      <View
-        style={{
-          flex: '1 1 0',
-          paddingRight: 16,
-          borderRight: fromToBorder ? '1px solid #000000' : undefined,
-          paddingHorizontal: fromToBorder ? 16 : undefined,
-          paddingBottom: fromToBorder ? 8 : undefined,
-        }}
-      >
-        <Text style={styles.thH}>Submitted by:</Text>
-        {manualSubmittedBy ? (
-          <Text
-            style={{
-              ...styles.text,
-              fontSize: manualFontSize,
-              lineHeight: manualFontSize && Math.max(1, manualFontSize / 12),
-            }}
-          >
-            {manualSubmittedByText}
-          </Text>
-        ) : (
-          <>
-            <Text style={styles.text}>{studentName || '.'}</Text>
-            {!!studentGroup && (
-              <Text style={styles.text}>{`Group: ${studentGroup}`}</Text>
-            )}
-            <Text style={styles.text}>{`Roll: ${studentID}`}</Text>
-            {!!studentSection && (
-              <Text style={styles.text}>{`Section: ${studentSection}`}</Text>
-            )}
-            {!!studentSession && studentID.length >= 2 && (
-              <Text style={styles.text}>
-                Session: 20{studentID.slice(0, 2)}-{+studentID.slice(0, 2) + 1}
-              </Text>
-            )}
-          </>
-        )}
-      </View>
-      <View
-        style={{
-          flex: '1 1 0',
-          paddingLeft: 16,
-          borderLeft: fromToBorder ? '1px solid #000000' : undefined,
-          paddingHorizontal: fromToBorder ? 16 : undefined,
-          paddingBottom: fromToBorder ? 8 : undefined,
-        }}
-      >
-        <Text style={styles.thH}>Submitted to:</Text>
-        {!!teacherName && (
-          <>
-            <Text style={styles.text}>{teacherName}</Text>
-            <Text style={styles.text}>{teacherDesignation}</Text>
-            {!!teacherDepartment && (
-              <Text style={styles.text}>{`Dept. of ${teacherDept}, RUET`}</Text>
-            )}
-          </>
-        )}
-        {!!secondTeacherName && (
-          <View style={{ marginTop: 16 }}>
-            <Text style={styles.text}>{secondTeacherName}</Text>
-            <Text style={styles.text}>{secondTeacherDesignation}</Text>
-            {!!teacherDepartment && (
-              <Text style={styles.text}>{`Dept. of ${teacherDept}, RUET`}</Text>
-            )}
-          </View>
-        )}
-      </View>
+      {isThesis ? (
+        <>
+          {teacherInfo}
+          {studentInfo}
+        </>
+      ) : (
+        <>
+          {studentInfo}
+          {teacherInfo}
+        </>
+      )}
     </View>
   );
   const dates = (
@@ -255,13 +271,21 @@ export function CoverTemplate() {
           </Text>
         </View>
       )}
-      <View style={{ textAlign: 'left', flexDirection: 'row' }}>
-        <Text style={styles.textBF}>Date of Submission</Text>
-        <Text style={styles.colon}>:</Text>
-        <Text style={styles.text}>
-          {dateOfSubmission && dayjs(dateOfSubmission).format('D MMMM YYYY')}
-        </Text>
-      </View>
+      {isThesis ? (
+        <View style={{ textAlign: 'center' }}>
+          <Text style={styles.text}>
+            {dateOfSubmission && dayjs(dateOfSubmission).format('D MMMM YYYY')}
+          </Text>
+        </View>
+      ) : (
+        <View style={{ textAlign: 'left', flexDirection: 'row' }}>
+          <Text style={styles.textBF}>Date of Submission</Text>
+          <Text style={styles.colon}>:</Text>
+          <Text style={styles.text}>
+            {dateOfSubmission && dayjs(dateOfSubmission).format('D MMMM YYYY')}
+          </Text>
+        </View>
+      )}
     </>
   );
 
@@ -301,16 +325,28 @@ export function CoverTemplate() {
               : 0,
           }}
         >
-          {!!coverNo &&
-            dataListItem(
-              `${type !== 'Lab Report' ? type : 'Experiment'} No.`,
-              coverNo === '0' ? '' : coverNo.padStart(2, '0'),
-            )}
-          {!!coverTitle &&
-            dataListItem(
-              `${type !== 'Lab Report' ? type : 'Experiment'} Title`,
-              coverTitle,
-            )}
+          {isThesis ? (
+            <View style={{ textAlign: 'center' }}>
+              <Text style={styles.text}>A project & thesis report on</Text>
+              <Text style={styles.text}>{coverTitle}</Text>
+            </View>
+          ) : (
+            <>
+              {!!coverNo &&
+                !isThesis &&
+                dataListItem(
+                  `${type !== 'Lab Report' ? type : 'Experiment'} No.`,
+                  coverNo === '0' ? '' : coverNo.padStart(2, '0'),
+                )}
+              {!!coverTitle &&
+                !isThesis &&
+                dataListItem(
+                  `${type !== 'Lab Report' ? type : 'Experiment'} Title`,
+                  coverTitle,
+                )}
+            </>
+          )}
+
           {courseInfoBellowTitle && (
             <>
               {dataListItem(

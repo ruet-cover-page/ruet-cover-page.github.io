@@ -12,7 +12,6 @@ import editorStore, {
   departments,
   designations,
   studentDepartments,
-  typeAtom,
   types,
 } from '@/store/editor';
 import { teacherEffect } from '@/store/effects/editor';
@@ -236,13 +235,25 @@ export function Editor() {
           atom={editorStore.datesBellowTitle}
           label="Show dates bellow title instead of at the bottom"
         />
+        <h2 className={tabHeaderClass}>Reset</h2>
+        Feeling messy, want to start over?
+        <Button
+          variant="destructive"
+          className=""
+          onClick={() => {
+            localStorage.clear();
+            window.location.reload();
+          }}
+        >
+          Reset all inputs and settings
+        </Button>
       </TabsContent>
     </Tabs>
   );
 }
 
 function DateOfExperiment() {
-  const type = useAtomValue(typeAtom);
+  const type = useAtomValue(editorStore.type);
 
   return (
     type === 'Lab Report' && (
@@ -254,7 +265,7 @@ function DateOfExperiment() {
 }
 
 function TypeAndCoverNo() {
-  const type = useAtomValue(typeAtom);
+  const type = useAtomValue(editorStore.type);
   const [coverNo, setCoverNo] = useAtom(editorStore.coverNo);
 
   return (
@@ -262,27 +273,29 @@ function TypeAndCoverNo() {
       <FormItem label="Type">
         <SelectInput<(typeof types)[number]>
           name="type"
-          atom={typeAtom}
+          atom={editorStore.type}
           options={types.map((x) => ({ label: x, value: x }))}
         />
       </FormItem>
-      <FormItem
-        label={`${type} No.`}
-        actions={
-          <Switch
-            defaultChecked={coverNo !== ''}
-            onCheckedChange={(x) => setCoverNo(x ? '1' : '')}
+      {type !== 'Thesis' && (
+        <FormItem
+          label={`${type} No.`}
+          actions={
+            <Switch
+              checked={coverNo !== ''}
+              onCheckedChange={(x) => setCoverNo(x ? '1' : '')}
+            />
+          }
+        >
+          <TextInput
+            atom={editorStore.coverNo}
+            disabled={coverNo === ''}
+            type="number"
+            step={1}
+            min={0}
           />
-        }
-      >
-        <TextInput
-          atom={editorStore.coverNo}
-          disabled={coverNo === ''}
-          type="number"
-          step={1}
-          min={0}
-        />
-      </FormItem>
+        </FormItem>
+      )}
     </div>
   );
 }

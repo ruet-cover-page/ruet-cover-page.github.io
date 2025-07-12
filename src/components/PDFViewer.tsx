@@ -119,7 +119,7 @@ export function PDFViewer({
   return (
     <div
       ref={containerRef}
-      className={cn('relative flex overflow-hidden bg-neutral-500', className)}
+      className={cn('relative flex overflow-hidden', className)}
       {...props}
     >
       {debouncedInstance.blob && (
