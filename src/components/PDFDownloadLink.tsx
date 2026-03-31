@@ -51,7 +51,7 @@ export const PDFDownloadLink = ({
       }
     });
     try {
-      // @ts-ignore
+      // @ts-expect-error
       window.umami?.track('download-cover-page', {
         studentId: defaultStore.get(editor.studentID) || 'Blank',
         courseNo: defaultStore.get(editor.courseNo) || 'Blank',

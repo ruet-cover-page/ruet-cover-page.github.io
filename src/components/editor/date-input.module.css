@@ -1,3 +1,4 @@
 .dateInput :global(.react-date-picker__wrapper) {
+  /* biome-ignore lint/complexity/noImportantStyles: need this to suppress library styles */
   border: none !important;
 }

@@ -6,8 +6,7 @@ import { cn } from '@/lib/utils';
 const Tabs = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root> & {
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    atom: WritableAtom<string, any, void>;
+    atom: WritableAtom<string, [string], void>;
   }
 >(({ atom, className, ...props }, ref) => {
   const [value, setValue] = useAtom(atom);
@@ -68,4 +67,4 @@ function TabsContent({
   );
 }
 
-export { Tabs, TabsList, TabsTrigger, TabsContent };
+export { Tabs, TabsContent, TabsList, TabsTrigger };

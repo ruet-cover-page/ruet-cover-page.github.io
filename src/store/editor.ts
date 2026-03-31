@@ -120,7 +120,7 @@ function booleanItem(key: string, initialValue: boolean) {
   });
 }
 const coverNo = stringItem('cover-no', '1');
-const studentNameIDBStore = idbKeyVal.createStore(
+export const studentNameIDBStore = idbKeyVal.createStore(
   'student-name',
   'student-name',
 );
@@ -162,7 +162,7 @@ const studentID = atom(
   },
 );
 
-const courseTitleIDBStore = idbKeyVal.createStore(
+export const courseTitleIDBStore = idbKeyVal.createStore(
   'course-title',
   'course-title',
 );

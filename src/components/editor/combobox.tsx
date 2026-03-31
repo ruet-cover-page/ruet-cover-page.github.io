@@ -1,6 +1,6 @@
 import { CaretSortIcon, CheckIcon, Cross1Icon } from '@radix-ui/react-icons';
 import { useAtom, type WritableAtom } from 'jotai';
-import { useResetAtom } from 'jotai/utils';
+import { type RESET, useResetAtom } from 'jotai/utils';
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,14 +19,13 @@ import {
 import { cn } from '@/lib/utils';
 import { FormItemContext } from './form-item';
 
-export function Combobox({
+export function Combobox<T extends string>({
   name,
   atom,
   options,
 }: {
   name: string;
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  atom: WritableAtom<string, any, void>;
+  atom: WritableAtom<T, [T | typeof RESET], void>;
   options: { value: string; label: string }[];
 }) {
   const [value, setValue] = useAtom(atom);
@@ -40,7 +39,6 @@ export function Combobox({
         <PopoverTrigger asChild>
           <Button
             variant="outline"
-            // biome-ignore lint/a11y/useSemanticElements: <explanation>
             role="combobox"
             aria-expanded={open}
             className="w-full justify-between"
@@ -74,7 +72,7 @@ export function Combobox({
                   key={option.value}
                   value={option.value}
                   onSelect={(currentValue) => {
-                    if (currentValue !== value) setValue(currentValue);
+                    if (currentValue !== value) setValue(currentValue as T);
                     setOpen(false);
                   }}
                 >

@@ -2,10 +2,11 @@
 <html lang="en">
   <head>
     <script>
+      var themes, el, theme;
       try {
-        var themes = ["light", "dark"];
-        var el = document.documentElement;
-        var theme =
+        themes = ["light", "dark"];
+        el = document.documentElement;
+        theme =
           localStorage.getItem("<%= import.meta.env.PUBLIC_THEME_KEY %>") ||
           (window.matchMedia("(prefers-color-scheme: dark)").matches
             ? "dark"
@@ -16,7 +17,7 @@
         if (themes.includes(theme)) {
           el.style.colorScheme = theme;
         }
-      } catch (e) {
+      } catch (_e) {
         //
       }
     </script>

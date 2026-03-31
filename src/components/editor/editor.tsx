@@ -21,6 +21,7 @@ import { Combobox } from './combobox';
 import { DateInput } from './DateInput';
 import { FormDescription } from './form-description';
 import { FormItem } from './form-item';
+import { ImportExport } from './import-export';
 import { SelectInput } from './select-input';
 import { SwitchInput } from './switch-input';
 import { TeacherName } from './teacher-name';
@@ -28,11 +29,7 @@ import { TextInput } from './text-input';
 import { TextAreaInput } from './textarea-input';
 
 const tabContentClass = cn(
-  'flex-1 flex-col gap-y-4 overflow-y-auto p-4 data-[state=active]:flex',
-);
-
-const tabHeaderClass = cn(
-  'mb-4 font-bold text-3xl leading-tight md:text-4xl dark:text-slate-50',
+  'flex-1 flex-col gap-y-4 overflow-y-auto p-4 data-[state=active]:flex prose dark:prose-invert max-w-full',
 );
 
 export function Editor() {
@@ -66,7 +63,7 @@ export function Editor() {
         ))}
       </TabsList>
       <TabsContent value="student" className={tabContentClass}>
-        <h2 className={tabHeaderClass}>Student</h2>
+        <h2>Student</h2>
         <SwitchInput
           atom={editorStore.manualSubmittedBy}
           label="Manual Input"
@@ -111,7 +108,7 @@ export function Editor() {
         </Button>
       </TabsContent>
       <TabsContent value="subject" className={tabContentClass}>
-        <h2 className={tabHeaderClass}>Subject</h2>
+        <h2>Subject</h2>
         <div className="grid gap-4 sm:grid-cols-[7rem_1fr]">
           <FormItem label={courseCode ? 'Course Code' : 'Course No.'}>
             <TextInput atom={editorStore.courseNo} />
@@ -138,7 +135,7 @@ export function Editor() {
         </Button>
       </TabsContent>
       <TabsContent value="teacher" className={tabContentClass}>
-        <h2 className={tabHeaderClass}>Teacher</h2>
+        <h2>Teacher</h2>
         <FormItem label="Teacher Name">
           <TeacherName
             nameAtom={editorStore.teacherName}
@@ -209,7 +206,7 @@ export function Editor() {
         </Button>
       </TabsContent>
       <TabsContent value="settings" className={tabContentClass}>
-        <h2 className={tabHeaderClass}>Settings</h2>
+        <h2>Settings</h2>
         <SwitchInput
           atom={editorStore.formToBorder}
           label="Add borders to submitted by and submitted to table"
@@ -235,18 +232,23 @@ export function Editor() {
           atom={editorStore.datesBellowTitle}
           label="Show dates bellow title instead of at the bottom"
         />
-        <h2 className={tabHeaderClass}>Reset</h2>
-        Feeling messy, want to start over?
-        <Button
-          variant="destructive"
-          className=""
-          onClick={() => {
-            localStorage.clear();
-            window.location.reload();
-          }}
-        >
-          Reset all inputs and settings
-        </Button>
+        <div>
+          <ImportExport />
+          <h3>Reset</h3>
+          <p>Feeling messy, want to start over?</p>
+          <p>
+            <Button
+              variant="destructive"
+              className=""
+              onClick={() => {
+                localStorage.clear();
+                window.location.reload();
+              }}
+            >
+              Reset all inputs and settings
+            </Button>
+          </p>
+        </div>
       </TabsContent>
     </Tabs>
   );
