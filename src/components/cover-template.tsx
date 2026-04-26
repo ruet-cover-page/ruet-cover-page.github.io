@@ -99,6 +99,18 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     flexBasis: 0,
   },
+  tableBordered: {
+    borderTop: '1px solid #000000',
+    borderLeft: '1px solid #000000',
+  },
+  tr: { display: 'flex', flexDirection: 'row' },
+  tdBordered: {
+    borderBottom: '1px solid #000000',
+    borderRight: '1px solid #000000',
+    flexBasis: 0,
+    flexGrow: 1,
+    flexShrink: 1,
+  },
 });
 
 const dataListItem = (key: string, value: string, keySize?: number) => (
@@ -132,6 +144,8 @@ export function CoverTemplate() {
   );
   const studentName = useAtomValue(editorStore.studentName);
   const manualSubmittedByText = useAtomValue(editorStore.manualSubmittedByText);
+  const CO = useAtomValue(editorStore.CO);
+  const PO = useAtomValue(editorStore.PO);
 
   /**
    * Settings
@@ -145,6 +159,7 @@ export function CoverTemplate() {
   const courseInfoBellowTitle = useAtomValue(editorStore.courseInfoBellowTitle);
   const datesBellowTitle = useAtomValue(editorStore.datesBellowTitle);
   const manualSubmittedBy = useAtomValue(editorStore.manualSubmittedBy);
+  const assessmentTable = useAtomValue(editorStore.assessmentTable);
 
   const teacherDept = secondTeacherName
     ? deptShortForm.get(teacherDepartment as Department)
@@ -320,7 +335,7 @@ export function CoverTemplate() {
         )}
         <View
           style={{
-            marginVertical: !secondTeacherName
+            marginVertical: !(secondTeacherName || assessmentTable)
               ? (courseInfoBellowTitle ? 16 : 0) + (datesBellowTitle ? 16 : 0)
               : 0,
           }}
@@ -361,6 +376,30 @@ export function CoverTemplate() {
         </View>
         {studentTeacherTable}
         {!datesBellowTitle && <View>{dates}</View>}
+        {assessmentTable && (
+          <View style={styles.tableBordered}>
+            <View style={styles.tr}>
+              <View style={styles.tdBordered}>
+                <Text>Assessment</Text>
+              </View>
+            </View>
+            <View style={styles.tr}>
+              {['CO', 'PO', 'Mark'].map((x) => (
+                <View style={styles.tdBordered} key={x}>
+                  <Text>{x}</Text>
+                </View>
+              ))}
+            </View>
+            <View style={styles.tr}>
+              {[CO, PO, ''].map((x, i) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: values might match, need index
+                <View style={styles.tdBordered} key={i}>
+                  <Text>{x}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
       </Page>
     </Document>
   );

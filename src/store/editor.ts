@@ -220,6 +220,8 @@ export default {
   dateOfExperiment: atom<null | Date>(dayjs().subtract(7, 'days').toDate()),
   dateOfSubmission: atom<null | Date>(new Date()),
   manualSubmittedByText: stringItem('manualSubmittedByText', ''),
+  CO: stringItem('CO', ''),
+  PO: stringItem('PO', ''),
   /**
    * Settings
    */
@@ -231,4 +233,5 @@ export default {
   studentSession: booleanItem('studentSession', false),
   courseInfoBellowTitle: booleanItem('courseInfoBellowTitle', false),
   datesBellowTitle: booleanItem('datesBellowTitle', false),
+  assessmentTable: booleanItem('assessmentTable', false),
 };

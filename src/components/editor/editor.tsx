@@ -126,6 +126,7 @@ export function Editor() {
         <FormItem label="Date of submission">
           <DateInput atom={editorStore.dateOfSubmission} />
         </FormItem>
+        <CO_PO />
         <Button
           variant="outline"
           className="mt-auto"
@@ -299,5 +300,27 @@ function TypeAndCoverNo() {
         </FormItem>
       )}
     </div>
+  );
+}
+
+function CO_PO() {
+  const assessmentTable = useAtomValue(editorStore.assessmentTable);
+
+  return (
+    <>
+      <h3 className="mb-0">Assessment table</h3>
+      <SwitchInput
+        atom={editorStore.assessmentTable}
+        label="Show assessment table"
+      />
+      <div className="grid gap-4 sm:grid-cols-2">
+        <FormItem label="CO">
+          <TextInput atom={editorStore.CO} disabled={!assessmentTable} />
+        </FormItem>
+        <FormItem label="PO">
+          <TextInput atom={editorStore.PO} disabled={!assessmentTable} />
+        </FormItem>
+      </div>
+    </>
   );
 }
